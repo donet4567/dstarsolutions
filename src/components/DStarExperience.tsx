@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { FormEvent, useEffect, useRef, useState } from "react";
+import SelectedWork from "./SelectedWork";
 
 const PHONE = "917558920076";
 const DEFAULT_MESSAGE = "Hello D Star, I would like to discuss a website or web application project.";
@@ -22,7 +23,7 @@ function ServiceIcon({ app = false }: { app?: boolean }) {
   return <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">{app ? <><rect x="3" y="3" width="9" height="9" rx="2" /><rect x="16" y="3" width="9" height="9" rx="2" /><rect x="3" y="16" width="9" height="9" rx="2" /><path d="M16 20.5h9m-4.5-4.5v9" /></> : <><rect x="2" y="4" width="24" height="20" rx="3" /><path d="M2 10h24M6 7h.1M10 7h.1m1 8-3 3 3 3m6-6 3 3-3 3" /></>}</svg>;
 }
 function Brand() {
-  return <span className="brand"><span className="brand-symbol"><Image src="/dstar-mark-v2.png" alt="" width={56} height={47} unoptimized /></span><span>D STAR<span className="brand-period">.</span><small>DIGITAL PRODUCT STUDIO</small></span></span>;
+  return <span className="brand"><span className="brand-symbol"><Image src="/dstar-mark-v2.png" alt="" width={56} height={47} unoptimized /></span><span>D Star IT Solutions<small>DIGITAL PRODUCT STUDIO</small></span></span>;
 }
 
 function HeroPreview() {
@@ -99,7 +100,7 @@ export default function DStarExperience() {
       <a href="#main" className="skip-link">Skip to content</a>
       <header className={`topbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="topbar-inner">
-          <a href="#top" aria-label="D Star home" onClick={() => setMenuOpen(false)}><Brand /></a>
+          <a href="#top" aria-label="D Star IT Solutions home" onClick={() => setMenuOpen(false)}><Brand /></a>
           <nav className="desktop-nav" aria-label="Main navigation"><a href="#services">What we do</a><a href="#process">Our process</a><a href="#engineering">The studio</a></nav>
           <div className="topbar-end"><button className="nav-cta" type="button" onClick={() => openBrief()}>Let’s talk <Arrow diagonal /></button><button ref={menuRef} className={`menu-trigger ${menuOpen ? "is-open" : ""}`} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button></div>
         </div>
@@ -134,6 +135,7 @@ export default function DStarExperience() {
             </article>
           </div><p className="services-note"><Star /> From the first sketch to the final launch. One team, every detail.</p>
         </section>
+        <SelectedWork />
         <section className="studio-section" id="engineering" aria-labelledby="studio-title"><div className="container studio-grid">
           <div className="studio-copy" data-reveal><p className="eyebrow"><span className="section-dash" /> 02 / THE D STAR DIFFERENCE</p><h2 id="studio-title">Small by choice.<br />Exceptional<br /><em>by intention.</em></h2><p>You work directly with the people building your product. No layers, no lost-in-translation moments. Just a focused studio that cares about your business as much as the build.</p><a className="text-link" href="#process">Get to know our approach <Arrow /></a></div>
           <div className="principles" data-reveal><article><span className="principle-number">01</span><div><h3>Design with a purpose.</h3><p>Every layout, interaction, and detail works towards a clearer, more enjoyable experience.</p></div><Star /></article><article><span className="principle-number">02</span><div><h3>Beauty, backed by substance.</h3><p>Responsive interfaces, accessible interactions, and maintainable code. A strong foundation beneath the surface.</p></div><Star /></article><article><span className="principle-number">03</span><div><h3>Your ambition. Our attention.</h3><p>A considered process, honest conversations, and care that carries through to launch.</p></div><Star /></article><div className="stack-block"><p>MODERN TOOLS. MEANINGFUL OUTCOMES.</p><div>{["Next.js", "React", "TypeScript", "PostgreSQL"].map((item, i) => <span key={item}><b>{["N", "⚛", "TS", "P"][i]}</b>{item}</span>)}</div></div></div>
@@ -141,7 +143,11 @@ export default function DStarExperience() {
         <section className="process-section section-space container" id="process" aria-labelledby="process-title"><div className="section-heading" data-reveal><div><p className="eyebrow"><span className="section-dash" /> 03 / HOW WE GET THERE</p><h2 id="process-title">A clear path from<br />idea to <em>impact.</em></h2></div><p className="section-intro">Good things don’t happen by accident.<br />Here’s how we make them happen, together.</p></div><div className="process-grid">{steps.map(([title, detail, caption], index) => <article className="process-step" key={title} data-reveal><div className="process-step-top"><span>0{index + 1}</span><Arrow /></div><h3>{title}</h3><p>{detail}</p><small>{caption}</small></article>)}</div></section>
         <section className="contact-section container" id="contact" aria-labelledby="contact-title"><div className="contact-panel" data-reveal><div className="contact-panel-top"><p className="eyebrow"><span className="status-dot" /> YOUR NEXT CHAPTER STARTS HERE</p><Star /></div><div className="contact-content"><h2 id="contact-title">Have a good idea?<br />Let’s make it <em>great.</em></h2><div><p>A rough idea. A fresh start. A problem worth solving.<br />Whatever it is, we’d love to hear it.</p><button className="button button-dark" type="button" onClick={() => openBrief()}>Start a conversation <Arrow diagonal /></button></div></div><div className="contact-panel-bottom"><span>GOOD WORK BEGINS WITH A HELLO.</span><a href={defaultWhatsApp} target="_blank" rel="noreferrer">Say hello on WhatsApp <Arrow diagonal /></a></div></div></section>
       </main>
-      <footer className="footer container"><div className="footer-top"><a href="#top" aria-label="D Star home"><Brand /></a><p>Thoughtfully designed.<br />Beautifully engineered. From Kerala.</p><a className="footer-phone" href="tel:+917558920076">+91 75589 20076 <Arrow diagonal /></a></div><div className="footer-bottom"><span>© {new Date().getFullYear()} D Star. Made with intention.</span><span>BHARANGANAM · PALA · KERALA</span><a href="#top">Back to top ↑</a></div></footer>
+      <footer className="footer container">
+        <div className="footer-top"><p>Thoughtfully designed.<br />Beautifully engineered. From Kerala.</p><a className="footer-phone" href="tel:+917558920076">+91 75589 20076 <Arrow diagonal /></a></div>
+        <div className="footer-bottom"><span>© {new Date().getFullYear()} D Star. Made with intention.</span><span>BHARANANGANAM · PALA · KERALA</span><a href="#top">Back to top ↑</a></div>
+        <div className="footer-brand"><a href="#top" aria-label="D Star IT Solutions home"><Brand /></a></div>
+      </footer>
       <dialog className="brief-dialog" ref={dialogRef} aria-labelledby="brief-title" aria-describedby="brief-description" onClose={() => { if (lastTrigger.current?.getClientRects().length) lastTrigger.current.focus(); else menuRef.current?.focus(); }} onClick={(event) => { if (event.target === dialogRef.current) { const box = dialogRef.current.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeBrief(); } }}>
         <button className="brief-close" type="button" aria-label="Close project brief" onClick={closeBrief}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
         <form className="brief-form" onSubmit={sendBrief}><p className="eyebrow"><Star /> LET’S MAKE SOMETHING MATTER</p><h2 id="brief-title">It starts with<br /><em>your idea.</em></h2><p id="brief-description">Tell us a little about what you have in mind. We’ll take it from there, together.</p><fieldset><legend>What are we building?</legend><div className="type-options">{["Website", "Web application", "Not sure yet"].map((type) => <label key={type}><input type="radio" name="projectType" value={type} checked={projectType === type} onChange={() => setProjectType(type)} /><span>{type}</span></label>)}</div></fieldset><label className="brief-input"><span>A little about your idea</span><textarea value={brief} onChange={(event) => setBrief(event.target.value)} placeholder="The big idea, a challenge, or something you’d love to build…" rows={4} maxLength={4000} /></label><button className="button button-gold brief-submit" type="submit">Continue on WhatsApp <Arrow diagonal /></button><p className="brief-footnote">Opens WhatsApp with your brief, ready for you to send.</p></form>

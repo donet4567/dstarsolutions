@@ -203,6 +203,7 @@ h2 em { color:var(--gold); }
 .footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-block:23px 30px; border-top:1px solid var(--line); color:#748064; font-size:10px; }
 .footer-bottom>span:nth-child(2) { font-size:8px; letter-spacing:1.3px; }
 .footer-bottom a { color:#626f50; }
+.footer-brand { display:flex; justify-content:center; padding-block:24px 40px; }
 .brief-dialog { padding:0; width:min(570px,calc(100% - 32px)); max-height:calc(100dvh - 40px); color:var(--text); background:#ffffff; border:1px solid #e8cb8d3a; border-radius:16px; box-shadow:0 30px 100px #0009; }
 .brief-dialog::backdrop { background:#050704be; backdrop-filter:blur(12px); }
 .brief-dialog[open] { animation:dialog-enter .22s ease-out; }
