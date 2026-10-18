@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -7,11 +7,11 @@ import styles from "./SelectedWork.module.css";
 
 const projects = [
   {
-    name: "Mecardee Autocraft",
+    name: "Mecardee Rental Management",
     slug: "mecardee-autocraft",
-    category: "Automotive · Digital experience",
+    category: "Automotive Â· Digital experience",
     description: "An automotive service and digital brand experience.",
-    alt: "Mecardee Autocraft automotive website concept preview",
+    alt: "Mecardee Rental Management web application concept preview",
   },
   {
     name: "Mecardee Manager",
@@ -23,7 +23,7 @@ const projects = [
   {
     name: "HireVify",
     slug: "hirevify",
-    category: "Recruitment · Digital platform",
+    category: "Recruitment Â· Digital platform",
     description: "A digital platform for recruitment and skills-based hiring.",
     alt: "HireVify recruitment and skills-based hiring platform concept preview",
   },
@@ -156,7 +156,7 @@ export default function SelectedWork() {
   return <>
     <section className={`${styles.section} container`} id="selected-work" aria-labelledby="selected-work-title">
       <div className={styles.heading}>
-        <div><p className="eyebrow"><span className="section-dash" /> A FEW THINGS WE’VE MADE</p><h2 id="selected-work-title">Selected work.</h2></div>
+        <div><p className="eyebrow"><span className="section-dash" /> A FEW THINGS WEâ€™VE MADE</p><h2 id="selected-work-title">Selected work.</h2></div>
         <p className={styles.intro}>Distinct ideas.<br />Thoughtfully brought to life.</p>
       </div>
       <p className={styles.srOnly} id="selected-work-help">Open a project to view its illustrative concept artwork. Screen content and figures are illustrative.</p>
@@ -225,3 +225,4 @@ export default function SelectedWork() {
     </dialog>, document.body)}
   </>;
 }
+
