@@ -1,6 +1,22 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+// Run before the page is parsed so a refresh cannot restore a lower section.
+// Normal section links and back/forward navigation keep their usual behavior.
+const resetScrollOnReload = `(() => {
+  if (performance.getEntriesByType('navigation')[0]?.type !== 'reload') return;
+  const previousRestoration = history.scrollRestoration;
+  history.scrollRestoration = 'manual';
+  if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+  addEventListener('pageshow', () => {
+    scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    requestAnimationFrame(() => {
+      scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      history.scrollRestoration = previousRestoration;
+    });
+  }, { once: true });
+})();`;
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.dstarsolutions.in"),
   title: "D Star | Website & Web App Development",
@@ -39,6 +55,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
       <body>{children}</body>
     </html>
   );
