@@ -692,3 +692,56 @@ body { font-size:16px; }
  .brief-form .type-options span { font-size:13px; }.brief-form>.eyebrow { font-size:10px; }
 }
 @media(prefers-reduced-motion:reduce) { .process-step,.process-step::before,.process-step::after,.process-step-top svg,.website-preview,.app-preview,.circle-arrow { transition:none; } }
+
+/* A clear studio signature, with room for the mark at every screen size. */
+.topbar-inner { height:96px; gap:24px; }
+.brand-link { display:inline-flex; flex-shrink:0; width:fit-content; }
+.brand { display:inline-flex; align-items:center; gap:13px; line-height:1; letter-spacing:normal; }
+.brand-symbol { display:flex; align-items:center; justify-content:center; flex:0 0 66px; width:66px; height:66px; padding:0; border-radius:0; background:transparent; box-shadow:none; }
+.brand-symbol img { width:100%; height:auto; }
+.brand-wordmark { display:flex; flex-direction:column; gap:7px; }
+.brand-wordmark strong { font-size:29px; font-weight:750; letter-spacing:-1.1px; color:var(--text); }
+.brand-wordmark>span { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:2.4px; color:#695a72; white-space:nowrap; }
+.desktop-nav { gap:28px; margin-left:0; }
+.topbar-end { flex-shrink:0; }
+.nav-cta { white-space:nowrap; }
+.menu-trigger { flex-shrink:0; }
+.footer { padding-top:28px; }
+.footer-grid { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(120px,.65fr) minmax(0,1fr); gap:clamp(28px,5vw,78px); padding-block:44px 48px; border-top:1px solid var(--line); }
+.brand--footer { gap:17px; }
+.brand--footer .brand-symbol { flex-basis:88px; width:88px; height:88px; }
+.brand--footer .brand-wordmark { gap:9px; }
+.brand--footer .brand-wordmark strong { font-size:42px; letter-spacing:-1.8px; }
+.brand--footer .brand-wordmark>span { font-size:12px; letter-spacing:3px; }
+.footer-identity>p { margin:22px 0 0; max-width:300px; color:#695a72; font-size:14px; line-height:1.85; }
+.footer-label { margin-bottom:23px; font-size:10px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#766583; line-height:1.6; }
+.footer-explore { display:flex; flex-direction:column; align-items:flex-start; gap:14px; padding-top:7px; }
+.footer-explore .footer-label { margin-bottom:9px; }
+.footer-explore>a { font-size:14px; line-height:1.5; color:#4f435f; }
+.footer-explore>a:hover,.footer-meta>a:hover { color:var(--gold); }
+.footer-contact { padding-top:7px; }
+.footer-contact-phone { display:inline-flex; align-items:center; gap:16px; font-size:clamp(17px,1.6vw,22px); letter-spacing:-.5px; white-space:nowrap; color:var(--text); }
+.footer-contact-phone svg,.footer-whatsapp svg { width:15px; height:15px; }
+.footer-whatsapp { display:flex; align-items:center; gap:9px; width:fit-content; margin-top:18px; padding-bottom:5px; border-bottom:1px solid var(--line); font-size:12px; color:var(--gold); line-height:1.7; }
+.footer-contact-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); }
+.footer-contact address { margin-top:22px; font-size:12px; line-height:1.8; font-style:normal; color:#695a72; }
+.footer-meta { display:flex; justify-content:space-between; align-items:center; gap:24px; padding-block:23px 28px; border-top:1px solid var(--line); color:#766583; font-size:11px; line-height:1.7; }
+.footer-meta>a { display:inline-flex; align-items:center; gap:14px; flex-shrink:0; color:#4f435f; }
+.footer-meta>a>span { display:grid; place-items:center; width:30px; height:30px; border:1px solid var(--line); border-radius:50%; font-size:16px; }
+@media(min-width:761px) and (max-width:1050px) {
+  .topbar-inner { gap:16px; }.desktop-nav { gap:18px; }.desktop-nav a { font-size:13px; }.nav-cta { padding:12px 15px; font-size:13px; gap:14px; }
+  .brand-symbol { flex-basis:58px; width:58px; height:58px; }.brand-wordmark strong { font-size:27px; }.brand-wordmark>span { font-size:9px; letter-spacing:2px; }
+  .footer-grid { grid-template-columns:minmax(0,1.1fr) minmax(110px,.6fr) minmax(0,1fr); gap:28px; }.brand--footer .brand-symbol { flex-basis:68px; width:68px; height:68px; }.brand--footer .brand-wordmark strong { font-size:34px; }.brand--footer .brand-wordmark>span { font-size:10px; letter-spacing:2px; }
+}
+@media(max-width:760px) {
+  .topbar-inner { height:84px; gap:12px; }.brand { gap:10px; }.brand-symbol { flex-basis:52px; width:52px; height:52px; }.brand-wordmark { gap:6px; }.brand-wordmark strong { font-size:24px; letter-spacing:-.8px; }.brand-wordmark>span { font-size:8px; letter-spacing:1.8px; }
+  .topbar-end { gap:12px; }.nav-cta { font-size:12px; padding:10px 13px; gap:10px; }.menu-trigger { width:32px; height:44px; }
+  .mobile-navigation:not([hidden]) { background:var(--background); box-shadow:0 16px 28px #302b3b12; }.mobile-navigation a,.mobile-navigation button { font-size:18px; }
+  .footer { padding-top:8px; }.footer-grid { grid-template-columns:1fr 1fr; gap:36px 24px; padding-block:32px 36px; }.footer-identity { grid-column:1/-1; }.footer-identity>p { margin-top:17px; font-size:13px; }.brand--footer { gap:16px; }.brand--footer .brand-symbol { flex-basis:76px; width:76px; height:76px; }.brand--footer .brand-wordmark strong { font-size:38px; }.brand--footer .brand-wordmark>span { font-size:10px; letter-spacing:2.7px; }
+  .footer-explore,.footer-contact { padding:0; }.footer-label { font-size:9px; letter-spacing:1.2px; margin-bottom:18px; }.footer-explore { gap:12px; }.footer-explore .footer-label { margin-bottom:6px; }.footer-explore>a { font-size:13px; }.footer-contact-phone { font-size:16px; gap:8px; }.footer-contact-phone svg { display:none; }.footer-whatsapp { font-size:11px; gap:7px; margin-top:15px; }.footer-whatsapp svg { width:12px; height:12px; }.footer-contact address { font-size:11px; margin-top:18px; }
+  .footer-meta { align-items:start; gap:20px; font-size:10px; padding-block:20px 24px; }.footer-meta>span { max-width:210px; }.footer-meta>a { gap:8px; white-space:nowrap; }.footer-meta>a>span { width:26px; height:26px; }
+}
+@media(max-width:380px) {
+  .brand-symbol { flex-basis:46px; width:46px; height:46px; }.brand { gap:9px; }.brand-wordmark strong { font-size:22px; }.brand-wordmark>span { font-size:8px; letter-spacing:1.5px; }.topbar-end { gap:8px; }.nav-cta { padding:10px 12px; }.nav-cta svg { display:none; }
+  .footer-grid { grid-template-columns:1fr; gap:30px; }.footer-identity { grid-column:auto; }.footer-explore { display:grid; grid-template-columns:1fr 1fr; column-gap:20px; }.footer-explore .footer-label { grid-column:1/-1; }.footer-contact-phone { font-size:20px; }.footer-meta { flex-direction:column; gap:16px; }.footer-meta>span { max-width:none; }
+}

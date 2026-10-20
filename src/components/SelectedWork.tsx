@@ -9,7 +9,7 @@ const projects = [
   {
     name: "Mecardee Rental Management",
     slug: "mecardee-autocraft",
-    category: "Automotive Â· Digital experience",
+    category: "Automotive · Digital experience",
     description: "An automotive service and digital brand experience.",
     alt: "Mecardee Rental Management web application concept preview",
   },
@@ -23,7 +23,7 @@ const projects = [
   {
     name: "HireVify",
     slug: "hirevify",
-    category: "Recruitment Â· Digital platform",
+    category: "Recruitment · Digital platform",
     description: "A digital platform for recruitment and skills-based hiring.",
     alt: "HireVify recruitment and skills-based hiring platform concept preview",
   },
@@ -63,6 +63,7 @@ export default function SelectedWork() {
   const [failed, setFailed] = useState(0);
   const [frame, setFrame] = useState<Frame | null>(null);
   const [modalProject, setModalProject] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState(false);
   const rows = useRef<(HTMLButtonElement | null)[]>([]);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
@@ -146,6 +147,7 @@ export default function SelectedWork() {
   const returnFocus = () => {
     dismissPreview();
     setModalProject(null);
+    setExpanded(false);
     suppressFocus.current = true;
     trigger.current?.focus({ preventScroll: true });
     suppressFocus.current = false;
@@ -153,10 +155,14 @@ export default function SelectedWork() {
     window.scrollTo({ left: scrollPosition.current.x, top: scrollPosition.current.y, behavior: "instant" });
   };
 
+  const changeProject = (direction: number) => {
+    setModalProject((index) => index === null ? null : (index + direction + projects.length) % projects.length);
+  };
+
   return <>
     <section className={`${styles.section} container`} id="selected-work" aria-labelledby="selected-work-title">
       <div className={styles.heading}>
-        <div><p className="eyebrow"><span className="section-dash" /> A FEW THINGS WEâ€™VE MADE</p><h2 id="selected-work-title">Selected work.</h2></div>
+        <div><p className="eyebrow"><span className="section-dash" /> A FEW THINGS WE’VE MADE</p><h2 id="selected-work-title">Selected work.</h2></div>
         <p className={styles.intro}>Distinct ideas.<br />Thoughtfully brought to life.</p>
       </div>
       <p className={styles.srOnly} id="selected-work-help">Open a project to view its illustrative concept artwork. Screen content and figures are illustrative.</p>
@@ -209,19 +215,37 @@ export default function SelectedWork() {
     </div>, document.body)}
 
     {modalProject !== null && createPortal(<dialog className={styles.dialog} ref={dialog}
+      data-expanded={expanded || undefined}
       aria-labelledby="work-dialog-title" aria-describedby="work-dialog-description work-dialog-note" onClose={returnFocus}
+      onKeyDown={(event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+          event.preventDefault();
+          changeProject(event.key === "ArrowRight" ? 1 : -1);
+        }
+      }}
       onClick={(event) => {
         if (event.target !== dialog.current) return;
         const bounds = dialog.current.getBoundingClientRect();
         if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.current.close();
       }}>
-      <div className={styles.dialogHeader}><p className="eyebrow">SELECTED WORK / 0{modalProject + 1}</p><button className={styles.close} type="button" autoFocus aria-label="Close project preview" onClick={() => dialog.current?.close()}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button></div>
-      <div className={styles.dialogArtwork}>
-        <ProjectArtwork index={modalProject} sizes="(max-width: 760px) calc(100vw - 34px), 864px"
-          onError={() => setFailed((value) => value | (1 << modalProject))} />
-        {(failed & (1 << modalProject)) !== 0 && <p className={styles.fallback}>Artwork is unavailable.<br />Project details are below.</p>}
+      <div className={styles.dialogHeader}><p className="eyebrow"><span className="section-dash" /> SELECTED WORK</p><button className={styles.close} type="button" autoFocus aria-label="Close project preview" onClick={() => dialog.current?.close()}><span>Close</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button></div>
+      <div className={styles.dialogBody}>
+        <div className={styles.dialogArtwork}>
+          <ProjectArtwork key={projects[modalProject].slug} index={modalProject}
+            sizes={expanded ? "(max-width: 760px) calc(100vw - 48px), (max-width: 1440px) calc(100vw - 68px), 1364px" : "(max-width: 900px) calc(100vw - 72px), (max-width: 1208px) calc(100vw - 378px), 830px"}
+            onLoad={() => setFailed((value) => value & ~(1 << modalProject))}
+            onError={() => setFailed((value) => value | (1 << modalProject))} />
+          {(failed & (1 << modalProject)) !== 0 && <p className={styles.fallback}>Artwork is unavailable.<br />Project details are below.</p>}
+          <button className={styles.expand} type="button" aria-pressed={expanded} onClick={() => setExpanded((value) => !value)}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={expanded ? "M4 9h5V4m11 11h-5v5M9 9 4 4m11 11 5 5" : "M9 4H4v5m11 11h5v-5M4 4l6 6m10 10-6-6"} /></svg><span>{expanded ? "Fit view" : "Expand image"}</span></button>
+        </div>
+        <div className={styles.dialogCopy} aria-live="polite" aria-atomic="true"><p className={styles.dialogCategory}>{projects[modalProject].category}</p><h2 id="work-dialog-title">{projects[modalProject].name}</h2><p id="work-dialog-description">{projects[modalProject].description}</p><small id="work-dialog-note">Illustrative concept artwork. Screen content and figures are illustrative.</small></div>
       </div>
-      <div className={styles.dialogCopy}><h2 id="work-dialog-title">{projects[modalProject].name}</h2><p id="work-dialog-description">{projects[modalProject].description}</p><small id="work-dialog-note">Illustrative concept artwork. Screen content and figures are illustrative.</small></div>
+      <div className={styles.dialogNavigation}>
+        <button type="button" className={styles.previous} aria-label="Previous project" onClick={() => changeProject(-1)}><PreviewArrow /><span>Previous</span></button>
+        <span className={styles.projectCount} aria-label={`Project ${modalProject + 1} of ${projects.length}`}><strong>0{modalProject + 1}</strong><span>/</span>0{projects.length}</span>
+        <button type="button" className={styles.next} aria-label="Next project" onClick={() => changeProject(1)}><span>Next project</span><PreviewArrow /></button>
+      </div>
     </dialog>, document.body)}
   </>;
 }

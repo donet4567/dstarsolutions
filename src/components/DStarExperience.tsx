@@ -22,8 +22,8 @@ function Star({ className = "" }: { className?: string }) {
 function ServiceIcon({ app = false }: { app?: boolean }) {
   return <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">{app ? <><rect x="3" y="3" width="9" height="9" rx="2" /><rect x="16" y="3" width="9" height="9" rx="2" /><rect x="3" y="16" width="9" height="9" rx="2" /><path d="M16 20.5h9m-4.5-4.5v9" /></> : <><rect x="2" y="4" width="24" height="20" rx="3" /><path d="M2 10h24M6 7h.1M10 7h.1m1 8-3 3 3 3m6-6 3 3-3 3" /></>}</svg>;
 }
-function Brand() {
-  return <span className="brand"><span className="brand-symbol"><Image src="/dstar-mark-v2.png" alt="" width={56} height={47} unoptimized /></span><span>D Star IT Solutions<small>DIGITAL PRODUCT STUDIO</small></span></span>;
+function Brand({ footer = false }: { footer?: boolean }) {
+  return <span className={`brand${footer ? " brand--footer" : ""}`}><span className="brand-symbol"><Image src="/dstar-mark-v2.png" alt="" width={854} height={718} sizes={footer ? "88px" : "66px"} unoptimized /></span><span className="brand-wordmark"><strong>D Star</strong><span>IT Solutions</span></span></span>;
 }
 
 function HeroPreview() {
@@ -100,7 +100,7 @@ export default function DStarExperience() {
       <a href="#main" className="skip-link">Skip to content</a>
       <header className={`topbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="topbar-inner">
-          <a href="#top" aria-label="D Star IT Solutions home" onClick={() => setMenuOpen(false)}><Brand /></a>
+          <a className="brand-link" href="#top" aria-label="D Star IT Solutions home" onClick={() => setMenuOpen(false)}><Brand /></a>
           <nav className="desktop-nav" aria-label="Main navigation"><a href="#services">What we do</a><a href="#process">Our process</a><a href="#engineering">The studio</a></nav>
           <div className="topbar-end"><button className="nav-cta" type="button" onClick={() => openBrief()}>Let’s talk <Arrow diagonal /></button><button ref={menuRef} className={`menu-trigger ${menuOpen ? "is-open" : ""}`} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button></div>
         </div>
@@ -144,9 +144,12 @@ export default function DStarExperience() {
         <section className="contact-section container" id="contact" aria-labelledby="contact-title"><div className="contact-panel" data-reveal><div className="contact-panel-top"><p className="eyebrow"><span className="status-dot" /> YOUR NEXT CHAPTER STARTS HERE</p><Star /></div><div className="contact-content"><h2 id="contact-title">Have a good idea?<br />Let’s make it <em>great.</em></h2><div><p>A rough idea. A fresh start. A problem worth solving.<br />Whatever it is, we’d love to hear it.</p><button className="button button-dark" type="button" onClick={() => openBrief()}>Start a conversation <Arrow diagonal /></button></div></div><div className="contact-panel-bottom"><span>GOOD WORK BEGINS WITH A HELLO.</span><a href={defaultWhatsApp} target="_blank" rel="noreferrer">Say hello on WhatsApp <Arrow diagonal /></a></div></div></section>
       </main>
       <footer className="footer container">
-        <div className="footer-top"><p>Thoughtfully designed.<br />Beautifully engineered. From Kerala.</p><a className="footer-phone" href="tel:+917558920076">+91 75589 20076 <Arrow diagonal /></a></div>
-        <div className="footer-bottom"><span>© {new Date().getFullYear()} D Star. Made with intention.</span><span>BHARANANGANAM · PALA · KERALA</span><a href="#top">Back to top ↑</a></div>
-        <div className="footer-brand"><a href="#top" aria-label="D Star IT Solutions home"><Brand /></a></div>
+        <div className="footer-grid">
+          <div className="footer-identity"><a className="brand-link" href="#top" aria-label="D Star IT Solutions home"><Brand footer /></a><p>Thoughtfully designed.<br />Beautifully engineered. From Kerala.</p></div>
+          <nav className="footer-explore" aria-label="Footer navigation"><p className="footer-label">Explore</p><a href="#services">What we do</a><a href="#selected-work">Selected work</a><a href="#process">Our process</a><a href="#engineering">The studio</a></nav>
+          <div className="footer-contact"><p className="footer-label">Let’s make something great</p><a className="footer-contact-phone" href="tel:+917558920076">+91 75589 20076 <Arrow diagonal /></a><a className="footer-whatsapp" href={defaultWhatsApp} target="_blank" rel="noreferrer"><span className="footer-contact-dot" /> Talk to us on WhatsApp <Arrow diagonal /></a><address>Bharananganam, Pala<br />Kerala, India</address></div>
+        </div>
+        <div className="footer-meta"><span>© {new Date().getFullYear()} D Star IT Solutions. Made with intention.</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div>
       </footer>
       <dialog className="brief-dialog" ref={dialogRef} aria-labelledby="brief-title" aria-describedby="brief-description" onClose={() => { if (lastTrigger.current?.getClientRects().length) lastTrigger.current.focus(); else menuRef.current?.focus(); }} onClick={(event) => { if (event.target === dialogRef.current) { const box = dialogRef.current.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeBrief(); } }}>
         <button className="brief-close" type="button" aria-label="Close project brief" onClick={closeBrief}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
