@@ -1,7 +1,10 @@
 import SelectedWork from "./SelectedWork";
+import CinematicHero from "./CinematicHero";
+import ServiceShowcase from "./ServiceShowcase";
+import ExperienceMotion from "./ExperienceMotion";
 import SiteHeader from "./SiteHeader";
 import ProjectBrief from "./ProjectBrief";
-import { Arrow, Star, ServiceIcon, Brand } from "./Brand";
+import { Arrow, Star, Brand } from "./Brand";
 import { defaultWhatsApp } from "./site";
 
 const steps = [
@@ -11,46 +14,19 @@ const steps = [
   ["Deliver", "We test the details, launch with care, and help your product find its feet in the real world.", "Ready for what’s next."],
 ];
 
-function HeroPreview() {
- return <div className="hero-art premium-art" aria-label="A soft sculptural bloom representing ideas coming to life">
- <div className="art-grid" aria-hidden="true" />
- <div className="orbit-label"><span className="status-dot" /> DESIGN MEETS ENGINEERING</div>
- <div className="bloom-sculpture" aria-hidden="true">{Array.from({ length: 8 }, (_, index) => <span className={`bloom-petal petal-${index}`} key={index} />)}<span className="bloom-center" /></div><div className="idea-chip"><span /> A little idea. Endless possibility.</div>
- <div className="art-spec"><span>THOUGHTFULLY SHAPED</span><span>MADE FOR YOU ↗</span></div>
- <div className="floating-note"><span className="note-icon"><ServiceIcon app /></span><div><strong>Made to feel right.</strong><span>In every little detail.</span></div><Arrow diagonal /></div>
- </div>;
-}
 
 export default function DStarExperience() {
   return <ProjectBrief>
     <a href="#main" className="skip-link">Skip to content</a>
     <SiteHeader />
+    <ExperienceMotion />
       <main id="main">
-        <section className="hero container" id="top" aria-labelledby="hero-title">
-          <div className="hero-copy">
-            <p className="eyebrow hero-eyebrow"><span className="status-dot" /> INDEPENDENT DIGITAL STUDIO · KERALA</p>
-            <h1 id="hero-title">Your next<br />big thing.<br /><em>Built different.</em></h1>
-            <p className="hero-description">We turn ambitious ideas into distinctive websites and powerful web apps. Thoughtfully designed. Precisely engineered. Entirely yours.</p>
-            <div className="hero-actions"><button className="button button-gold" type="button" data-open-brief="">Start your project <Arrow diagonal /></button><a className="text-link" href="#services">Discover our expertise <Arrow /></a></div>
-          </div>
-          <HeroPreview />
-          <div className="hero-bottom"><span><i className="location-dot" /> ROOTED IN KERALA. BUILT FOR EVERYWHERE.</span><a href="#services">SCROLL TO EXPLORE <span>↓</span></a></div>
-        </section>
+        <CinematicHero />
         <div className="discipline-strip" aria-label="Our disciplines"><div className="container"><span>Thoughtful design</span><Star /><span>Purposeful engineering</span><Star /><span>Seamless experiences</span><Star /><span>Lasting impact</span><Star /></div></div>
+        <section className="studio-manifesto container" aria-labelledby="manifesto-title"><p className="eyebrow"><span className="section-dash" /> THE WAY WE SEE IT</p><h2 id="manifesto-title">Great ideas deserve<br />an extraordinary<br /><em>digital life.</em></h2><div><span>DESIGN IS HOW IT FEELS.<br />ENGINEERING IS HOW IT WORKS.</span><p>We bring both together. A focused studio for people who care about the details, and believe their next chapter should feel entirely their own.</p></div><Star /></section>
         <section className="services section-space container" id="services" aria-labelledby="services-title">
           <div className="section-heading" data-reveal><div><p className="eyebrow"><span className="section-dash" /> 01 / WHAT WE DO</p><h2 id="services-title">Digital experiences.<br /><span className="muted">Real-world impact.</span></h2></div><p className="section-intro">We keep our focus sharp, so every detail gets the attention it deserves. From your first impression to your everyday operations.</p></div>
-          <div className="service-grid">
-            <article className="service-card" data-reveal>
-              <div className="service-card-top"><span className="service-icon"><ServiceIcon /></span><span className="card-number">01 — WEBSITES</span></div><h3>A presence that<br />feels like <em>you.</em></h3><p>Beautiful, fast, intuitive websites that tell your story and turn a first visit into a lasting connection.</p><div className="service-tags"><span>Business websites</span><span>Landing pages</span><span>Portfolios</span></div>
-              <div className="website-preview" aria-hidden="true"><div className="preview-browser"><span><i /><i /><i /></span><small>your next chapter</small><span>↗</span></div><div className="preview-website"><div className="preview-site-nav"><strong>yourbrand<span>®</span></strong><span>About &nbsp; Work &nbsp; Contact</span></div><div className="preview-site-content"><small>EXCEPTIONAL BY DESIGN</small><strong>Make an<br /><em>impression.</em></strong><span className="preview-site-button">Discover something different <span>↗</span></span></div><Star className="preview-site-star" /></div></div>
-              <button className="service-link" type="button" data-open-brief="Website"><span>Let’s build your website</span><span className="circle-arrow"><Arrow diagonal /></span></button>
-            </article>
-            <article className="service-card app-card" data-reveal>
-              <div className="service-card-top"><span className="service-icon"><ServiceIcon app /></span><span className="card-number">02 — WEB APPLICATIONS</span></div><h3>Less busywork.<br />More <em>possibility.</em></h3><p>Custom web applications that simplify the complex and work the way your business actually works.</p><div className="service-tags"><span>Dashboards</span><span>Booking systems</span><span>Custom platforms</span></div>
-              <div className="app-preview" aria-hidden="true"><div className="app-sidebar"><span className="app-logo"><Star /> workspace</span><span className="app-sidebar-active">◫ &nbsp; Overview</span><span>▤ &nbsp; Projects</span><span>◷ &nbsp; Schedule</span><span>⚙ &nbsp; Settings</span><small>BUILT AROUND YOU</small></div><div className="app-window"><div className="app-window-top"><strong>Everything, in flow.</strong><span className="app-avatar">Y</span></div><small>A little clarity. A lot more possibility.</small><div className="app-metrics"><div><span>Plan</span><strong>Stay focused <i>↗</i></strong></div><div><span>Progress</span><strong>Keep moving <i>↗</i></strong></div></div><div className="app-tasks"><span>YOUR WORK, CONNECTED <i>•••</i></span><div><b className="task-check">✓</b><span>One clear overview</span><small>Complete</small></div><div><b className="task-check">✓</b><span>A smoother workflow</span><small>Complete</small></div><div><b className="task-current" /><span>Your next big thing</span><small className="task-progress">In progress</small></div></div></div></div>
-              <button className="service-link" type="button" data-open-brief="Web application"><span>Let’s simplify your workflow</span><span className="circle-arrow"><Arrow diagonal /></span></button>
-            </article>
-          </div><p className="services-note"><Star /> From the first sketch to the final launch. One team, every detail.</p>
+          <ServiceShowcase /><p className="services-note"><Star /> From the first sketch to the final launch. One team, every detail.</p>
         </section>
         <SelectedWork />
         <section className="studio-section" id="engineering" aria-labelledby="studio-title"><div className="container studio-grid">

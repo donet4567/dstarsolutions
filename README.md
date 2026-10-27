@@ -21,7 +21,7 @@ npm start
 
 Use Node 24.22.0 (pinned in `.nvmrc` and `.node-version`) locally and in hosting settings. On Windows, select that version with your Node version manager before running npm.
 
-The site uses Next.js 16.4, React 19.3 and the default Turbopack production builder. Static page sections are Server Components; the navigation, enquiry form and project gallery are small client boundaries. Project artwork loads only after interaction. Motion uses native CSS and IntersectionObserver.
+The site uses Next.js 16.4, React 19.3 and the default Turbopack production builder. Static page sections are Server Components; the navigation, enquiry form and project gallery are small client boundaries. Project artwork loads only after interaction. The cinematic hero lazy-loads a locally sculpted Three.js bloom through React Three Fiber; all materials and environment lighting are generated locally, with no external models or HDR downloads. Scroll progress is sampled once per animation frame without React re-renders. Rendering pauses offscreen, on hidden tabs, and through the visible pause control. Reduced-motion preferences disable the pinned sequence and autonomous motion; the server-rendered CSS bloom remains available without JavaScript or WebGL. Service previews include desktop/mobile switching and a small interactive task dashboard.
 
 ## TypeScript compatibility
 
@@ -38,7 +38,7 @@ npm run test:e2e
 npm audit --omit=dev
 ```
 
-The browser suite runs against a production server on port 3100 in desktop and mobile Chromium. It covers the gallery and keyboard controls, enquiry preparation, mobile navigation, refresh-to-top behavior, server-rendered content, SEO routes and performance reporting. It never sends a WhatsApp message.
+The browser suite runs against a production server on port 3100 in desktop and mobile Chromium. It covers the 3D scene, pause controls, reduced motion, WebGL fallback, service demos, 320–1440px layouts, gallery and keyboard controls, enquiry preparation, mobile navigation, refresh-to-top behavior, server-rendered content, SEO routes and performance reporting. It never sends a WhatsApp message.
 
 GitHub Actions runs these checks on pushes to `main` and pull requests. Dependabot opens weekly npm update PRs and monthly GitHub Actions update PRs, grouping framework and React packages together.
 
