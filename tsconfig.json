@@ -31,8 +31,10 @@
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "*.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

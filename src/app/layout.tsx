@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import WebVitals from "@/components/WebVitals";
+import { SITE_NAME, SITE_URL } from "@/components/site";
 import "./globals.css";
 
 // Run before the page is parsed so a refresh cannot restore a lower section.
@@ -18,29 +20,55 @@ const resetScrollOnReload = `(() => {
 })();`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.dstarsolutions.in"),
-  title: "D Star | Website & Web App Development",
+  metadataBase: new URL(SITE_URL),
+  title: "D Star IT Solutions | Websites & Web Apps in Kerala",
   description:
-    "D Star is a focused digital product studio in Pala, Kerala, designing modern websites and custom web applications for real business use.",
+    "D Star IT Solutions in Bharananganam, Pala, Kerala designs and develops modern websites and custom web applications for your business.",
+  applicationName: SITE_NAME,
   keywords: [
     "website development Kerala",
     "web app development Kerala",
     "website development Pala",
     "custom web applications",
-    "D Star",
+    SITE_NAME,
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "D Star | Website & Web App Development",
+    title: "D Star IT Solutions | Websites & Web Apps in Kerala",
     description: "Focused website and web app design, engineering and launch.",
     type: "website",
     url: "/",
-    siteName: "D Star",
-    images: [{ url: "/dstar-mark-v2.png", width: 420, height: 353, alt: "D Star" }],
+    siteName: SITE_NAME,
+    locale: "en_IN",
+    images: [{ url: "/dstar-mark-v2.png", width: 854, height: 718, alt: SITE_NAME }],
+  },
+  twitter: {
+    card: "summary",
+    title: "D Star IT Solutions | Websites & Web Apps in Kerala",
+    description: "Thoughtfully designed websites and custom web apps. Based in Bharananganam, Pala, Kerala.",
+    images: ["/dstar-mark-v2.png"],
   },
   icons: {
     icon: "/dstar-mark-v2.png",
     apple: "/dstar-mark-v2.png",
+  },
+};
+
+const business = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${SITE_URL}/#business`,
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/dstar-mark-v2.png`,
+  image: `${SITE_URL}/dstar-mark-v2.png`,
+  telephone: "+917558920076",
+  description: "Website design, development and custom web applications.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bharananganam, Pala",
+    addressRegion: "Kerala",
+    addressCountry: "IN",
   },
 };
 
@@ -56,7 +84,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
-      <body>{children}</body>
+      <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, "\\u003c") }} />
+        {children}
+        <WebVitals />
+      </body>
     </html>
   );
 }

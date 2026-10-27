@@ -28,3 +28,8 @@ Thumbs.db
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local snapshots and browser test artifacts
+/.dstar-backups/
+/playwright-report/
+/test-results/
