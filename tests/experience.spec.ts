@@ -16,7 +16,7 @@ test("service demos switch viewport and update dashboard state", async ({ page }
   await expect(page.locator('[aria-live="polite"]').filter({ hasText: "2 / 3" })).toBeVisible();
 });
 
-test("bloom loads, can be paused and keeps a readable composition", async ({ page, isMobile }, testInfo) => {
+test("bloom loads, can be paused and keeps a readable composition", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.locator("#top")).toHaveAttribute("data-ready", "true", { timeout: 45_000 });
   await expect(page.locator("#top canvas")).toBeVisible();
@@ -25,19 +25,9 @@ test("bloom loads, can be paused and keeps a readable composition", async ({ pag
   await expect(page.getByRole("button", { name: "Resume animation", exact: true })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("button", { name: "Rotate bloom right" })).toBeDisabled();
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-  if (isMobile) {
-    await expect(page.getByTestId("hero-interface")).toBeHidden();
-  } else {
-    const description = await page.getByTestId("hero-description").boundingBox();
-    const interfacePanel = await page.getByTestId("hero-interface").boundingBox();
-    expect(description).not.toBeNull();
-    expect(interfacePanel).not.toBeNull();
-    const overlaps = description!.x < interfacePanel!.x + interfacePanel!.width
-      && description!.x + description!.width > interfacePanel!.x
-      && description!.y < interfacePanel!.y + interfacePanel!.height
-      && description!.y + description!.height > interfacePanel!.y;
-    expect(overlaps).toBeFalsy();
-  }
+  await expect(page.locator("#top")).not.toContainText("Everything, in flow.");
+  await expect(page.locator("#top")).not.toContainText("Make an impression.");
+  await expect(page.getByTestId("hero-interface")).toHaveCount(0);
   await page.screenshot({ path: testInfo.outputPath("hero.png") });
   await page.getByRole("button", { name: "Resume animation", exact: true }).click();
   await expect(page.getByRole("button", { name: "Rotate bloom right" })).toBeEnabled();

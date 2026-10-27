@@ -3,6 +3,7 @@ import WebVitals from "@/components/WebVitals";
 import { SITE_NAME, SITE_URL } from "@/components/site";
 import "./globals.css";
 import "./cinematic.css";
+import "./depth.css";
 
 // Run before the page is parsed so a refresh cannot restore a lower section.
 // Normal section links and back/forward navigation keep their usual behavior.

@@ -41,8 +41,8 @@ function ProjectArtwork({ index, sizes, onLoad, onError }: {
   const sourceSet = (format: string) => [640, 960, 1440]
     .map((width) => `/selected-work/${project.slug}-${width}.${format} ${width}w`).join(", ");
 
-  // The pack already supplies optimized, correctly sized encodings. Preserve them
-  // with picture sources; mount only after an explicit preview interaction.
+  // Preserve the supplied optimized encodings. Gallery art mounts near the
+  // viewport; dialog and hover layers mount after a preview interaction.
   return <picture>
     <source type="image/avif" srcSet={sourceSet("avif")} sizes={sizes} />
     <source type="image/webp" srcSet={sourceSet("webp")} sizes={sizes} />
@@ -64,6 +64,8 @@ export default function SelectedWork() {
   const [frame, setFrame] = useState<Frame | null>(null);
   const [modalProject, setModalProject] = useState<number | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const [artVisible, setArtVisible] = useState(false);
+  const section = useRef<HTMLElement>(null);
   const rows = useRef<(HTMLButtonElement | null)[]>([]);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
@@ -74,6 +76,16 @@ export default function SelectedWork() {
   const suppressFocus = useRef(false);
   const scrollPosition = useRef({ x: 0, y: 0 });
 
+  useEffect(() => {
+    const element = section.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setArtVisible(true); observer.disconnect(); }
+    }, { rootMargin: "150px" });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
   const dismissPreview = useCallback(() => {
     hovered.current = null;
     focused.current = null;
@@ -82,6 +94,7 @@ export default function SelectedWork() {
   }, []);
 
   const showPreview = (index: number) => {
+    if (artVisible) return;
     const row = rows.current[index];
     if (!row || modalProject !== null || dialog.current?.open || document.querySelector("dialog[open]")) return;
     if (!window.matchMedia("(min-width: 761px)").matches) return;
@@ -160,15 +173,15 @@ export default function SelectedWork() {
   };
 
   return <>
-    <section className={`${styles.section} container`} id="selected-work" aria-labelledby="selected-work-title">
+    <section ref={section} className={`${styles.section} container`} id="selected-work" aria-labelledby="selected-work-title" data-depth-section="">
       <div className={styles.heading}>
-        <div><p className="eyebrow"><span className="section-dash" /> A FEW THINGS WE’VE MADE</p><h2 id="selected-work-title">Selected work.</h2></div>
+        <div><p className="eyebrow"><span className="section-dash" /> 03 / SELECTED WORK</p><h2 id="selected-work-title">Selected work.</h2></div>
         <p className={styles.intro}>Distinct ideas.<br />Thoughtfully brought to life.</p>
       </div>
       <p className={styles.srOnly} id="selected-work-help">Open a project to view its illustrative concept artwork. Screen content and figures are illustrative.</p>
       <ol className={styles.list}>
         {projects.map((project, index) => <li key={project.slug}>
-          <button className={styles.row} type="button" ref={(node) => { rows.current[index] = node; }}
+          <button className={styles.row} type="button" data-depth-card="" ref={(node) => { rows.current[index] = node; }}
             aria-label={`Preview ${project.name}`} aria-describedby="selected-work-help" aria-haspopup="dialog"
             data-active={active === index || undefined}
             onPointerEnter={(event) => {
@@ -190,6 +203,7 @@ export default function SelectedWork() {
               if (hovered.current !== null) showPreview(hovered.current); else dismissPreview();
             }}
             onClick={(event) => openProject(index, event.currentTarget)}>
+            <span className={styles.thumbnail} aria-hidden="true">{artVisible && <ProjectArtwork index={index} sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1100px) 42vw, 30vw" />}<span className={styles.viewProject}>EXPLORE PROJECT <PreviewArrow /></span></span>
             <span className={styles.number} aria-hidden="true">0{index + 1}</span>
             <span className={styles.name}>{project.name}</span>
             <span className={styles.category}>{project.category}</span>

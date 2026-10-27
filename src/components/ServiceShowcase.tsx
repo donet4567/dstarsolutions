@@ -10,7 +10,7 @@ export default function ServiceShowcase() {
   const [mobile, setMobile] = useState(false);
   const [completed, setCompleted] = useState([true, true, false]);
   return <div className={styles.showcase}>
-    <article className={styles.service} data-reveal>
+    <article className={styles.service} data-reveal data-depth-card="">
       <div className={styles.copy}><span className={styles.index}>01 / WEBSITES</span><h3>A presence that<br />feels like <em>you.</em></h3><p>Distinctive websites with a point of view. Designed to make people feel something, and built to turn that feeling into a connection.</p><div className={styles.tags}><span>Business websites</span><span>Landing pages</span><span>Portfolios</span></div><button className={styles.link} type="button" data-open-brief="Website">Let’s build your website <Arrow diagonal /></button></div>
       <div className={styles.websiteStage}>
         <div className={styles.demoToolbar}><span>ONE IDEA. EVERY SCREEN.</span><div role="group" aria-label="Website preview size"><button type="button" aria-pressed={!mobile} onClick={() => setMobile(false)}>Desktop</button><button type="button" aria-pressed={mobile} onClick={() => setMobile(true)}>Mobile</button></div></div>
@@ -23,7 +23,7 @@ export default function ServiceShowcase() {
         <div className={styles.stageCaption}><span className={styles.dot} /><span>A little personality. Everywhere you go.</span><span>↗</span></div>
       </div>
     </article>
-    <article className={`${styles.service} ${styles.application}`} data-reveal>
+    <article className={`${styles.service} ${styles.application}`} data-reveal data-depth-card="">
       <div className={styles.copy}><span className={styles.index}>02 / WEB APPLICATIONS</span><h3>Less busywork.<br />More <em>possibility.</em></h3><p>Bring your people, processes, and possibilities together. Custom applications that make the complicated feel effortless.</p><div className={styles.tags}><span>Dashboards</span><span>Booking systems</span><span>Custom platforms</span></div><button className={styles.link} type="button" data-open-brief="Web application">Let’s simplify your workflow <Arrow diagonal /></button></div>
       <div className={styles.appStage}>
         <div className={styles.demoToolbar}><span>YOUR WORK. BEAUTIFULLY CONNECTED.</span><span className={styles.tryHint}>Try completing a task ↘</span></div>

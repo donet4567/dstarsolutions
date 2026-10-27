@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { Component, useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import type { BloomInput } from "./BloomCanvas";
-import { Arrow, Star } from "./Brand";
+import { Arrow } from "./Brand";
 import styles from "./CinematicHero.module.css";
 
 const BloomCanvas = dynamic(() => import("./BloomCanvas"), { ssr: false });
@@ -78,7 +78,7 @@ export default function CinematicHero() {
         <h1 id="hero-title">Your next big thing.<br /><em>Built different.</em></h1>
         <span className={styles.titleNote}>A LITTLE IDEA. ENDLESS POSSIBILITY.</span>
       </div>
-      <div className={styles.sculpture} role="img" aria-label="An interactive pastel bloom with curved, pearl-finished petals"
+      <div className={styles.sculpture} data-testid="hero-sculpture" role="img" aria-label="An interactive pastel bloom with curved, pearl-finished petals"
         onPointerDown={(event) => {
           if (event.pointerType !== "mouse" || event.button !== 0 || reduced || paused) return;
           drag.current = event.clientX;
@@ -102,14 +102,7 @@ export default function CinematicHero() {
       </div>
       <div className={styles.orbitLabel} aria-hidden="true"><span>01 / THE SPARK</span><span>THOUGHTFULLY SHAPED ↗</span></div>
       <div className={styles.chapter} aria-hidden="true"><span>02 / THE POSSIBILITIES</span><p>From a spark.<br />To something <em>real.</em></p></div>
-      <div className={styles.interface} data-testid="hero-interface" aria-hidden="true">
-        <div className={styles.browserBar}><span>● ● ●</span><span>your-next-chapter.design</span><Arrow diagonal /></div>
-        <div className={styles.interfaceNav}><strong>yourbrand®</strong><span>THOUGHTFULLY DIFFERENT ↗</span></div>
-        <div className={styles.interfaceBody}><small>AN IDEA, BROUGHT TO LIFE.</small><strong>Make an<br /><em>impression.</em></strong><span className={styles.demoButton}>Explore the possibilities ↗</span><div className={styles.miniBloom}><Star /></div></div>
-        <div className={styles.interfaceFooter}><span>DESIGNED AROUND YOU</span><span>01 — ∞</span></div>
-      </div>
-      <div className={styles.floatingCard} aria-hidden="true"><span className={styles.cardIcon}><Star /></span><div><strong>Everything, in flow.</strong><span>Your idea. Beautifully connected.</span></div><span>↗</span></div>
-      <div className={styles.bottomCopy}><p data-testid="hero-description">We turn ambitious ideas into distinctive websites and powerful web apps. Thoughtfully designed. Entirely yours.</p><button className={styles.cta} type="button" data-open-brief="">Start your project <Arrow diagonal /></button></div>
+      <div className={styles.bottomCopy}><p data-testid="hero-description">We turn ambitious ideas into distinctive websites and powerful web apps. Thoughtfully designed. Entirely yours.</p><button className={styles.cta} data-magnetic="" type="button" data-open-brief="">Start your project <Arrow diagonal /></button></div>
       <div className={styles.controls} role="group" aria-label="Sculpture controls">
         <span>EXPLORE THE FORM</span>
         <button type="button" aria-label="Rotate bloom left" disabled={!ready || paused || reduced} onClick={() => { input.current.rotation -= Math.PI / 4; }}>←</button>
