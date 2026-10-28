@@ -10,3 +10,12 @@
 @media(max-width:1000px) { .copy { padding:30px; }.websiteStage,.appStage { padding:24px; }.sidebar { padding:18px 10px; }.workspace { padding:16px; }.demoToolbar>span { font-size:6px; letter-spacing:.6px; }.appStage .tryHint { font-size:10px; }.task { gap:5px; }.task small { font-size:5px; }.sidebar>span { font-size:7px; } }
 @media(max-width:760px) { .showcase { gap:24px; }.service,.application { grid-template-columns:1fr; border-radius:4px 25px 4px 4px; }.copy,.application .copy { grid-column:auto; grid-row:auto; padding:30px 26px; }.index { font-size:9px; margin-bottom:24px; }.copy h3 { font-size:39px; letter-spacing:-1.8px; }.copy>p { max-width:none; font-size:14px; margin-top:18px; }.tags { margin-top:20px; }.tags span { font-size:8px; }.link { padding-top:26px; font-size:12px; }.websiteStage,.appStage { grid-column:auto; grid-row:auto; padding:24px 18px; min-height:400px; gap:24px; }.websiteContent>strong { font-size:44px; }.websiteNav { padding:20px; }.websiteNav>span { font-size:5px; }.websiteContent { padding:16px 20px 26px; }.stageCaption { font-size:8px; }.dashboard { min-height:305px; }.workspace { padding:15px 12px; }.workspace h4 { font-size:18px; }.metrics>div { padding:10px 7px; }.metrics strong { font-size:10px; }.task>span { font-size:7px; }.sidebar { width:26%; padding:20px 9px; }.sidebar>span { font-size:7px; }.sidebar strong { font-size:19px; gap:4px; }.sidebar small { font-size:5px; }.appStage .tryHint { font-size:10px; }.demoToolbar button { padding:7px 10px; font-size:8px; } }
 @media(prefers-reduced-motion:reduce) { .website,.dashboard { transform:none; transition:none; }.website[data-mobile="true"] { transform:none; }.progressTrack>span { transition:none; } }
+
+.index,.tags span,.demoToolbar>span,.demoToolbar button,.browser,.websiteNav>span,
+.websiteContent>small,.websiteBottom,.stageCaption,.application .index,
+.appStage .demoToolbar>span,.appStage .tryHint,.sidebar,.sidebar>span:nth-child(2),
+.workspaceHeader,.avatar,.workspace>p,.metrics span,.metrics strong,.metrics i,
+.tasks>span,.task>span,.task small,.appStage .stageCaption { color:var(--readable-on-tint); }
+.application .link { color:#4f7181; }
+.application .copy h3 em { color:#527b89; }
+.pill { background:#80566f; }

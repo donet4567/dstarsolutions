@@ -2,11 +2,20 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import type { MutableRefObject } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Lightformer, RoundedBox } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Environment } from "@react-three/drei/core/Environment";
+import { Lightformer } from "@react-three/drei/core/Lightformer";
+import { RoundedBox } from "@react-three/drei/core/RoundedBox";
+import SceneRenderer from "./SceneRenderer";
 import * as THREE from "three";
 
-export type DimensionInput = { progress: number };
+// Stable JSX prevents rebuilding the environment when controls or chapters change.
+const environment = <Environment resolution={128} frames={1}>
+      <Lightformer position={[-3, 4, 5]} scale={[5, 5, 1]} intensity={3} />
+      <Lightformer position={[5, 1, 2]} scale={[2, 6, 1]} intensity={2} color="#e4d6f5" />
+    </Environment>;
+
+export type DimensionInput = { progress: number; invalidate?: () => void };
 
 function screenTexture(application = false, phone = false) {
   const canvas = document.createElement("canvas");
@@ -76,7 +85,7 @@ function screenTexture(application = false, phone = false) {
   return texture;
 }
 
-function DigitalForm({ input, animate, chapter }: {
+function DigitalForm({ input: inputRef, animate, chapter }: {
   input: MutableRefObject<DimensionInput>;
   animate: boolean;
   chapter: number;
@@ -86,12 +95,20 @@ function DigitalForm({ input, animate, chapter }: {
   const idea = useRef<THREE.Group>(null);
   const application = useRef<THREE.MeshBasicMaterial>(null);
   const progress = useRef(0);
+  const invalidate = useThree((state) => state.invalidate);
+  useEffect(() => {
+    if (!animate) return;
+    inputRef.current.invalidate = invalidate;
+    invalidate();
+    const value = inputRef.current;
+    return () => { delete value.invalidate; };
+  }, [animate, inputRef, invalidate]);
   const textures = useMemo(() => [screenTexture(), screenTexture(true), screenTexture(true, true)], []);
   useEffect(() => () => textures.forEach((texture) => texture.dispose()), [textures]);
 
   useFrame(({ camera }, rawDelta) => {
     const delta = Math.min(rawDelta, .06);
-    progress.current = animate ? THREE.MathUtils.damp(progress.current, input.current.progress, 5, delta) : input.current.progress;
+    progress.current = animate ? THREE.MathUtils.damp(progress.current, inputRef.current.progress, 5, delta) : inputRef.current.progress;
     const p = progress.current;
     const emergence = THREE.MathUtils.smoothstep(p, .1, .53);
     if (browser.current) {
@@ -113,6 +130,9 @@ function DigitalForm({ input, animate, chapter }: {
     if (application.current) application.current.opacity = THREE.MathUtils.smoothstep(p, .58, .82);
     camera.position.set(3.1 - p * 2.4, 2.3 - p * .9, 10.5 - Math.sin(p * Math.PI) * .9);
     camera.lookAt(.2, -.1, 0);
+    // This scene moves only with scroll input. Keep damping at the same speed,
+    // then stop requesting identical frames once it has settled.
+    if (animate && Math.abs(p - inputRef.current.progress) > .00001) invalidate();
   });
 
   return <>
@@ -147,17 +167,15 @@ export default function DimensionCanvas({ input, animate, chapter, onReady }: {
   chapter: number;
   onReady: () => void;
 }) {
-  return <Canvas aria-hidden="true" frameloop={animate ? "always" : "demand"}
+  return <Canvas aria-hidden="true" frameloop="demand"
     camera={{ position: [3.1, 2.3, 10.5], fov: 37 }} dpr={[1, 1.5]}
     shadows={{ type: THREE.PCFShadowMap }} gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
-    onCreated={onReady}>
+    >
     <ambientLight intensity={1.5} />
     <directionalLight position={[-4, 7, 6]} intensity={2.7} color="#fff7ef" castShadow shadow-mapSize={[1024, 1024]} shadow-radius={4} shadow-bias={-.001} />
     <directionalLight position={[5, 1, 4]} intensity={1.8} color="#d9ddff" />
-    <Environment resolution={128} frames={1}>
-      <Lightformer position={[-3, 4, 5]} scale={[5, 5, 1]} intensity={3} />
-      <Lightformer position={[5, 1, 2]} scale={[2, 6, 1]} intensity={2} color="#e4d6f5" />
-    </Environment>
+    {environment}
     <DigitalForm input={input} animate={animate} chapter={chapter} />
+    <SceneRenderer onReady={onReady} />
   </Canvas>;
 }

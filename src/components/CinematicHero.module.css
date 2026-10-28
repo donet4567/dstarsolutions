@@ -26,3 +26,5 @@
   .controls { position:relative; left:auto; right:auto; bottom:auto; margin-top:25px; }.controls>span { font-size:7px; }.controls button { width:32px; height:32px; }.bottomLine { left:24px; right:24px; bottom:22px; font-size:6px; letter-spacing:.8px; gap:14px; padding-top:18px; }.bottomLine>span { max-width:150px; line-height:1.6; }.bottomLine a { gap:9px; }.chapter,.progress { display:none; }
 }
 @media(prefers-reduced-motion:reduce) { .journey { height:auto; }.stage { position:relative; }.opening,.sculpture { transform:none; }.chapter,.progress { display:none; }.opening { opacity:1; }.cta:hover { transform:none; } }
+
+.controls>span,.bottomLine { color:var(--readable-plum); }

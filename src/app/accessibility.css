@@ -1,0 +1,41 @@
+/* Interface contrast corrections. The artwork and page surfaces retain the
+   original palette; small text needs at least 4.5:1 against its surface. */
+:root { --readable-plum:#6b5879; --readable-on-tint:#65516f; --readable-green:#4e665b; }
+.brand-wordmark>span,
+.discipline-strip span,
+.section-heading .eyebrow,
+.section-heading .section-intro,
+.services-note,
+.process-card-label,
+.process-stage .process-step-top>span,
+.process-stage .process-step>p,
+.process-stage .process-step>small,
+.footer-identity>p,
+.footer-label,
+.footer-explore>a,
+.footer-whatsapp,
+.footer-contact address,
+.footer-meta,
+.footer-meta>a { color:var(--readable-plum); }
+#selected-work .eyebrow { color:var(--readable-plum); }
+.studio-copy .eyebrow,
+.studio-copy>p:not(.eyebrow),
+.principles article p,
+.principle-number,
+.stack-block>p,
+.stack-block>div>span,
+.stack-block b,
+.studio-copy .text-link { color:var(--readable-green); }
+.studio-copy h2 em { color:#607f71; }
+.contact-panel-top .eyebrow,
+.contact-content p,
+.contact-panel-bottom,
+.contact-panel-bottom a { color:var(--readable-on-tint); }
+.contact-content h2 em { color:#80618f; }
+.services .muted { color:#886b97; }
+.brief-form>.eyebrow,
+.type-options input:checked+span { color:var(--readable-plum); }
+.brief-input textarea::placeholder,
+.brief-footnote { color:#58664b; }
+.desktop-nav a:hover,.desktop-nav a:focus-visible,
+.footer-explore>a:hover,.footer-meta>a:hover { color:var(--readable-plum); }

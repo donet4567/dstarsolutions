@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import Image from "next/image";
+// Picture supplies the existing pre-encoded AVIF/WebP responsive sources.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "./SelectedWork.module.css";
@@ -46,8 +46,8 @@ function ProjectArtwork({ index, sizes, onLoad, onError }: {
   return <picture>
     <source type="image/avif" srcSet={sourceSet("avif")} sizes={sizes} />
     <source type="image/webp" srcSet={sourceSet("webp")} sizes={sizes} />
-    <Image src={`/selected-work/${project.slug}-960.webp`} alt={project.alt}
-      width={960} height={540} unoptimized loading="eager" decoding="async"
+    <img src={`/selected-work/${project.slug}-960.webp`} alt={project.alt}
+      width={960} height={540} loading="eager" decoding="async"
       onLoad={onLoad} onError={onError} />
   </picture>;
 }
@@ -182,7 +182,7 @@ export default function SelectedWork() {
       <ol className={styles.list}>
         {projects.map((project, index) => <li key={project.slug}>
           <button className={styles.row} type="button" data-depth-card="" ref={(node) => { rows.current[index] = node; }}
-            aria-label={`Preview ${project.name}`} aria-describedby="selected-work-help" aria-haspopup="dialog"
+            aria-describedby="selected-work-help" aria-haspopup="dialog"
             data-active={active === index || undefined}
             onPointerEnter={(event) => {
               if (event.pointerType !== "mouse" || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;

@@ -40,6 +40,6 @@ test("project gallery presents all three previews in document order", async ({ p
   await expect(images.nth(0)).toHaveAttribute("alt", /Mecardee Rental Management/);
   await expect(images.nth(1)).toHaveAttribute("alt", /Mecardee Manager/);
   await expect(images.nth(2)).toHaveAttribute("alt", /HireVify/);
-  await gallery.getByRole("button", { name: "Preview HireVify", exact: true }).click();
+  await gallery.getByRole("button", { name: /HireVify Recruitment/ }).click();
   await expect(page.getByRole("dialog").getByRole("heading", { name: "HireVify", exact: true })).toBeVisible();
 });

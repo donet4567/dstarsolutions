@@ -20,11 +20,11 @@ export default function ProjectBrief({ children }: { children: ReactNode }) {
         }
       });
     }, { threshold: 0.08 });
+    // These reveal targets are all below the hero. Observing them avoids
+    // forcing layout inside sections the browser has deferred offscreen.
     document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((element) => {
-      if (element.getBoundingClientRect().top > window.innerHeight) {
         element.classList.add("will-reveal");
         observer.observe(element);
-      }
     });
     return () => observer.disconnect();
   }, []);

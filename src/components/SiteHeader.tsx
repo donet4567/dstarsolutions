@@ -28,7 +28,7 @@ export default function SiteHeader() {
   return (
       <header className={`topbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="topbar-inner">
-          <a className="brand-link" href="#top" aria-label="D Star IT Solutions home" onClick={() => setMenuOpen(false)}><Brand /></a>
+          <a className="brand-link" href="#top" title="Home" onClick={() => setMenuOpen(false)}><Brand /></a>
           <nav className="desktop-nav" aria-label="Main navigation"><a href="#services">What we do</a><a href="#selected-work">Selected work</a><a href="#engineering">The studio</a><a href="#process">Our process</a></nav>
           <div className="topbar-end"><button className="nav-cta" type="button" data-open-brief="" onClick={() => setMenuOpen(false)}>Let’s talk <Arrow diagonal /></button><button ref={menuRef} className={`menu-trigger ${menuOpen ? "is-open" : ""}`} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button></div>
         </div>

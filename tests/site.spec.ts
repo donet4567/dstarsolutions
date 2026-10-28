@@ -38,7 +38,7 @@ test("project artwork loads on interaction and gallery supports keyboard navigat
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   expect(artwork).toHaveLength(0);
-  const trigger = page.getByRole("button", { name: "Preview Mecardee Rental Management", exact: true });
+  const trigger = page.getByRole("button", { name: /Mecardee Rental Management Automotive/ });
   await trigger.click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();

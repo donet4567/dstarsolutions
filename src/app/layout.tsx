@@ -4,10 +4,13 @@ import { SITE_NAME, SITE_URL } from "@/components/site";
 import "./globals.css";
 import "./cinematic.css";
 import "./depth.css";
+import "./accessibility.css";
+import "./rendering.css";
 
 // Run before the page is parsed so a refresh cannot restore a lower section.
 // Normal section links and back/forward navigation keep their usual behavior.
-const resetScrollOnReload = `(() => {
+const resetScrollOnReload = `document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full';
+(() => {
   if (performance.getEntriesByType('navigation')[0]?.type !== 'reload') return;
   const previousRestoration = history.scrollRestoration;
   history.scrollRestoration = 'manual';
@@ -84,7 +87,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, "\\u003c") }} />

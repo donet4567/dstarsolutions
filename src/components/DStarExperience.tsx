@@ -32,7 +32,7 @@ export default function DStarExperience() {
       </main>
       <footer className="footer container">
         <div className="footer-grid">
-          <div className="footer-identity"><a className="brand-link" href="#top" aria-label="D Star IT Solutions home"><Brand footer /></a><p>Thoughtfully designed.<br />Beautifully engineered. From Kerala.</p></div>
+          <div className="footer-identity"><a className="brand-link" href="#top" title="Home"><Brand footer /></a><p>Thoughtfully designed.<br />Beautifully engineered. From Kerala.</p></div>
           <nav className="footer-explore" aria-label="Footer navigation"><p className="footer-label">Explore</p><a href="#services">What we do</a><a href="#selected-work">Selected work</a><a href="#engineering">The studio</a><a href="#process">Our process</a></nav>
           <div className="footer-contact"><p className="footer-label">Let’s make something great</p><a className="footer-contact-phone" href="tel:+917558920076">+91 75589 20076 <Arrow diagonal /></a><a className="footer-whatsapp" href={defaultWhatsApp} target="_blank" rel="noreferrer"><span className="footer-contact-dot" /> Talk to us on WhatsApp <Arrow diagonal /></a><address>Bharananganam, Pala<br />Kerala, India</address></div>
         </div>

@@ -94,3 +94,7 @@
 @media(min-width:761px) and (max-width:1000px) { .list { gap:15px; }.row { padding-inline:13px; grid-template-columns:18px minmax(0,1fr) 28px; gap:10px 5px; }.thumbnail { margin-inline:-13px; width:calc(100% + 26px); }.name { font-size:20px; }.arrow { width:26px; height:26px; }.category { font-size:8px; } }
 @media(max-width:760px) { .list { grid-template-columns:1fr; gap:22px; }.heading h2 { font-size:42px; }.row { padding-bottom:24px; grid-template-columns:25px minmax(0,1fr) 34px; }.thumbnail { aspect-ratio:16/10; }.name { font-size:27px; }.number { font-size:14px; }.category { font-size:11px; }.viewProject { font-size:7px; } }
 @media(prefers-reduced-motion:reduce) { .thumbnail img { transition:none; } }
+
+.intro,.number,.category,.viewProject,.dialogHeader :global(.eyebrow),.dialogCopy p.dialogCategory,.close,.dialogNavigation button { color:var(--readable-plum); }
+.row[data-active="true"] .name,.row:focus-visible .name { color:var(--readable-plum); }
+@media(hover:hover) { .row:hover .name { color:var(--readable-plum); } }

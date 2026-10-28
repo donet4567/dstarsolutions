@@ -61,6 +61,8 @@ test("layout stays inside small phones and desktop viewports", async ({ page }) 
 
 test("a missing WebGL renderer retains the illustrated hero and enquiry", async ({ page }) => {
   await page.addInitScript(() => {
+    // Exercise the main-thread compatibility renderer as well as failed WebGL.
+    Object.defineProperty(HTMLCanvasElement.prototype, "transferControlToOffscreen", { value: undefined, configurable: true });
     const original = HTMLCanvasElement.prototype.getContext;
     HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, type: string, ...args: unknown[]) {
       if (type === "webgl" || type === "webgl2" || type === "experimental-webgl") return null;

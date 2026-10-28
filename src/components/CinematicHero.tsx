@@ -1,13 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Component, useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import type { BloomInput } from "./BloomCanvas";
 import { Arrow } from "./Brand";
 import styles from "./CinematicHero.module.css";
-
-const BloomCanvas = dynamic(() => import("./BloomCanvas"), { ssr: false });
+import BloomCanvas from "./BloomScene";
 
 class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
@@ -24,6 +22,7 @@ function BloomFallback() {
 
 export default function CinematicHero() {
   const section = useRef<HTMLElement>(null);
+  const sculpture = useRef<HTMLDivElement>(null);
   const input = useRef<BloomInput>({ progress: 0, pointerX: 0, pointerY: 0, rotation: 0 });
   const drag = useRef<number | null>(null);
   const [available, setAvailable] = useState(false);
@@ -42,17 +41,24 @@ export default function CinematicHero() {
     updateMotion();
     motion.addEventListener("change", updateMotion);
     const observer = new IntersectionObserver(([entry]) => {
-      setVisible(entry.isIntersecting && !document.hidden);
       if (entry.isIntersecting) setAvailable(true);
     }, { rootMargin: "120px" });
     observer.observe(element);
-    const visibility = () => setVisible(!document.hidden && element.getBoundingClientRect().bottom > 0 && element.getBoundingClientRect().top < innerHeight);
+    const viewObserver = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting && !document.hidden));
+    if (sculpture.current) viewObserver.observe(sculpture.current);
+    const visibility = () => {
+      const bounds = sculpture.current?.getBoundingClientRect();
+      setVisible(!document.hidden && !!bounds && bounds.bottom > 0 && bounds.top < innerHeight);
+    };
     let frame = 0;
     const update = () => {
       frame = 0;
       const bounds = element.getBoundingClientRect();
       const p = motion.matches || mobile.matches ? 0 : Math.max(0, Math.min(1, -bounds.top / Math.max(1, bounds.height - innerHeight)));
-      input.current.progress = p;
+      if (input.current.progress !== p) {
+        input.current.progress = p;
+        input.current.invalidate?.();
+      }
       element.style.setProperty("--journey", String(p));
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
@@ -62,6 +68,7 @@ export default function CinematicHero() {
     document.addEventListener("visibilitychange", visibility);
     return () => {
       observer.disconnect();
+      viewObserver.disconnect();
       motion.removeEventListener("change", updateMotion);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
@@ -78,7 +85,7 @@ export default function CinematicHero() {
         <h1 id="hero-title">Your next big thing.<br /><em>Built different.</em></h1>
         <span className={styles.titleNote}>A LITTLE IDEA. ENDLESS POSSIBILITY.</span>
       </div>
-      <div className={styles.sculpture} data-testid="hero-sculpture" role="img" aria-label="An interactive pastel bloom with curved, pearl-finished petals"
+      <div ref={sculpture} className={styles.sculpture} data-testid="hero-sculpture" role="img" aria-label="An interactive pastel bloom with curved, pearl-finished petals"
         onPointerDown={(event) => {
           if (event.pointerType !== "mouse" || event.button !== 0 || reduced || paused) return;
           drag.current = event.clientX;
@@ -93,9 +100,10 @@ export default function CinematicHero() {
             input.current.rotation += (event.clientX - drag.current) * 0.008;
             drag.current = event.clientX;
           }
+          input.current.invalidate?.();
         }}
         onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }}
-        onPointerLeave={() => { input.current.pointerX = 0; input.current.pointerY = 0; }}>
+        onPointerLeave={() => { input.current.pointerX = 0; input.current.pointerY = 0; input.current.invalidate?.(); }}>
         <div className={styles.halo} aria-hidden="true" />
         <BloomFallback />
         {available && <SceneBoundary><BloomCanvas input={input} animate={visible && !paused && !reduced} onReady={onReady} /></SceneBoundary>}
@@ -105,8 +113,8 @@ export default function CinematicHero() {
       <div className={styles.bottomCopy}><p data-testid="hero-description">We turn ambitious ideas into distinctive websites and powerful web apps. Thoughtfully designed. Entirely yours.</p><button className={styles.cta} data-magnetic="" type="button" data-open-brief="">Start your project <Arrow diagonal /></button></div>
       <div className={styles.controls} role="group" aria-label="Sculpture controls">
         <span>EXPLORE THE FORM</span>
-        <button type="button" aria-label="Rotate bloom left" disabled={!ready || paused || reduced} onClick={() => { input.current.rotation -= Math.PI / 4; }}>←</button>
-        <button type="button" aria-label="Rotate bloom right" disabled={!ready || paused || reduced} onClick={() => { input.current.rotation += Math.PI / 4; }}>→</button>
+        <button type="button" aria-label="Rotate bloom left" disabled={!ready || paused || reduced} onClick={() => { input.current.rotation -= Math.PI / 4; input.current.invalidate?.(); }}>←</button>
+        <button type="button" aria-label="Rotate bloom right" disabled={!ready || paused || reduced} onClick={() => { input.current.rotation += Math.PI / 4; input.current.invalidate?.(); }}>→</button>
         <button type="button" className={styles.pause} aria-label={paused ? "Resume animation" : "Pause animation"} aria-pressed={paused} disabled={reduced || !ready} onClick={() => setPaused((value) => !value)}>{paused ? "▶" : "Ⅱ"}</button>
       </div>
       <div className={styles.bottomLine}><span>ROOTED IN KERALA. BUILT FOR EVERYWHERE.</span><a href="#services">SCROLL TO DISCOVER <span>↓</span></a></div>

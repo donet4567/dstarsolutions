@@ -40,7 +40,10 @@ export default function DigitalJourney() {
       frame = 0;
       const bounds = element.getBoundingClientRect();
       const p = motion.matches || short.matches ? .5 : Math.max(0, Math.min(1, -bounds.top / Math.max(1, bounds.height - innerHeight)));
-      input.current.progress = p;
+      if (input.current.progress !== p) {
+        input.current.progress = p;
+        input.current.invalidate?.();
+      }
       element.style.setProperty("--story-progress", String(p));
       const next = p < .32 ? 0 : p < .7 ? 1 : 2;
       if (next !== current.current) { current.current = next; setChapter(next); }

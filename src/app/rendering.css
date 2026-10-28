@@ -1,0 +1,27 @@
+/* Let the browser defer below-fold layout and paint. Once a section is laid
+   out, `auto` retains its real size as it leaves the viewport. Its content,
+   accessibility tree, anchor links and interactions remain in the document. */
+#services,#selected-work,#engineering,#process,#contact,.footer {
+  content-visibility:auto;
+  contain-intrinsic-block-size:auto var(--section-estimate);
+}
+#services { --section-estimate:1560px; }
+#selected-work { --section-estimate:650px; }
+#engineering { --section-estimate:720px; }
+#process { --section-estimate:1400px; }
+#contact { --section-estimate:590px; }
+.footer { --section-estimate:375px; }
+@media(max-width:1000px) and (min-width:761px) {
+  #services { --section-estimate:1480px; }
+  #selected-work { --section-estimate:500px; }
+  #engineering { --section-estimate:910px; }
+  #contact { --section-estimate:645px; }
+}
+@media(max-width:760px) {
+  #services { --section-estimate:2200px; }
+  #selected-work { --section-estimate:1270px; }
+  #engineering { --section-estimate:1080px; }
+  #process { --section-estimate:1850px; }
+  #contact { --section-estimate:600px; }
+  .footer { --section-estimate:460px; }
+}
