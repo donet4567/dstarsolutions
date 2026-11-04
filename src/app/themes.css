@@ -72,7 +72,6 @@ html[data-theme="sand"] [data-palette="sand"]>span,
 html[data-theme="sage"] [data-palette="sage"]>span,
 html[data-theme="mist"] [data-palette="mist"]>span,
 html[data-theme="midnight"] [data-palette="midnight"]>span { box-shadow:0 0 0 3px var(--background),0 0 0 4px var(--switch-accent); }
-.theme-label { color:var(--readable-plum); font-size:11px; letter-spacing:.6px; }
 @media(min-width:761px) and (max-width:1100px) {
   .topbar-inner { gap:12px; }
   .desktop-nav { gap:12px; }
@@ -83,13 +82,12 @@ html[data-theme="midnight"] [data-palette="midnight"]>span { box-shadow:0 0 0 3p
   .theme-options .theme-option { flex-basis:24px; width:24px; }
 }
 @media(max-width:760px) {
-  .theme-switcher--desktop { display:none; }
-  .theme-switcher--mobile { display:flex; align-items:center; justify-content:space-between; gap:12px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  :root { --mobile-header-extra:44px; }
+  html { scroll-padding-top:144px; }
+  .topbar-inner { position:relative; height:128px; padding-bottom:44px; }
+  .theme-switcher { position:absolute; left:50%; bottom:0; transform:translateX(-50%); }
   .theme-options .theme-option { flex-basis:44px; width:44px; min-height:44px; }
   .theme-option>span { width:17px; height:17px; }
-}
-@media(max-width:400px) {
-  .theme-switcher--mobile { flex-direction:column; align-items:flex-start; gap:4px; }
 }
 @media(prefers-reduced-motion:reduce) { .theme-option>span { transition:none; } }
 

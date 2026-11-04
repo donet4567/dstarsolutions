@@ -24,7 +24,7 @@ export default function CinematicHero() {
   const section = useRef<HTMLElement>(null);
   const sculpture = useRef<HTMLDivElement>(null);
   const input = useRef<BloomInput>({ progress: 0, pointerX: 0, pointerY: 0, rotation: 0 });
-  const drag = useRef<number | null>(null);
+  const drag = useRef<{ x: number; y: number; rotating: boolean } | null>(null);
   const [available, setAvailable] = useState(false);
   const [visible, setVisible] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -54,17 +54,20 @@ export default function CinematicHero() {
     const update = () => {
       frame = 0;
       const bounds = element.getBoundingClientRect();
-      const p = motion.matches || mobile.matches ? 0 : Math.max(0, Math.min(1, -bounds.top / Math.max(1, bounds.height - innerHeight)));
+      const p = motion.matches ? 0 : Math.max(0, Math.min(1, -bounds.top / Math.max(1, bounds.height - innerHeight)));
       if (input.current.progress !== p) {
         input.current.progress = p;
         input.current.invalidate?.();
       }
-      element.style.setProperty("--journey", String(p));
+      // Mobile keeps its readable, unpinned layout while the existing bloom
+      // responds to scrolling through the hero, just as it does on desktop.
+      element.style.setProperty("--journey", String(mobile.matches ? 0 : p));
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    motion.addEventListener("change", schedule);
     document.addEventListener("visibilitychange", visibility);
     return () => {
       observer.disconnect();
@@ -72,6 +75,7 @@ export default function CinematicHero() {
       motion.removeEventListener("change", updateMotion);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      motion.removeEventListener("change", schedule);
       document.removeEventListener("visibilitychange", visibility);
       cancelAnimationFrame(frame);
     };
@@ -87,18 +91,27 @@ export default function CinematicHero() {
       </div>
       <div ref={sculpture} className={styles.sculpture} data-testid="hero-sculpture" role="img" aria-label="An interactive pastel bloom with curved, pearl-finished petals"
         onPointerDown={(event) => {
-          if (event.pointerType !== "mouse" || event.button !== 0 || reduced || paused) return;
-          drag.current = event.clientX;
-          event.currentTarget.setPointerCapture(event.pointerId);
+          if (event.button !== 0 || reduced || paused) return;
+          drag.current = { x: event.clientX, y: event.clientY, rotating: event.pointerType === "mouse" };
+          if (drag.current.rotating) event.currentTarget.setPointerCapture(event.pointerId);
         }}
         onPointerMove={(event) => {
           if (reduced || paused) return;
+          if (drag.current && !drag.current.rotating) {
+            const dx = event.clientX - drag.current.x;
+            const dy = event.clientY - drag.current.y;
+            if (Math.abs(dy) > 6 && Math.abs(dy) >= Math.abs(dx)) { drag.current = null; return; }
+            if (Math.abs(dx) < 6) return;
+            drag.current.rotating = true;
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }
+          if (event.pointerType !== "mouse" && !drag.current) return;
           const box = event.currentTarget.getBoundingClientRect();
           input.current.pointerX = (event.clientX - box.left) / box.width * 2 - 1;
           input.current.pointerY = (event.clientY - box.top) / box.height * 2 - 1;
           if (drag.current !== null) {
-            input.current.rotation += (event.clientX - drag.current) * 0.008;
-            drag.current = event.clientX;
+            input.current.rotation += (event.clientX - drag.current.x) * 0.008;
+            drag.current.x = event.clientX;
           }
           input.current.invalidate?.();
         }}

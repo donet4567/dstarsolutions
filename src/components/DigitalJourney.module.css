@@ -13,8 +13,8 @@
 @media(max-width:1000px) and (min-width:761px) { .copy { width:35%; }.copy h2 { font-size:56px; }.chapter p { font-size:11px; }.scene { width:65%; right:-6%; }.topline { font-size:7px; }.navigation { width:35%; }.annotation { font-size:6px; } }
 @media(max-width:760px) {
   :global(html[data-motion="full"]) .world { height:240svh; }.stage { min-height:780px; }
-  .topline { top:112px; left:24px; right:24px; padding-bottom:17px; font-size:7px; }.topline>span:last-child { display:none; }
-  .copy { top:155px; left:24px; right:24px; width:auto; max-width:none; }.copy h2 { font-size:clamp(42px,9.5vw,61px); line-height:1.01; }.copy h2 em { margin-left:0; }
+  .topline { top:calc(112px + var(--mobile-header-extra,0px)); left:24px; right:24px; padding-bottom:17px; font-size:7px; }.topline>span:last-child { display:none; }
+  .copy { top:calc(155px + var(--mobile-header-extra,0px)); left:24px; right:24px; width:auto; max-width:none; }.copy h2 { font-size:clamp(42px,9.5vw,61px); line-height:1.01; }.copy h2 em { margin-left:0; }
   .chapter { margin-top:22px; max-width:310px; }.chapter>span { font-size:7px; }.chapter h3 { margin-top:10px; font-size:15px; }.chapter p { margin-top:8px; font-size:11px; line-height:1.8; max-width:300px; }
   .scene { top:40%; left:-15%; right:auto; width:130%; height:48%; }
   .navigation { bottom:28px; left:24px; right:24px; width:auto; }.navigation button { min-height:62px; padding:12px 0; font-size:11px; }.navigation button>span { font-size:7px; }.annotation { display:none; }

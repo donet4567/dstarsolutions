@@ -38,8 +38,11 @@ export default function DigitalJourney() {
     let frame = 0;
     const update = () => {
       frame = 0;
+      // Static layouts use the chapter buttons. Scrolling must not overwrite
+      // the visitor's selection after a button or anchor moves into view.
+      if (motion.matches || short.matches) return;
       const bounds = element.getBoundingClientRect();
-      const p = motion.matches || short.matches ? .5 : Math.max(0, Math.min(1, -bounds.top / Math.max(1, bounds.height - innerHeight)));
+      const p = Math.max(0, Math.min(1, -bounds.top / Math.max(1, bounds.height - innerHeight)));
       if (input.current.progress !== p) {
         input.current.progress = p;
         input.current.invalidate?.();
@@ -48,7 +51,18 @@ export default function DigitalJourney() {
       const next = p < .32 ? 0 : p < .7 ? 1 : 2;
       if (next !== current.current) { current.current = next; setChapter(next); }
     };
-    const preferences = () => { setEnhanced(!motion.matches && !short.matches); update(); };
+    const preferences = () => {
+      const enabled = !motion.matches && !short.matches;
+      setEnhanced(enabled);
+      if (!enabled) {
+        input.current.progress = .5;
+        input.current.invalidate?.();
+        current.current = 1;
+        setChapter(1);
+        element.style.setProperty("--story-progress", ".5");
+      }
+      update();
+    };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     const observer = new IntersectionObserver(([entry]) => {
       setVisible(entry.isIntersecting && !document.hidden);

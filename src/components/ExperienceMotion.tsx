@@ -17,7 +17,9 @@ export default function ExperienceMotion() {
     const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-depth-card], [data-depth-section]"));
     const sections = Array.from(document.querySelectorAll<HTMLElement>("#services, #selected-work, #engineering, #process"));
     const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a, .mobile-navigation a"));
-    const pinned = window.matchMedia("(min-width: 761px) and (min-height: 650px)");
+    const pinned = window.matchMedia("(min-height: 560px)");
+    const phone = window.matchMedia("(max-width: 760px)");
+    const processHeading = process?.querySelector<HTMLElement>(".process-stage > .section-heading");
     const header = document.querySelector<HTMLElement>(".topbar");
     let frame = 0;
     const update = () => {
@@ -35,7 +37,11 @@ export default function ExperienceMotion() {
       if (motion.matches) return;
       if (process && processBounds) {
         const bounds = processBounds;
-        const progress = Math.max(0, Math.min(1, pinned.matches ? -bounds.top / Math.max(1, bounds.height - innerHeight) : (innerHeight * .7 - bounds.top) / bounds.height));
+        // On phones the heading scrolls naturally before the cards pin below
+        // the header. Start the sequence when the first card reaches that spot.
+        const nearViewport = bounds.top < innerHeight + 200 && bounds.bottom > -200;
+        const start = pinned.matches && phone.matches && nearViewport && processHeading ? Math.max(0, processHeading.offsetHeight + 30 - 144) : 0;
+        const progress = Math.max(0, Math.min(1, pinned.matches ? (-bounds.top - start) / Math.max(1, bounds.height - innerHeight - start) : (innerHeight * .7 - bounds.top) / bounds.height));
         process.style.setProperty("--process-progress", String(progress));
         steps.forEach((step, index) => {
           step.dataset.current = String(Math.min(3, Math.floor(progress * 4)) === index);
@@ -53,6 +59,12 @@ export default function ExperienceMotion() {
     update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    motion.addEventListener("change", schedule);
+    pinned.addEventListener("change", schedule);
+    // Deferred sections can acquire their real height after the first scroll
+    // event. Refresh the card progress when that layout settles as well.
+    const processObserver = new ResizeObserver(schedule);
+    if (process) processObserver.observe(process);
     const fine = matchMedia("(hover: hover) and (pointer: fine)");
     const buttons = Array.from(document.querySelectorAll<HTMLElement>("[data-magnetic], .nav-cta, .button-dark"));
     const magnet = (event: PointerEvent) => {
@@ -71,6 +83,9 @@ export default function ExperienceMotion() {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       motion.removeEventListener("change", updateMotion);
+      motion.removeEventListener("change", schedule);
+      pinned.removeEventListener("change", schedule);
+      processObserver.disconnect();
       buttons.forEach((button) => { button.removeEventListener("pointermove", magnet); button.removeEventListener("pointerleave", reset); button.style.removeProperty("translate"); });
       cancelAnimationFrame(frame);
       delete document.documentElement.dataset.motion;

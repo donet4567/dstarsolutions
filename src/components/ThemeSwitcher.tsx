@@ -26,10 +26,9 @@ function subscribe(update: () => void) {
 }
 const snapshot = () => document.documentElement.dataset.theme || "ivory";
 
-export default function ThemeSwitcher({ mobile = false }: { mobile?: boolean }) {
+export default function ThemeSwitcher() {
   const selected = useSyncExternalStore(subscribe, snapshot, () => "ivory");
-  return <div className={`theme-switcher${mobile ? " theme-switcher--mobile" : " theme-switcher--desktop"}`}>
-    {mobile && <span className="theme-label">Choose your palette</span>}
+  return <div className="theme-switcher">
     <div className="theme-options" role="group" aria-label="Website color theme">
       {themes.map(([id, label]) => <button
         className="theme-option" type="button" key={id} data-palette={id}

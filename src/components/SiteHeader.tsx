@@ -34,7 +34,6 @@ export default function SiteHeader() {
           <div className="topbar-end"><ThemeSwitcher /><button className="nav-cta" type="button" data-open-brief="" onClick={() => setMenuOpen(false)}>Let’s talk <Arrow diagonal /></button><button ref={menuRef} className={`menu-trigger ${menuOpen ? "is-open" : ""}`} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button></div>
         </div>
         <nav id="mobile-navigation" className="mobile-navigation" aria-label="Mobile navigation" hidden={!menuOpen}>
-          <ThemeSwitcher mobile />
           <a href="#services" onClick={() => setMenuOpen(false)}>What we do <Arrow diagonal /></a><a href="#selected-work" onClick={() => setMenuOpen(false)}>Selected work <Arrow diagonal /></a><a href="#engineering" onClick={() => setMenuOpen(false)}>The studio <Arrow diagonal /></a><a href="#process" onClick={() => setMenuOpen(false)}>Our process <Arrow diagonal /></a><button type="button" data-open-brief="" onClick={() => setMenuOpen(false)}>Start a project <Arrow diagonal /></button>
         </nav>
       </header>

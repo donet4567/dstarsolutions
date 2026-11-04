@@ -12,7 +12,7 @@ export default function ProcessJourney() {
   return <section className="process-section section-space container" id="process" aria-labelledby="process-title" data-depth-section="">
     <div className="process-stage">
       <div className="section-heading"><div><p className="eyebrow"><span className="section-dash" /> 05 / HOW WE GET THERE</p><h2 id="process-title">A clear path from<br />idea to <em>impact.</em></h2></div><p className="section-intro">One considered step at a time.<br />A shared ambition, brought to life.</p><div className="process-index" aria-hidden="true"><span>DISCOVER</span><span>DESIGN</span><span>DEVELOP</span><span>DELIVER</span></div></div>
-      <div className="process-grid">{steps.map(([title, detail, caption, label], index) => <article className="process-step" key={title} style={{ "--step": index } as CSSProperties}>
+      <div className="process-grid">{steps.map(([title, detail, caption, label], index) => <article className="process-step" data-depth-card="" key={title} style={{ "--step": index } as CSSProperties}>
         <div className="process-step-top"><span>0{index + 1}</span><Arrow /></div><span className="process-card-label">{label}</span><h3>{title}</h3><p>{detail}</p><small>{caption}</small><div className="process-card-art" aria-hidden="true"><span /><span /><span /></div>
       </article>)}</div>
     </div>
