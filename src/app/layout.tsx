@@ -6,6 +6,7 @@ import "./cinematic.css";
 import "./depth.css";
 import "./accessibility.css";
 import "./rendering.css";
+import "./themes.css";
 
 // Run before the page is parsed so a refresh cannot restore a lower section.
 // Normal section links and back/forward navigation keep their usual behavior.
@@ -23,6 +24,9 @@ const resetScrollOnReload = `document.documentElement.dataset.motion = matchMedi
     });
   }, { once: true });
 })();`;
+
+// Synchronous and inline: restore the palette before any body content can paint.
+const restoreTheme = `(() => { let theme = 'ivory'; try { const saved = localStorage.getItem('dstar-theme'); if (['ivory','sand','sage','mist','midnight'].includes(saved)) theme = saved; } catch {} document.documentElement.dataset.theme = theme; })();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -88,7 +92,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
+      <head><script id="restore-theme" dangerouslySetInnerHTML={{ __html: restoreTheme }} /><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, "\\u003c") }} />
         {children}

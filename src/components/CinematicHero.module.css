@@ -28,3 +28,18 @@
 @media(prefers-reduced-motion:reduce) { .journey { height:auto; }.stage { position:relative; }.opening,.sculpture { transform:none; }.chapter,.progress { display:none; }.opening { opacity:1; }.cta:hover { transform:none; } }
 
 .controls>span,.bottomLine { color:var(--readable-plum); }
+
+/* Only colors change; the bloom, composition and movement remain untouched. */
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.journey,.stage) { background:var(--background); }
+:global(html[data-theme]:not([data-theme="ivory"])) .opening h1 { color:var(--text); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.opening h1 em,.chapter em,.bottomLine a>span) { color:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.edition,.titleNote,.orbitLabel,.chapter>span,.bottomCopy p,.controls>span,.bottomLine) { color:var(--muted); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.bottomLine,.controls button,.cta) { border-color:var(--line); }
+:global(html[data-theme]:not([data-theme="ivory"])) .cta { color:var(--theme-on-accent); background:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) .cta:hover { background:var(--gold-bright); }
+:global(html[data-theme]:not([data-theme="ivory"])) .controls button { color:var(--gold); background:var(--surface); }
+:global(html[data-theme]:not([data-theme="ivory"])) .controls button:hover:enabled { background:var(--theme-tint); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.edition i,.progress span) { background:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) .progress { background:var(--line); }
+
+:global(html[data-theme]:not([data-theme="ivory"])) .orbitLabel::before { background:var(--line); }

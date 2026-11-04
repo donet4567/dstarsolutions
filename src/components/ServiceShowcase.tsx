@@ -13,7 +13,13 @@ export default function ServiceShowcase() {
     <article className={styles.service} data-reveal data-depth-card="">
       <div className={styles.copy}><span className={styles.index}>01 / WEBSITES</span><h3>A presence that<br />feels like <em>you.</em></h3><p>Distinctive websites with a point of view. Designed to make people feel something, and built to turn that feeling into a connection.</p><div className={styles.tags}><span>Business websites</span><span>Landing pages</span><span>Portfolios</span></div><button className={styles.link} type="button" data-open-brief="Website">Let’s build your website <Arrow diagonal /></button></div>
       <div className={styles.websiteStage}>
-        <div className={styles.demoToolbar}><span>ONE IDEA. EVERY SCREEN.</span><div role="group" aria-label="Website preview size"><button type="button" aria-pressed={!mobile} onClick={() => setMobile(false)}>Desktop</button><button type="button" aria-pressed={mobile} onClick={() => setMobile(true)}>Mobile</button></div></div>
+        <div className={`${styles.demoToolbar} ${styles.previewToolbar}`}>
+          <div className={styles.previewIntro}><span>ONE IDEA. EVERY SCREEN.</span><h4>Explore the live preview</h4><p id="preview-help">Tap to switch between Desktop and Mobile views</p></div>
+          <div className={styles.previewToggle} role="group" aria-label="Website preview size" aria-describedby="preview-help">
+            <button type="button" aria-pressed={!mobile} onClick={() => setMobile(false)}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8m-4-4v4" /></svg>Desktop view</button>
+            <button type="button" aria-pressed={mobile} onClick={() => setMobile(true)}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3" /><path d="M11 18h2" /></svg>Mobile view</button>
+          </div>
+        </div>
         <div className={styles.website} data-mobile={mobile} aria-label={`${mobile ? "Mobile" : "Desktop"} website concept preview`}>
           <div className={styles.browser}><span>● ● ●</span><span>yourbrand.design</span><span>↗</span></div>
           <div className={styles.websiteNav}><strong>yourbrand®</strong><span>About &nbsp; Work &nbsp; Contact</span></div>

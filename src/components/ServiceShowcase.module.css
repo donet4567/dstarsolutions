@@ -19,3 +19,34 @@
 .application .link { color:#4f7181; }
 .application .copy h3 em { color:#527b89; }
 .pill { background:#80566f; }
+
+/* Preserve the preview's content and viewport logic; make its controls explicit. */
+.demoToolbar.previewToolbar { flex-direction:column; align-items:flex-start; gap:14px; }
+.demoToolbar .previewIntro { display:block; padding:0; border:0; border-radius:0; background:none; }
+.previewIntro>span { font-size:7px; letter-spacing:1px; color:var(--readable-on-tint); }
+.previewIntro h4 { margin:8px 0 6px; font-size:16px; font-weight:500; letter-spacing:-.3px; color:var(--theme-text,#3b3244); }
+.previewIntro p { color:var(--readable-on-tint); font-size:10px; line-height:1.6; }
+.demoToolbar .previewToggle { display:flex; flex-wrap:wrap; gap:3px; padding:4px; border:1px solid var(--theme-line,#c8b8ce); border-radius:30px; background:var(--theme-surface,#fff9fc); }
+.previewToggle button { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:44px; padding:10px 14px; border-radius:25px; color:var(--theme-muted,#6b5879); font-size:11px; font-weight:500; transition:background .18s,color .18s; }
+.previewToggle button svg { width:16px; height:16px; }
+.previewToggle button:hover { background:var(--switch-hover); }
+.previewToggle button[aria-pressed="true"] { background:var(--switch-accent); color:var(--switch-on-accent); box-shadow:0 2px 7px #302b3b15; }
+.previewToggle button:focus-visible { outline:2px solid var(--switch-accent); outline-offset:2px; }
+@media(max-width:380px) { .previewToggle button { padding-inline:10px; font-size:10px; gap:5px; } }
+@media(prefers-reduced-motion:reduce) { .previewToggle button { transition:none; } }
+
+/* Alternate palettes only; the default retains the original artwork colors. */
+:global(html[data-theme]:not([data-theme="ivory"])) .service { background:var(--surface); border-color:var(--line); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.copy h3,.websiteNav strong,.websiteContent>strong,.workspace h4) { color:var(--text); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.copy h3 em,.application .copy h3 em,.link,.application .link,.websiteContent em) { color:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.copy>p,.index,.tags span,.browser,.websiteNav>span,.websiteContent>small,.websiteBottom,.stageCaption,.application .index,.appStage .stageCaption,.sidebar,.sidebar strong,.sidebar>span:nth-child(2),.workspaceHeader,.avatar,.workspace>p,.metrics span,.metrics strong,.metrics i,.tasks>span,.task>span,.task small) { color:var(--muted); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.tags span,.link svg,.application .link svg,.browser,.websiteBottom,.metrics>div,.task) { border-color:var(--line); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.websiteStage,.appStage) { background:var(--theme-tint); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.website,.dashboard) { background:var(--surface); border-color:var(--line); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.sidebar,.avatar,.metrics>div,.metrics>div:last-child,.link:hover svg) { background:var(--theme-tint); }
+:global(html[data-theme]:not([data-theme="ivory"])) .sidebar>span:nth-child(2) { background:var(--surface); }
+:global(html[data-theme]:not([data-theme="ivory"])) .pill { background:var(--gold); color:var(--theme-on-accent); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.dot,.appStage .dot,.progressTrack>span) { background:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) .progressTrack { background:var(--line); }
+:global(html[data-theme]:not([data-theme="ivory"])) .task input { accent-color:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) .orb { background:linear-gradient(125deg,var(--theme-tint),var(--gold)); }

@@ -3,10 +3,10 @@ import { expect, test } from "@playwright/test";
 test("service demos switch viewport and update dashboard state", async ({ page }) => {
   await page.goto("/");
   const sizes = page.getByRole("group", { name: "Website preview size" });
-  await sizes.getByRole("button", { name: "Mobile", exact: true }).click();
-  await expect(sizes.getByRole("button", { name: "Mobile", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await sizes.getByRole("button", { name: "Mobile view", exact: true }).click();
+  await expect(sizes.getByRole("button", { name: "Mobile view", exact: true })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByLabel("Mobile website concept preview", { exact: true })).toBeVisible();
-  await sizes.getByRole("button", { name: "Desktop", exact: true }).click();
+  await sizes.getByRole("button", { name: "Desktop view", exact: true }).click();
   await expect(page.getByLabel("Desktop website concept preview", { exact: true })).toBeVisible();
   const task = page.getByRole("checkbox", { name: /Bring it to life/ });
   await task.check();

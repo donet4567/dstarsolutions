@@ -6,6 +6,7 @@ import ServiceShowcase from "./ServiceShowcase";
 import ExperienceMotion from "./ExperienceMotion";
 import SiteHeader from "./SiteHeader";
 import ProjectBrief from "./ProjectBrief";
+import FounderNote from "./FounderNote";
 import { Arrow, Star, Brand } from "./Brand";
 import { defaultWhatsApp } from "./site";
 
@@ -29,6 +30,7 @@ export default function DStarExperience() {
         </div></section>
         <ProcessJourney />
         <section className="contact-section container" id="contact" aria-labelledby="contact-title"><div className="contact-panel" data-reveal data-depth-card=""><div className="contact-panel-top"><p className="eyebrow"><span className="status-dot" /> YOUR NEXT CHAPTER STARTS HERE</p><Star /></div><div className="contact-content"><h2 id="contact-title">Have a good idea?<br />Let’s make it <em>great.</em></h2><div><p>A rough idea. A fresh start. A problem worth solving.<br />Whatever it is, we’d love to hear it.</p><button className="button button-dark" type="button" data-open-brief="">Start a conversation <Arrow diagonal /></button></div></div><div className="contact-panel-bottom"><span>GOOD WORK BEGINS WITH A HELLO.</span><a href={defaultWhatsApp} target="_blank" rel="noreferrer">Say hello on WhatsApp <Arrow diagonal /></a></div></div></section>
+        <FounderNote />
       </main>
       <footer className="footer container">
         <div className="footer-grid">

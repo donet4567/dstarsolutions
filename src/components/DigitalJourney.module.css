@@ -25,3 +25,15 @@
 
 .topline,.chapter>span,.chapter p,.navigation button,.annotation,.fallbackScreen>span { color:var(--readable-on-tint); }
 .copy h2 em { color:#886899; }
+
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.world,.stage) { background:var(--theme-tint); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.copy h2,.chapter h3) { color:var(--text); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.copy h2 em,.navigation button[aria-current]) { color:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.topline,.chapter>span,.chapter p,.navigation button,.annotation,.fallbackScreen>span) { color:var(--muted); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.topline,.navigation button) { border-color:var(--line); }
+:global(html[data-theme]:not([data-theme="ivory"])) .navigation button[aria-current] { border-color:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) :is(.navigation i,.navigation button[aria-current] i,.progress>span) { background:var(--gold); }
+:global(html[data-theme]:not([data-theme="ivory"])) .progress { background:var(--line); }
+:global(html[data-theme]:not([data-theme="ivory"])) .fallbackScreen { background:var(--surface); border-color:var(--line); }
+:global(html[data-theme]:not([data-theme="ivory"])) .fallbackScreen>strong { color:var(--text); }
+:global(html[data-theme]:not([data-theme="ivory"])) .plinth { background:var(--theme-tint); }
