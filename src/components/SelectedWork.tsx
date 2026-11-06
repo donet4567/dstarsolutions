@@ -175,8 +175,8 @@ export default function SelectedWork() {
   return <>
     <section ref={section} className={`${styles.section} container`} id="selected-work" aria-labelledby="selected-work-title" data-depth-section="">
       <div className={styles.heading}>
-        <div><p className="eyebrow"><span className="section-dash" /> 03 / SELECTED WORK</p><h2 id="selected-work-title">Selected work.</h2></div>
-        <p className={styles.intro}>Distinct ideas.<br />Thoughtfully brought to life.</p>
+        <div><p className="eyebrow"><span className="section-dash" /> BEYOND BUSINESS WEBSITES</p><h2 id="selected-work-title">Selected work.</h2></div>
+        <p className={styles.intro}>A closer look at our web application work.<br />Illustrative project previews.</p>
       </div>
       <p className={styles.srOnly} id="selected-work-help">Open a project to view its illustrative concept artwork. Screen content and figures are illustrative.</p>
       <ol className={styles.list}>

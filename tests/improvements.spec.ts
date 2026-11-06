@@ -53,11 +53,12 @@ test("all five palettes persist and cover sections, previews, navigation and enq
     if (id !== "ivory") {
       const colors = await page.evaluate(() => {
         const text = getComputedStyle(document.body).color;
-        return [text, ...[".services h2", ".process-section h2", "#founder-title", ".footer-contact-phone"].map((selector) => getComputedStyle(document.querySelector(selector)!).color)];
+        return [text, ...[".sales-benefits h2", ".simple-process h2", "#founder-title", ".footer-contact-phone"].map((selector) => getComputedStyle(document.querySelector(selector)!).color)];
       });
       expect(new Set(colors).size).toBe(1);
-      await expectReadableText(page, [".services h2", ".services .muted", ".process-section h2", "#founder-title", "#founder-title em", ".footer-contact-phone", ".contact-content p", ".contact-content h2 em"]);
+      await expectReadableText(page, [".sales-benefits h2", ".plan-audience", ".plan-price", ".price-card li", ".pricing-disclosure p", ".simple-process h2", "#founder-title", "#founder-title em", ".footer-contact-phone", ".contact-content p", ".contact-content h2 em"]);
     }
+    await expectReadableText(page, [".sales-heading>p", ".plan-audience", ".price-card li", ".pricing-disclosure p", ".showcase-note", ".simple-process li>p", ".sales-number"]);
     expect(await page.evaluate(() => localStorage.getItem("dstar-theme"))).toBe(id);
     if (isMobile) await page.getByRole("button", { name: "Close navigation" }).click();
     await page.screenshot({ path: testInfo.outputPath(`${id}-hero.png`) });
@@ -68,12 +69,13 @@ test("all five palettes persist and cover sections, previews, navigation and enq
       await toggle.focus();
       await page.keyboard.press("Enter");
       await expect(toggle).toHaveAttribute("aria-pressed", "true");
-      await expect(page.getByLabel(`${mode} website concept preview`, { exact: true })).toBeVisible();
+      await expect(page.getByRole("img", { name: `${mode} demo concept for Restaurants & cafés`, exact: true })).toBeVisible();
       const touchTarget = await toggle.boundingBox();
       expect(touchTarget!.height).toBeGreaterThanOrEqual(44);
     }
     await page.locator("#services").screenshot({ path: testInfo.outputPath(`${id}-services.png`) });
-    await page.locator("#digital-journey").screenshot({ path: testInfo.outputPath(`${id}-journey.png`) });
+    await page.locator("#packages").screenshot({ path: testInfo.outputPath(`${id}-packages.png`) });
+    await page.locator("#business-websites").screenshot({ path: testInfo.outputPath(`${id}-business-examples.png`) });
     await page.locator("#selected-work").screenshot({ path: testInfo.outputPath(`${id}-work.png`) });
     await page.locator("#engineering").screenshot({ path: testInfo.outputPath(`${id}-studio.png`) });
     await page.locator("#process").screenshot({ path: testInfo.outputPath(`${id}-process.png`) });
@@ -82,9 +84,9 @@ test("all five palettes persist and cover sections, previews, navigation and enq
     await founder.screenshot({ path: testInfo.outputPath(`${id}-founder.png`) });
     await page.locator("footer").screenshot({ path: testInfo.outputPath(`${id}-footer.png`) });
     await founder.getByRole("button", { name: "Let’s build it", exact: true }).click();
-    const dialog = page.getByRole("dialog", { name: /It starts with/ });
+    const dialog = page.getByRole("dialog", { name: /Tell us about/ });
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByRole("textbox")).toBeEditable();
+    await expect(dialog.getByRole("textbox", { name: "Your name", exact: true })).toBeEditable();
     await dialog.screenshot({ path: testInfo.outputPath(`${id}-enquiry.png`) });
     await page.keyboard.press("Escape");
     await expect(founder.getByRole("button", { name: "Let’s build it", exact: true })).toBeFocused();

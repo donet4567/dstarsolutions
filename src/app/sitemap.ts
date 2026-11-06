@@ -2,5 +2,8 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/components/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: `${SITE_URL}/`, changeFrequency: "monthly", priority: 1 }];
+  return [
+    { url: `${SITE_URL}/`, changeFrequency: "monthly", priority: 1 },
+    { url: `${SITE_URL}/small-business-websites`, changeFrequency: "monthly", priority: .9 },
+  ];
 }

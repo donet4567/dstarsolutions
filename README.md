@@ -21,7 +21,17 @@ npm start
 
 Use Node 24.22.0 (pinned in `.nvmrc` and `.node-version`) locally and in hosting settings. On Windows, select that version with your Node version manager before running npm.
 
-The site uses Next.js 16.4, React 19.3 and the default Turbopack production builder. Static page sections are Server Components; the navigation, enquiry form and project gallery are small client boundaries. Project artwork loads as the ordered gallery approaches the viewport; dialogs retain keyboard navigation. The cinematic hero lazy-loads a locally sculpted Three.js bloom through React Three Fiber; all materials and environment lighting are generated locally, with no external models or HDR downloads. Scroll progress is sampled once per animation frame without React re-renders. Rendering pauses offscreen, on hidden tabs, and through the visible pause control. Reduced-motion preferences disable the pinned sequence and autonomous motion; the server-rendered CSS bloom remains available without JavaScript or WebGL. A second scroll-controlled 3D journey turns an abstract idea into a website and a connected mobile application. Camera motion, interface crossfades and the device reveal follow native scrolling. The process section uses an ordered, pinned card sequence on desktop, with a readable static layout on phones and for reduced motion. Service previews include desktop/mobile switching and a small interactive task dashboard.
+The site uses Next.js 16.4, React 19.3 and the default Turbopack production builder. Static page sections are Server Components; navigation, the enquiry form, theme controls, business preview switching and the project gallery use small client boundaries. Project artwork loads as the compact gallery approaches the viewport; project dialogs retain keyboard navigation. The hero lazy-loads the existing locally sculpted Three.js bloom, with no external models or HDR downloads. Rendering pauses offscreen, on hidden tabs and through the visible pause control. Reduced-motion preferences disable autonomous motion; the server-rendered CSS bloom remains available without JavaScript or WebGL.
+
+The homepage presents business website benefits, three packages, six business demo concepts, the studio, selected work, custom applications, four development steps, FAQs, enquiries and Donet Joseph’s founder section. The longer digital journey, task dashboard and pinned process components remain in source for future reuse but are no longer mounted on the sales pages. The original five palettes, including Midnight Navy, remain available and persist before paint.
+
+## Website packages and enquiries
+
+`/small-business-websites` is the dedicated package landing page. `src/components/website-content.ts` is the shared source for the ₹8,000 Essential, ₹15,000 Growth and ₹25,000 Premium packages, exclusions, FAQs and six demo concepts. Changes here update both sales pages. Prices are starting one-time development fees; domain, hosting, renewals and the other stated exclusions cost extra. Static packages include no database, login, admin dashboard or online checkout.
+
+`src/components/site.ts` owns the business number and URL encoder used by package, demo, floating contact and enquiry links. The enquiry dialog collects a name, business name, category, package and short requirement, and opens a WhatsApp draft for review. It stores no enquiry in a database and does not send messages automatically. The floating WhatsApp control steps aside when it would obstruct another link or button.
+
+`/website-demos/[slug]` contains six real local concept pages. Their brands are fictional and explicitly labelled. They use local CSS artwork, require no remote images, and route enquiries to D Star. These pages are marked `noindex` to avoid presenting fictional businesses as search results. Mecardee and HireVify remain in the selected-work gallery, with the original illustrative-artwork disclosure.
 
 ## TypeScript compatibility
 
@@ -38,7 +48,7 @@ npm run test:e2e
 npm audit --omit=dev
 ```
 
-The browser suite runs against a production server on port 3100 in desktop and mobile Chromium. It covers the 3D scene, pause controls, reduced motion, WebGL fallback, service demos, 320–1440px layouts, gallery and keyboard controls, enquiry preparation, mobile navigation, refresh-to-top behavior, server-rendered content, SEO routes and performance reporting. It never sends a WhatsApp message.
+The browser suite runs against a production server on port 3100 in desktop and mobile Chromium. It covers the bloom, pause controls, reduced motion, WebGL fallback, desktop/mobile business previews, 320–1440px layouts, five palettes, gallery keyboard controls, package prices and WhatsApp messages, enquiry validation and Unicode encoding, local demo routes, mobile navigation, refresh-to-top behavior, server-rendered content, SEO routes and performance reporting. It never sends a WhatsApp message. If the Playwright browser is not installed, set `TEST_CHROME_PATH` to an installed Chrome executable before running the suite.
 
 GitHub Actions runs these checks on pushes to `main` and pull requests. Dependabot opens weekly npm update PRs and monthly GitHub Actions update PRs, grouping framework and React packages together.
 
@@ -54,6 +64,6 @@ Production visits report CLS, FCP, INP, LCP and TTFB through Next.js `useReportW
 
 In your hosting runtime logs, filter for `web-vital`. For each metric, deduplicate by `id` and use the latest value, then compare the 75th percentile across equivalent date ranges. CLS is unitless; other values are milliseconds. Good Core Web Vitals targets are LCP ≤ 2500 ms, INP ≤ 200 ms and CLS ≤ 0.1. Treat synthetic test measurements separately from visitor data.
 
-Export a date range as JSONL and run `npm run vitals:summary -- path/to/runtime-logs.jsonl` for a deduplicated p75 summary against the good thresholds. It accepts plain JSON lines, prefixed JSON lines, or JSON entries with a JSON `message` field. This summary is intended for the current single-page site.
+Export a date range as JSONL and run `npm run vitals:summary -- path/to/runtime-logs.jsonl` for a deduplicated p75 summary against the good thresholds. It accepts plain JSON lines, prefixed JSON lines, or JSON entries with a JSON `message` field. Measurements aggregate visits across the site without recording page URLs.
 
 Collection works without an external analytics account. Retention follows your hosting log settings; a persistent dashboard or automated performance alerts require connecting those logs to your chosen monitoring service. No external dashboard is provisioned by this repository.

@@ -5,7 +5,7 @@ test("brand, business metadata and crawlable routes are consistent", async ({ pa
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await expect(page).toHaveTitle(/D Star IT Solutions/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Built different.");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Built for Your Business.");
   await expect(page.locator("footer address")).toContainText("Bharananganam, Pala");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /^https:\/\/www\.dstarsolutions\.in\/?$/);
   const business = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText());
@@ -58,11 +58,14 @@ test("project artwork loads on interaction and gallery supports keyboard navigat
 
 test("service enquiries preserve project type and prepare the WhatsApp brief", async ({ page }) => {
   await page.goto("/");
-  const trigger = page.getByRole("button", { name: "Let’s simplify your workflow" });
+  const trigger = page.getByRole("button", { name: "Request Custom Quote" });
   await trigger.click();
   const dialog = page.getByRole("dialog");
   await expect(dialog.getByRole("radio", { name: "Web application", exact: true })).toBeChecked();
-  await dialog.getByRole("textbox", { name: "A little about your idea" }).fill("A rental booking application");
+  await dialog.getByRole("textbox", { name: "Your name", exact: true }).fill("Test Customer");
+  await dialog.getByRole("textbox", { name: "Business name", exact: true }).fill("Example Rentals");
+  await dialog.getByRole("combobox", { name: "Business category" }).selectOption("Other business");
+  await dialog.getByRole("textbox", { name: "Short project requirement" }).fill("A rental booking application");
   // Inspect the prepared URL without opening WhatsApp or sending a message.
   await page.evaluate(() => { window.open = (url) => { document.documentElement.dataset.preparedBrief = String(url); return null; }; });
   await dialog.getByRole("button", { name: "Continue on WhatsApp" }).click();

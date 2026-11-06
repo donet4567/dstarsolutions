@@ -43,3 +43,42 @@
 :global(html[data-theme]:not([data-theme="ivory"])) .progress { background:var(--line); }
 
 :global(html[data-theme]:not([data-theme="ivory"])) .orbitLabel::before { background:var(--line); }
+
+/* Keep the original sculpture; let the business message lead without pinning. */
+.journey { height:auto; }
+.stage { position:relative; height:auto; min-height:760px; padding:200px var(--gutter) 125px; }
+.edition { top:140px; }
+.opening { position:relative; inset:auto; width:65%; text-align:left; transform:none; opacity:1; pointer-events:auto; }
+.opening h1 { font-size:clamp(48px,5.5vw,84px); line-height:1.08; letter-spacing:-.06em; }
+.opening h1 em { font-size:.88em; }
+.description { max-width:470px; margin-top:26px; color:var(--muted); font-size:15px; line-height:1.85; }
+.price { margin-top:28px; color:var(--text); font-size:17px; }
+.price strong { font-size:29px; font-weight:500; letter-spacing:-1px; }
+.priceNote { margin-top:8px; color:var(--muted); font-size:11px; line-height:1.7; }
+.actions { display:flex; align-items:flex-start; flex-direction:column; gap:19px; margin-top:24px; }
+.quote { display:inline-flex; align-items:center; gap:12px; min-height:44px; color:var(--readable-plum); font-size:12px; font-weight:600; }
+.quote svg { width:17px; height:17px; }
+.sculpture { top:20%; left:58%; width:45%; height:65%; transform:none; }
+.controls { left:auto; right:max(90px,10%); bottom:95px; }
+.bottomLine { color:var(--muted); font-size:8px; right:max(90px,var(--page-edge,5vw)); }
+@media(min-width:761px) and (max-width:1000px) { .stage { padding-top:190px; }.opening { width:72%; }.opening h1 { font-size:58px; }.sculpture { left:60%; width:45%; top:26%; }.edition { font-size:7px; }.description { max-width:390px; } }
+@media(max-width:760px) {
+  .stage { display:block; min-height:0; padding:185px 24px 290px; }
+  .edition { top:154px; left:24px; right:24px; justify-content:flex-start; font-size:7px; }
+  .opening { width:100%; }
+  .opening h1 { font-size:clamp(38px,7.7vw,57px); line-height:1.08; }
+  .description { max-width:480px; margin-top:18px; font-size:13px; line-height:1.75; }
+  .price { margin-top:18px; font-size:14px; max-width:100%; }
+  .price strong { font-size:26px; white-space:nowrap; }
+  .priceNote { font-size:10px; margin-top:5px; max-width:320px; }
+  .actions { gap:9px; margin-top:18px; }
+  .actions :global(.button) { font-size:12px; min-height:48px; }
+  .quote { font-size:11px; }
+  .sculpture { position:absolute; margin:0; left:35%; top:auto; bottom:60px; width:65%; height:230px; }
+  .controls { position:absolute; margin:0; right:auto; left:24px; bottom:100px; flex-wrap:wrap; max-width:125px; }
+  .controls>span { width:100%; margin-bottom:8px; font-size:7px; }
+  .controls button { width:32px; height:32px; }
+  .bottomLine { font-size:6px; gap:12px; right:80px; }
+}
+@media(prefers-reduced-motion:reduce) { .quote,.actions a { transition:none; } }
+@media(max-width:370px) { .opening h1 { font-size:30px; letter-spacing:-.055em; }.price { font-size:12px; }.price strong { font-size:25px; } }

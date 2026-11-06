@@ -26,37 +26,17 @@ test("themes stay visible at the top on phones with the menu closed", async ({ p
   await page.screenshot({ path: testInfo.outputPath("visible-theme-header.png") });
 });
 
-test("process cards animate during scrolling and remain readable with reduced motion", async ({ page, isMobile }, testInfo) => {
-  test.setTimeout(90_000);
+test("all process steps are readable together without a pinned scroll sequence", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const section = page.locator("#process");
   await section.scrollIntoViewIfNeeded();
-  const sticky = section.locator(isMobile ? ".process-grid" : ".process-stage");
-  await expect(sticky).toHaveCSS("position", "sticky");
-  for (const [width, height] of isMobile ? [[393, 839], [393, 650], [320, 568]] : [[1280, 900], [1280, 600], [1280, 560]]) {
-    await page.setViewportSize({ width, height });
-    const seen = new Set<string>();
-    for (let step = 0; step <= 20; step++) {
-      await section.evaluate((element, step) => scrollTo({ top: scrollY + element.getBoundingClientRect().top + (element.clientHeight - innerHeight) * step / 20, behavior: "instant" }), step);
-      await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
-      const current = await section.locator('.process-step[data-current="true"] h3').innerText();
-      seen.add(current);
-      if (step === 10) {
-        await page.getByRole("button", { name: "Midnight Navy", exact: true }).click();
-        await expect(page.locator("html")).toHaveAttribute("data-motion", "full");
-      }
-    }
-    expect([...seen]).toEqual(["Discover", "Design", "Develop", "Deliver"]);
-    const top = await sticky.evaluate((element) => element.getBoundingClientRect().top);
-    expect(Math.abs(top - (isMobile ? 144 : 0))).toBeLessThan(2);
-    const caption = await section.locator(".process-step").last().locator("small").boundingBox();
-    expect(caption!.y + caption!.height).toBeLessThanOrEqual(height);
-  }
+  const steps = section.locator(".simple-process-grid li");
+  await expect(steps).toHaveCount(4);
+  await expect(steps.locator("h3")).toHaveText(["Let’s talk", "Shape the design", "Build & refine", "Check & launch"]);
   await page.screenshot({ path: testInfo.outputPath("process-scroll.png") });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(section.locator(".process-stage")).toHaveCSS("position", "relative");
-  for (const card of await section.locator(".process-step").all()) await expect(card).toHaveCSS("transform", "none");
+  for (const card of await steps.all()) await expect(card).toHaveCSS("transform", "none");
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await expect(page.locator("html")).toHaveAttribute("data-motion", "full");
 });

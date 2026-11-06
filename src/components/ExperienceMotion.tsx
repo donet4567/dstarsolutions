@@ -15,7 +15,7 @@ export default function ExperienceMotion() {
     const process = document.querySelector<HTMLElement>(".process-section");
     const steps = Array.from(process?.querySelectorAll<HTMLElement>(".process-step") ?? []);
     const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-depth-card], [data-depth-section]"));
-    const sections = Array.from(document.querySelectorAll<HTMLElement>("#services, #selected-work, #engineering, #process"));
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("#packages, #business-websites, #selected-work, #process"));
     const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a, .mobile-navigation a"));
     const pinned = window.matchMedia("(min-height: 560px)");
     const phone = window.matchMedia("(max-width: 760px)");

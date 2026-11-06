@@ -1,19 +1,14 @@
 import { expect, test } from "@playwright/test";
 
-test("service demos switch viewport and update dashboard state", async ({ page }) => {
+test("business demo previews switch between desktop and mobile", async ({ page }) => {
   await page.goto("/");
   const sizes = page.getByRole("group", { name: "Website preview size" });
   await sizes.getByRole("button", { name: "Mobile view", exact: true }).click();
   await expect(sizes.getByRole("button", { name: "Mobile view", exact: true })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByLabel("Mobile website concept preview", { exact: true })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Mobile demo concept for Restaurants & cafés", exact: true })).toBeVisible();
   await sizes.getByRole("button", { name: "Desktop view", exact: true }).click();
-  await expect(page.getByLabel("Desktop website concept preview", { exact: true })).toBeVisible();
-  const task = page.getByRole("checkbox", { name: /Bring it to life/ });
-  await task.check();
-  await expect(task).toBeChecked();
-  await expect(page.locator('[aria-live="polite"]').filter({ hasText: "3 / 3" })).toBeVisible();
-  await task.uncheck();
-  await expect(page.locator('[aria-live="polite"]').filter({ hasText: "2 / 3" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Desktop demo concept for Restaurants & cafés", exact: true })).toBeVisible();
+  await expect(page.locator(".business-card")).toHaveCount(6);
 });
 
 test("bloom loads, can be paused and keeps a readable composition", async ({ page }, testInfo) => {
@@ -54,7 +49,9 @@ test("layout stays inside small phones and desktop viewports", async ({ page }) 
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
     await page.locator("#services").scrollIntoViewIfNeeded();
-    await expect(page.getByRole("button", { name: "Let’s build your website" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /A small investment/ })).toBeVisible();
+    await page.locator("#packages").scrollIntoViewIfNeeded();
+    await expect(page.getByRole("link", { name: "Choose This Package: Business Essential", exact: true })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
   }
 });
@@ -72,6 +69,6 @@ test("a missing WebGL renderer retains the illustrated hero and enquiry", async 
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.getByRole("img", { name: /interactive pastel bloom/ })).toBeVisible();
-  await page.getByRole("button", { name: "Start your project", exact: true }).click();
+  await page.locator("header").getByRole("button", { name: "Let’s talk", exact: true }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
 });

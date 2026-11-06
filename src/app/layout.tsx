@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import WebVitals from "@/components/WebVitals";
-import { SITE_NAME, SITE_URL } from "@/components/site";
+import { PHONE, SITE_NAME, SITE_URL } from "@/components/site";
 import "./globals.css";
 import "./cinematic.css";
 import "./depth.css";
 import "./accessibility.css";
 import "./rendering.css";
 import "./themes.css";
+import "./sales.css";
 
 // Run before the page is parsed so a refresh cannot restore a lower section.
 // Normal section links and back/forward navigation keep their usual behavior.
@@ -30,21 +31,23 @@ const restoreTheme = `(() => { let theme = 'ivory'; try { const saved = localSto
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "D Star IT Solutions | Websites & Web Apps in Kerala",
+  title: "Business Websites from ₹8,000 in Kerala | D Star IT Solutions",
   description:
-    "D Star IT Solutions in Bharananganam, Pala, Kerala designs and develops modern websites and custom web applications for your business.",
+    "Beautiful, mobile-friendly business websites from ₹8,000. D Star IT Solutions in Bharananganam, Pala serves Kottayam, Kerala and beyond. Domain and hosting extra.",
   applicationName: SITE_NAME,
   keywords: [
     "website development Kerala",
     "web app development Kerala",
     "website development Pala",
+    "small business websites Kerala",
+    "affordable website design Kottayam",
     "custom web applications",
     SITE_NAME,
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "D Star IT Solutions | Websites & Web Apps in Kerala",
-    description: "Focused website and web app design, engineering and launch.",
+    title: "Beautiful Business Websites from ₹8,000 | D Star IT Solutions",
+    description: "Professional business websites for shops, startups and growing businesses in Kerala and beyond. One-time development fee; domain and hosting extra.",
     type: "website",
     url: "/",
     siteName: SITE_NAME,
@@ -53,8 +56,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "D Star IT Solutions | Websites & Web Apps in Kerala",
-    description: "Thoughtfully designed websites and custom web apps. Based in Bharananganam, Pala, Kerala.",
+    title: "Beautiful Business Websites from ₹8,000 | D Star IT Solutions",
+    description: "Mobile-friendly business websites from Pala, Kerala. Starting development fee ₹8,000; domain and hosting extra.",
     images: ["/dstar-mark-v2.png"],
   },
   icons: {
@@ -71,7 +74,7 @@ const business = {
   url: SITE_URL,
   logo: `${SITE_URL}/dstar-mark-v2.png`,
   image: `${SITE_URL}/dstar-mark-v2.png`,
-  telephone: "+917558920076",
+  telephone: `+${PHONE}`,
   description: "Website design, development and custom web applications.",
   address: {
     "@type": "PostalAddress",

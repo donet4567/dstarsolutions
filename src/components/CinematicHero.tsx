@@ -6,6 +6,7 @@ import type { BloomInput } from "./BloomCanvas";
 import { Arrow } from "./Brand";
 import styles from "./CinematicHero.module.css";
 import BloomCanvas from "./BloomScene";
+import { whatsappUrl } from "./site";
 
 class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
@@ -84,10 +85,13 @@ export default function CinematicHero() {
   return <section ref={section} className={styles.journey} id="top" aria-labelledby="hero-title" data-ready={ready || undefined}>
     <div className={styles.stage}>
       <div className={styles.grain} aria-hidden="true" />
-      <div className={styles.edition}><span><i /> INDEPENDENT DIGITAL STUDIO · KERALA</span><span>DESIGN WITH FEELING. BUILD WITH PURPOSE.</span></div>
+      <div className={styles.edition}><span><i /> INDEPENDENT DIGITAL STUDIO · KERALA</span><span>SMALL BUSINESS. BEAUTIFUL POSSIBILITIES.</span></div>
       <div className={styles.opening}>
-        <h1 id="hero-title">Your next big thing.<br /><em>Built different.</em></h1>
-        <span className={styles.titleNote}>A LITTLE IDEA. ENDLESS POSSIBILITY.</span>
+        <h1 id="hero-title">Beautiful Websites.<br /><em>Built for Your Business.</em></h1>
+        <p className={styles.description} data-testid="hero-description">Professional, mobile-friendly websites for shops, startups and growing businesses. Designed to impress your customers and make it easier for them to contact you.</p>
+        <p className={styles.price}>Business Websites Starting at <strong>₹8,000</strong></p>
+        <p className={styles.priceNote}>One-time development fee. Domain and hosting charges additional.</p>
+        <div className={styles.actions}><a href="#packages" className="button sales-primary">Explore Website Packages <Arrow diagonal /></a><a href={whatsappUrl("Hello D Star, I would like a free quote for a business website starting at ₹8,000. Please help me choose a package.")} target="_blank" rel="noreferrer" className={styles.quote}>Get a Free Quote on WhatsApp <Arrow diagonal /></a></div>
       </div>
       <div ref={sculpture} className={styles.sculpture} data-testid="hero-sculpture" role="img" aria-label="An interactive pastel bloom with curved, pearl-finished petals"
         onPointerDown={(event) => {
@@ -121,17 +125,13 @@ export default function CinematicHero() {
         <BloomFallback />
         {available && <SceneBoundary><BloomCanvas input={input} animate={visible && !paused && !reduced} onReady={onReady} /></SceneBoundary>}
       </div>
-      <div className={styles.orbitLabel} aria-hidden="true"><span>01 / THE SPARK</span><span>THOUGHTFULLY SHAPED ↗</span></div>
-      <div className={styles.chapter} aria-hidden="true"><span>02 / THE POSSIBILITIES</span><p>From a spark.<br />To something <em>real.</em></p></div>
-      <div className={styles.bottomCopy}><p data-testid="hero-description">We turn ambitious ideas into distinctive websites and powerful web apps. Thoughtfully designed. Entirely yours.</p><button className={styles.cta} data-magnetic="" type="button" data-open-brief="">Start your project <Arrow diagonal /></button></div>
       <div className={styles.controls} role="group" aria-label="Sculpture controls">
-        <span>EXPLORE THE FORM</span>
+        <span>THE D STAR BLOOM</span>
         <button type="button" aria-label="Rotate bloom left" disabled={!ready || paused || reduced} onClick={() => { input.current.rotation -= Math.PI / 4; input.current.invalidate?.(); }}>←</button>
         <button type="button" aria-label="Rotate bloom right" disabled={!ready || paused || reduced} onClick={() => { input.current.rotation += Math.PI / 4; input.current.invalidate?.(); }}>→</button>
         <button type="button" className={styles.pause} aria-label={paused ? "Resume animation" : "Pause animation"} aria-pressed={paused} disabled={reduced || !ready} onClick={() => setPaused((value) => !value)}>{paused ? "▶" : "Ⅱ"}</button>
       </div>
-      <div className={styles.bottomLine}><span>ROOTED IN KERALA. BUILT FOR EVERYWHERE.</span><a href="#services">SCROLL TO DISCOVER <span>↓</span></a></div>
-      <div className={styles.progress} aria-hidden="true"><span /></div>
+      <div className={styles.bottomLine}><span>ROOTED IN PALA, KERALA. BUILT FOR YOUR BUSINESS.</span><a href="#business-websites">SEE WEBSITE EXAMPLES <span>↗</span></a></div>
     </div>
   </section>;
 }
