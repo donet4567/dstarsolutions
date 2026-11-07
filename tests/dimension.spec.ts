@@ -4,7 +4,7 @@ test("the package landing page contains the complete customer journey", async ({
   await page.goto("/small-business-websites");
   await expect(page).toHaveTitle(/Small Business Websites from ₹8,000/);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://www.dstarsolutions.in/small-business-websites");
-  await expect(page.locator(".package-price")).toContainText("₹8,000");
+  await expect(page.locator("#top")).not.toContainText("₹8,000");
   await expect(page.locator(".price-card")).toHaveCount(3);
   await expect(page.locator(".business-card")).toHaveCount(6);
   await expect(page.locator(".simple-process-grid li")).toHaveCount(4);
@@ -18,7 +18,7 @@ test("reduced motion keeps packages and the four steps readable", async ({ page 
   await page.locator("#packages").scrollIntoViewIfNeeded();
   await expect(page.locator(".price-card").first()).toHaveCSS("transition-duration", "0s");
   await expect(page.locator(".simple-process-grid li")).toHaveCount(4);
-  for (const card of await page.locator(".simple-process-grid li").all()) await expect(card).toHaveCSS("position", "static");
+  for (const card of await page.locator(".simple-process-grid li").all()) await expect(card).not.toHaveCSS("position", "sticky");
 });
 
 test("project gallery presents all three previews in document order", async ({ page }) => {

@@ -1,4 +1,5 @@
-// Lossless WebP keeps every visible logo pixel and retains PNG compatibility.
+import Image from "next/image";
+// Supplied logo, pre-encoded at the sizes used by the site.
 
 export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={diagonal ? "M6 18 18 6M6 6h12v12" : "M4 12h16m-6-6 6 6-6 6"} /></svg>;
@@ -10,6 +11,6 @@ export function ServiceIcon({ app = false }: { app?: boolean }) {
   return <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">{app ? <><rect x="3" y="3" width="9" height="9" rx="2" /><rect x="16" y="3" width="9" height="9" rx="2" /><rect x="3" y="16" width="9" height="9" rx="2" /><path d="M16 20.5h9m-4.5-4.5v9" /></> : <><rect x="2" y="4" width="24" height="20" rx="3" /><path d="M2 10h24M6 7h.1M10 7h.1m1 8-3 3 3 3m6-6 3 3-3 3" /></>}</svg>;
 }
 export function Brand({ footer = false }: { footer?: boolean }) {
-  return <span className={`brand${footer ? " brand--footer" : ""}`}><span className="brand-symbol"><picture><source srcSet="/dstar-mark-v2.webp" type="image/webp" /><img src="/dstar-mark-v2.png" alt="" width={854} height={718} sizes={footer ? "88px" : "66px"} loading="lazy" decoding="async" /></picture></span><span className="brand-wordmark"><strong>D Star</strong><span>IT Solutions</span></span></span>;
+  if (footer) return <span className="brand brand--footer"><Image unoptimized className="brand-lockup" src="/brand/dstar-lockup.webp" alt="D Star IT Solutions" width={640} height={597} loading="lazy" decoding="async" /></span>;
+  return <span className="brand"><span className="brand-symbol"><Image unoptimized src="/brand/dstar-monogram-square.webp" loading="eager" alt="" width={256} height={256} decoding="async" /></span><span className="brand-wordmark"><strong>D Star</strong><span>IT Solutions</span></span></span>;
 }
-

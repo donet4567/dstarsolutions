@@ -1,20 +1,16 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import styles from "./Navigation.module.css";
 
-const themes = [
-  ["ivory", "Ivory + Lavender"],
-  ["sand", "Warm Sand + Plum"],
-  ["sage", "Soft Sage + Bronze/Gold"],
-  ["mist", "Mist Blue + Slate"],
-  ["midnight", "Midnight Navy"],
-] as const;
-
-const key = "dstar-theme";
+const key = "dstar-appearance-v1";
+const subscribeReady = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
 function subscribe(update: () => void) {
   const onStorage = (event: StorageEvent) => {
     if (event.key !== key && event.key !== null) return;
-    document.documentElement.dataset.theme = themes.some(([id]) => id === event.newValue) ? event.newValue! : "ivory";
+    document.documentElement.dataset.theme = event.newValue === "ivory" ? "ivory" : "midnight";
     update();
   };
   window.addEventListener("dstar-theme-change", update);
@@ -24,21 +20,16 @@ function subscribe(update: () => void) {
     window.removeEventListener("storage", onStorage);
   };
 }
-const snapshot = () => document.documentElement.dataset.theme || "ivory";
+const snapshot = () => document.documentElement.dataset.theme === "ivory" ? "ivory" : "midnight";
 
 export default function ThemeSwitcher() {
-  const selected = useSyncExternalStore(subscribe, snapshot, () => "ivory");
-  return <div className="theme-switcher">
-    <div className="theme-options" role="group" aria-label="Website color theme">
-      {themes.map(([id, label]) => <button
-        className="theme-option" type="button" key={id} data-palette={id}
-        aria-label={label} title={label} aria-pressed={selected === id}
-        onClick={() => {
-          document.documentElement.dataset.theme = id;
-          window.dispatchEvent(new Event("dstar-theme-change"));
-          try { localStorage.setItem(key, id); } catch { /* The theme still works when storage is unavailable. */ }
-        }}
-      ><span aria-hidden="true" /></button>)}
-    </div>
-  </div>;
+  const selected = useSyncExternalStore(subscribe, snapshot, () => "midnight");
+  const dark = selected === "midnight";
+  const ready = useSyncExternalStore(subscribeReady, clientReady, serverReady);
+  return <div className="theme-switcher"><button disabled={!ready} className={styles.themeControl} type="button" aria-label={`Switch to ${dark ? "light" : "dark"} theme`} onClick={() => {
+    const next = dark ? "ivory" : "midnight";
+    document.documentElement.dataset.theme = next;
+    window.dispatchEvent(new Event("dstar-theme-change"));
+    try { localStorage.setItem(key, next); } catch { /* Appearance still works when browser storage is unavailable. */ }
+  }}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">{dark ? <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></> : <path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5 8.7 8.7 0 1 0 20.5 14.3Z" />}</svg><span>{dark ? "Light appearance" : "Dark appearance"}</span></button></div>;
 }

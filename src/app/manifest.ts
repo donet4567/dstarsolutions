@@ -7,15 +7,14 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Website and web app development studio.",
     start_url: "/",
     display: "standalone",
-    background_color: "#fffefd",
-    theme_color: "#fffefd",
+    background_color: "#100d15",
+    theme_color: "#100d15",
     icons: [
       {
-        src: "/dstar-mark-v2.png",
-        sizes: "854x718",
+        src: "/brand/dstar-icon-256.png",
+        sizes: "256x256",
         type: "image/png",
       },
     ],
   };
 }
-

@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-07",
+  "scope": "Local production Lighthouse 13.6.0; no deployment performed",
+  "checks": {
+    "build": "passed",
+    "lint": "passed, zero warnings",
+    "typescript": "passed",
+    "fullSuite": "45 of 46 passed before the final theme startup fix",
+    "themeFix": "Passed all 6 repeated runs, three on desktop and three on mobile",
+    "responsiveWidths": [
+      360,
+      390,
+      768,
+      1024,
+      1440
+    ]
+  },
+  "lighthouse": {
+    "mobile": {
+      "scores": {
+        "performance": 72,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "agentic-browsing": 100
+      },
+      "lcp": "1.1 s",
+      "tbt": "2,060 ms",
+      "cls": "0",
+      "source": ".dstar-backups/performance/mobile-2026-11-07T10-42-53-588Z.report.json"
+    },
+    "desktop": {
+      "scores": {
+        "performance": 90,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "agentic-browsing": 100
+      },
+      "lcp": "0.9 s",
+      "tbt": "250 ms",
+      "cls": "0.005",
+      "source": ".dstar-backups/performance/desktop-2026-11-07T10-47-48-202Z.report.json"
+    }
+  },
+  "unresolved": [
+    "Mobile startup blocking time remains too high; the high mobile performance target is not met."
+  ]
+}

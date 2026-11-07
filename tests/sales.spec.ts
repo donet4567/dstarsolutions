@@ -51,7 +51,9 @@ test("enquiry validates fields and preserves Unicode, punctuation and package se
 
 test("all six demo concepts have real local pages and truthful enquiry links", async ({ page, request }) => {
   await page.goto("/");
-  const links = await page.locator(".business-card-actions").getByRole("link", { name: "View Demo", exact: true }).evaluateAll((nodes) => nodes.map((node) => node.getAttribute("href")!));
+  const links = ["restaurants-cafes", "salons-beauty", "construction", "boutiques-shops", "travel-homestays", "professional-services"].map((slug) => `/website-demos/${slug}`);
+  await expect(page.locator(".gallery-image-stage img")).toHaveCount(6);
+  await expect(page.locator('a[href^="/website-demos/"]')).toHaveCount(0);
   expect(links).toHaveLength(6);
   for (const href of links) {
     const response = await request.get(href);
@@ -74,7 +76,7 @@ test("pricing and enquiry controls fit phones, tablets and desktops on both page
   for (const path of ["/", "/small-business-websites"]) {
     await page.goto(path);
     await page.emulateMedia({ reducedMotion: "reduce" });
-    for (const width of [320, 390, 768, 1024, 1440]) {
+    for (const width of [320, 360, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       for (const section of ["#top", "#packages", "#business-websites", "#contact"]) {
         await page.locator(section).scrollIntoViewIfNeeded();
@@ -115,11 +117,11 @@ test("floating WhatsApp leaves package buttons reachable", async ({ page, isMobi
   await expect(floating).toBeVisible();
 });
 
-test("small phone hero presents the price and package CTA without scrolling", async ({ page }, testInfo) => {
+test("small phone hero presents the package CTA without hero pricing", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 320, height: 568 });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.locator("#top")).toContainText("₹8,000");
+  await expect(page.locator("#top")).not.toContainText("₹8,000");
   const cta = await page.getByRole("link", { name: "Explore Website Packages", exact: true }).boundingBox();
   expect(cta!.y + cta!.height).toBeLessThanOrEqual(568);
   expect(await page.evaluate(() => scrollY)).toBe(0);

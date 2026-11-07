@@ -5,7 +5,7 @@ test("brand, business metadata and crawlable routes are consistent", async ({ pa
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await expect(page).toHaveTitle(/D Star IT Solutions/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Built for Your Business.");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Small studio.");
   await expect(page.locator("footer address")).toContainText("Bharananganam, Pala");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /^https:\/\/www\.dstarsolutions\.in\/?$/);
   const business = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText());

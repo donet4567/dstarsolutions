@@ -2,20 +2,21 @@ import Link from "next/link";
 import { Arrow, Brand, Star } from "./Brand";
 import { defaultWhatsApp, DISPLAY_PHONE, PHONE, whatsappUrl } from "./site";
 import { exclusions, faqs, packages, packageWhatsApp } from "./website-content";
+import ThemeSwitcher from "./ThemeSwitcher";
 export { default as FloatingWhatsApp } from "./FloatingWhatsApp";
 
 export function WebsiteBenefits() {
   return <section className="sales-benefits container" id="services" aria-labelledby="benefits-title">
-    <div><p className="eyebrow"><span className="section-dash" /> MADE FOR YOUR EVERYDAY BUSINESS</p><h2 id="benefits-title">A small investment.<br /><em>A stronger first impression.</em></h2></div>
+    <div><p className="eyebrow"><span className="section-dash" /> THE BUSINESS OF FIRST IMPRESSIONS</p><h2 id="benefits-title">Built to look good.<br /><em>Made to work harder.</em></h2></div>
     <div className="benefit-grid">{[["Look the part.", "Give customers a professional place to discover your business, services and work."], ["Be easy to reach.", "Turn interest into a conversation with WhatsApp enquiries, contact details and directions."], ["Feel right on every screen.", "A fast, mobile-friendly website that makes browsing your business simple."]].map(([title, text], index) => <article key={title}><span className="sales-number">0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
   </section>;
 }
 
 export function WebsitePackages({ showGuide = true }: { showGuide?: boolean }) {
   return <section className="sales-section pricing-section" id="packages" aria-labelledby="packages-title"><div className="container">
-    <div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> THOUGHTFUL WEBSITES. CLEAR PACKAGES.</p><h2 id="packages-title">Premium in feel.<br /><em>Practical in price.</em></h2></div><p>Choose a starting point that fits your business.<br />We’ll take care of the details, together.</p></div>
+    <div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> WEBSITE PACKAGES</p><h2 id="packages-title">Choose your<br /><em>next chapter.</em></h2></div><p>Three considered starting points.<br />One clear scope. A website that feels like you.</p></div>
     <div className="pricing-grid">{packages.map((plan, index) => <article className={`price-card ${index === 0 ? "price-card-featured" : ""}`} key={plan.id} aria-labelledby={`plan-${plan.id}`}>
-      <div className="plan-kicker"><span>0{index + 1} / {index === 0 ? "YOUR STARTING POINT" : index === 1 ? "ROOM TO GROW" : "DISTINCTIVELY YOURS"}</span><Star /></div>
+      <div className="plan-kicker"><span>0{index + 1}</span><span>{index === 0 ? "START HERE" : index === 1 ? "ROOM TO GROW" : "DISTINCTIVELY YOURS"}</span></div>
       <h3 id={`plan-${plan.id}`}>{plan.name}</h3><p className="plan-audience">{plan.audience}</p><p className="plan-price">{plan.price}<span>starting development fee</span></p><a className={`button ${index === 0 ? "sales-primary" : "sales-secondary"}`} href={packageWhatsApp(plan)} target="_blank" rel="noreferrer" aria-label={`Choose This Package: ${plan.name}`}>Choose This Package <Arrow diagonal /></a>
       <p className="plan-note">{plan.note}</p><ul>{plan.features.map((feature) => <li key={feature}><span aria-hidden="true">✓</span>{feature}</li>)}</ul>
     </article>)}</div>
@@ -48,5 +49,5 @@ export function EnquirySection() {
 }
 
 export function SiteFooter() {
-  return <footer className="footer container"><div className="footer-grid"><div className="footer-identity"><Link className="brand-link" href="/" title="D Star home"><Brand footer /></Link><p>Thoughtfully designed.<br />Beautifully engineered. From Kerala.</p></div><nav className="footer-explore" aria-label="Footer navigation"><p className="footer-label">Explore</p><Link href="/small-business-websites">Website packages</Link><a href="#business-websites">Business examples</a><a href="#selected-work">Selected work</a><a href="#process">Our process</a></nav><div className="footer-contact"><p className="footer-label">Let’s build your business website</p><a className="footer-contact-phone" href={`tel:+${PHONE}`}>{DISPLAY_PHONE} <Arrow diagonal /></a><a className="footer-whatsapp" href={defaultWhatsApp} target="_blank" rel="noreferrer"><span className="footer-contact-dot" /> Talk to us on WhatsApp <Arrow diagonal /></a><address>Bharananganam, Pala<br />Kerala, India</address></div></div><div className="footer-meta"><span>© {new Date().getFullYear()} D Star IT Solutions. Made with intention.</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div></footer>;
+  return <footer className="footer container"><div className="footer-grid"><div className="footer-identity"><Link className="brand-link" href="/" title="D Star home"><Brand footer /></Link><p>Independent thinking.<br />Beautifully built. From Kerala.</p></div><nav className="footer-explore" aria-label="Footer navigation"><p className="footer-label">Explore</p><Link href="/small-business-websites">Website packages</Link><a href="#business-websites">Business examples</a><a href="#selected-work">Selected work</a><a href="#process">Our process</a></nav><div className="footer-contact"><p className="footer-label">A good place to start</p><a className="footer-contact-phone" href={`tel:+${PHONE}`}>{DISPLAY_PHONE} <Arrow diagonal /></a><a className="footer-whatsapp" href={defaultWhatsApp} target="_blank" rel="noreferrer"><span className="footer-contact-dot" /> Talk to us on WhatsApp <Arrow diagonal /></a><address>Bharananganam, Pala<br />Kerala, India</address></div></div><div className="footer-signature" aria-hidden="true">D STAR<span>✳</span></div><div className="footer-meta"><span>© {new Date().getFullYear()} D Star IT Solutions.</span><div className="footer-appearance"><span>Appearance</span><ThemeSwitcher /></div><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div></footer>;
 }

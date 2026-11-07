@@ -1,17 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import WebVitals from "@/components/WebVitals";
 import { PHONE, SITE_NAME, SITE_URL } from "@/components/site";
-import "./globals.css";
-import "./cinematic.css";
-import "./depth.css";
-import "./accessibility.css";
+import "./foundation.css";
 import "./rendering.css";
 import "./themes.css";
 import "./sales.css";
+import "./orbit.css";
 
 // Run before the page is parsed so a refresh cannot restore a lower section.
 // Normal section links and back/forward navigation keep their usual behavior.
-const resetScrollOnReload = `document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduced' : 'full';
+const resetScrollOnReload = `(() => { const motion = matchMedia('(prefers-reduced-motion: reduce)'); const update = () => document.documentElement.dataset.motion = motion.matches ? 'reduced' : 'full'; update(); motion.addEventListener('change', update); })();
 (() => {
   if (performance.getEntriesByType('navigation')[0]?.type !== 'reload') return;
   const previousRestoration = history.scrollRestoration;
@@ -27,7 +25,7 @@ const resetScrollOnReload = `document.documentElement.dataset.motion = matchMedi
 })();`;
 
 // Synchronous and inline: restore the palette before any body content can paint.
-const restoreTheme = `(() => { let theme = 'ivory'; try { const saved = localStorage.getItem('dstar-theme'); if (['ivory','sand','sage','mist','midnight'].includes(saved)) theme = saved; } catch {} document.documentElement.dataset.theme = theme; })();`;
+const restoreTheme = `(() => { let theme = 'midnight'; try { const saved = localStorage.getItem('dstar-appearance-v1'); if (saved === 'ivory' || saved === 'midnight') theme = saved; } catch {} document.documentElement.dataset.theme = theme; })();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -52,17 +50,17 @@ export const metadata: Metadata = {
     url: "/",
     siteName: SITE_NAME,
     locale: "en_IN",
-    images: [{ url: "/dstar-mark-v2.png", width: 854, height: 718, alt: SITE_NAME }],
+    images: [{ url: "/brand/dstar-lockup.webp", width: 640, height: 597, alt: SITE_NAME }],
   },
   twitter: {
     card: "summary",
     title: "Beautiful Business Websites from ₹8,000 | D Star IT Solutions",
     description: "Mobile-friendly business websites from Pala, Kerala. Starting development fee ₹8,000; domain and hosting extra.",
-    images: ["/dstar-mark-v2.png"],
+    images: ["/brand/dstar-lockup.webp"],
   },
   icons: {
-    icon: "/dstar-mark-v2.png",
-    apple: "/dstar-mark-v2.png",
+    icon: "/brand/dstar-icon-256.png",
+    apple: "/brand/dstar-icon-256.png",
   },
 };
 
@@ -72,8 +70,8 @@ const business = {
   "@id": `${SITE_URL}/#business`,
   name: SITE_NAME,
   url: SITE_URL,
-  logo: `${SITE_URL}/dstar-mark-v2.png`,
-  image: `${SITE_URL}/dstar-mark-v2.png`,
+  logo: `${SITE_URL}/brand/dstar-lockup.webp`,
+  image: `${SITE_URL}/brand/dstar-lockup.webp`,
   telephone: `+${PHONE}`,
   description: "Website design, development and custom web applications.",
   address: {
@@ -88,8 +86,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#fffefd",
-  colorScheme: "light",
+  themeColor: "#100d15",
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -104,6 +102,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
-
-
-

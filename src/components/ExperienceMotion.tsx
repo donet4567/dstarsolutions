@@ -1,95 +1,20 @@
 "use client";
-
 import { useEffect } from "react";
 
-// Progressive enhancement: section content stays readable without JavaScript.
+// Intersection events drive navigation; scroll work never scans section geometry.
 export default function ExperienceMotion() {
   useEffect(() => {
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotion = () => {
-      const value = motion.matches ? "reduced" : "full";
-      if (document.documentElement.dataset.motion !== value) document.documentElement.dataset.motion = value;
-    };
-    updateMotion();
-    motion.addEventListener("change", updateMotion);
-    const process = document.querySelector<HTMLElement>(".process-section");
-    const steps = Array.from(process?.querySelectorAll<HTMLElement>(".process-step") ?? []);
-    const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-depth-card], [data-depth-section]"));
-    const sections = Array.from(document.querySelectorAll<HTMLElement>("#packages, #business-websites, #selected-work, #process"));
-    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a, .mobile-navigation a"));
-    const pinned = window.matchMedia("(min-height: 560px)");
-    const phone = window.matchMedia("(max-width: 760px)");
-    const processHeading = process?.querySelector<HTMLElement>(".process-stage > .section-heading");
-    const header = document.querySelector<HTMLElement>(".topbar");
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      // Read geometry together, before changing inherited CSS variables. Mixing
-      // reads and writes forces the browser to lay out the page repeatedly.
-      const total = document.documentElement.scrollHeight - innerHeight;
-      const sectionBounds = sections.map((element) => ({ element, bounds: element.getBoundingClientRect() }));
-      const processBounds = !motion.matches ? process?.getBoundingClientRect() : undefined;
-      const depthBounds = !motion.matches ? elements.filter((element) => !element.checkVisibility || element.checkVisibility({ contentVisibilityAuto: true }))
-        .map((element) => ({ element, bounds: element.getBoundingClientRect() })) : [];
-      header?.style.setProperty("--page-progress", String(total > 0 ? scrollY / total : 0));
-      const active = sectionBounds.find(({ bounds }) => bounds.top <= innerHeight * .4 && bounds.bottom > innerHeight * .4)?.element;
-      links.forEach((link) => { if (active && link.hash === `#${active.id}`) link.setAttribute("aria-current", "location"); else link.removeAttribute("aria-current"); });
-      if (motion.matches) return;
-      if (process && processBounds) {
-        const bounds = processBounds;
-        // On phones the heading scrolls naturally before the cards pin below
-        // the header. Start the sequence when the first card reaches that spot.
-        const nearViewport = bounds.top < innerHeight + 200 && bounds.bottom > -200;
-        const start = pinned.matches && phone.matches && nearViewport && processHeading ? Math.max(0, processHeading.offsetHeight + 30 - 144) : 0;
-        const progress = Math.max(0, Math.min(1, pinned.matches ? (-bounds.top - start) / Math.max(1, bounds.height - innerHeight - start) : (innerHeight * .7 - bounds.top) / bounds.height));
-        process.style.setProperty("--process-progress", String(progress));
-        steps.forEach((step, index) => {
-          step.dataset.current = String(Math.min(3, Math.floor(progress * 4)) === index);
-        });
-      }
-      depthBounds.forEach(({ element, bounds }) => {
-        if (bounds.top > innerHeight + 200 || bounds.bottom < -200) return;
-        const entry = Math.max(0, Math.min(1, (innerHeight - bounds.top) / (innerHeight * .65)));
-        const travel = Math.max(-1, Math.min(1, (innerHeight * .5 - bounds.top - bounds.height * .5) / (innerHeight * .5 + bounds.height * .5)));
-        element.style.setProperty("--depth-progress", String(entry));
-        element.style.setProperty("--depth-travel", String(travel));
-      });
-    };
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
-    update();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    motion.addEventListener("change", schedule);
-    pinned.addEventListener("change", schedule);
-    // Deferred sections can acquire their real height after the first scroll
-    // event. Refresh the card progress when that layout settles as well.
-    const processObserver = new ResizeObserver(schedule);
-    if (process) processObserver.observe(process);
-    const fine = matchMedia("(hover: hover) and (pointer: fine)");
-    const buttons = Array.from(document.querySelectorAll<HTMLElement>("[data-magnetic], .nav-cta, .button-dark"));
-    const magnet = (event: PointerEvent) => {
-      if (motion.matches || !fine.matches || !(event.currentTarget instanceof HTMLElement)) return;
-      const element = event.currentTarget;
-      const bounds = element.getBoundingClientRect();
-      const x = Math.max(-5, Math.min(5, (event.clientX - bounds.left - bounds.width / 2) * .1));
-      const y = Math.max(-4, Math.min(4, (event.clientY - bounds.top - bounds.height / 2) * .1));
-      element.style.translate = `${x}px ${y}px`;
-    };
-    const reset = (event: PointerEvent) => {
-      if (event.currentTarget instanceof HTMLElement) event.currentTarget.style.translate = "0px 0px";
-    };
-    buttons.forEach((button) => { button.addEventListener("pointermove", magnet); button.addEventListener("pointerleave", reset); });
-    return () => {
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      motion.removeEventListener("change", updateMotion);
-      motion.removeEventListener("change", schedule);
-      pinned.removeEventListener("change", schedule);
-      processObserver.disconnect();
-      buttons.forEach((button) => { button.removeEventListener("pointermove", magnet); button.removeEventListener("pointerleave", reset); button.style.removeProperty("translate"); });
-      cancelAnimationFrame(frame);
-      delete document.documentElement.dataset.motion;
-    };
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotion = () => { document.documentElement.dataset.motion = motion.matches ? "reduced" : "full"; };
+    updateMotion(); motion.addEventListener("change", updateMotion);
+    const links = [...document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a, .mobile-navigation a")];
+    const observer = new IntersectionObserver((entries) => {
+      const active = entries.find((entry) => entry.isIntersecting);
+      if (!active) return;
+      links.forEach((link) => { if (link.hash === `#${active.target.id}`) link.setAttribute("aria-current", "location"); else link.removeAttribute("aria-current"); });
+    }, { rootMargin: "-15% 0px -65% 0px" });
+    document.querySelectorAll("#packages, #business-websites, #selected-work, #process").forEach((section) => observer.observe(section));
+    return () => { motion.removeEventListener("change", updateMotion); observer.disconnect(); };
   }, []);
   return null;
 }

@@ -1,26 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-test("the bloom renders in a worker and keeps its controls", async ({ page }) => {
-  const worker = page.waitForEvent("worker");
+test("editorial hero is crawlable and reduced motion retains a static sculpture", async ({ page, request }) => {
+  const response = await request.get("/");
+  expect(await response.text()).toContain("Small studio.");
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await worker;
-  await expect(page.locator("#top")).toHaveAttribute("data-ready", "true", { timeout: 45_000 });
-  await page.getByRole("button", { name: "Rotate bloom left" }).click();
-  await page.getByRole("button", { name: "Pause animation", exact: true }).click();
-  await expect(page.getByRole("button", { name: "Resume animation", exact: true })).toHaveAttribute("aria-pressed", "true");
-});
-
-test("browsers without transferable canvases retain the same interactive bloom", async ({ page }) => {
-  await page.addInitScript(() => {
-    Object.defineProperty(HTMLCanvasElement.prototype, "transferControlToOffscreen", { value: undefined, configurable: true });
-  });
-  const workers: string[] = [];
-  page.on("worker", (worker) => workers.push(worker.url()));
-  await page.goto("/");
-  await expect(page.locator("#top")).toHaveAttribute("data-ready", "true", { timeout: 45_000 });
-  await expect(page.locator("#top canvas")).toBeVisible();
-  await page.getByRole("button", { name: "Rotate bloom right" }).click();
-  await page.getByRole("button", { name: "Pause animation", exact: true }).click();
-  await expect(page.getByRole("button", { name: "Resume animation", exact: true })).toBeVisible();
-  expect(workers).toHaveLength(0);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.locator("#top")).not.toContainText("₹8,000");
+  await expect(page.locator(".orbit-sculpture canvas")).toHaveCount(0);
+  await expect(page.locator(".orbit-fallback")).toBeVisible();
 });
