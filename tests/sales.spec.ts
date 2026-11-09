@@ -53,7 +53,7 @@ test("all six demo concepts have real local pages and truthful enquiry links", a
   await page.goto("/");
   const links = ["restaurants-cafes", "salons-beauty", "construction", "boutiques-shops", "travel-homestays", "professional-services"].map((slug) => `/website-demos/${slug}`);
   await expect(page.locator(".gallery-image-stage img")).toHaveCount(6);
-  await expect(page.locator('a[href^="/website-demos/"]')).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "View Demo", exact: true })).toHaveCount(6);
   expect(links).toHaveLength(6);
   for (const href of links) {
     const response = await request.get(href);

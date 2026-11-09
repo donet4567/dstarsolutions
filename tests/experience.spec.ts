@@ -1,14 +1,15 @@
 import { expect, test } from "@playwright/test";
 
-test("gallery controls reveal composition and detail without demo links", async ({ page }) => {
+test("image composition controls act independently and demo links are available", async ({ page }) => {
   await page.goto("/");
-  const controls = page.getByRole("group", { name: "Website preview size" });
+  const controls = page.getByRole("group", { name: "Fern & Flour image composition" });
   for (const [name, detail] of [["Detail crop", "true"], ["Full composition", "false"]]) {
     await controls.getByRole("button", { name, exact: true }).click();
     await expect(controls.getByRole("button", { name, exact: true })).toHaveAttribute("aria-pressed", "true");
     await expect(page.locator(".gallery-image-stage").first()).toHaveAttribute("data-detail", detail);
   }
-  await expect(page.locator('.business-card a[href^="/website-demos/"]')).toHaveCount(0);
+  await expect(page.locator(".gallery-image-stage").nth(1)).toHaveAttribute("data-detail", "false");
+  await expect(page.getByRole("link", { name: "View Demo", exact: true })).toHaveCount(6);
 });
 
 test("clean navigation and hero fit all requested widths", async ({ page }) => {

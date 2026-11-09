@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-09",
+  "scope": "Local production build; deployment is not verified by these checks",
+  "checks": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "build": "passed",
+    "fullSuite": "52 passed",
+    "finalFocusedSuite": "10 passed",
+    "responsiveWidths": [
+      320,
+      360,
+      390,
+      768,
+      1024,
+      1440
+    ],
+    "originalPublicAssets": "unchanged",
+    "browserErrorsInSixDemos": 0
+  },
+  "lighthouse": {
+    "mobile": {
+      "source": ".dstar-backups/performance/mobile-2026-11-09T10-03-59-723Z.report.json",
+      "scores": {
+        "performance": 69,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "agentic-browsing": 100
+      },
+      "lcpMs": 2129.248,
+      "totalBlockingTimeMs": 1708.5,
+      "cls": 0
+    },
+    "desktop": {
+      "source": ".dstar-backups/performance/desktop-2026-11-09T10-04-59-692Z.report.json",
+      "scores": {
+        "performance": 87,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "agentic-browsing": 100
+      },
+      "lcpMs": 508.4225,
+      "totalBlockingTimeMs": 306.71125000000006,
+      "cls": 0
+    }
+  },
+  "limitations": [
+    "Mobile main-thread blocking remains high.",
+    "A performance improvement over the recorded 72 mobile / 90 desktop baseline has not been established.",
+    "Field Core Web Vitals require post-deployment observation."
+  ]
+}
