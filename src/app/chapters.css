@@ -1,0 +1,100 @@
+/* Four deliberate surfaces: ink, paper, vermilion and signal orange. */
+:root,html[data-theme="midnight"] { --theme-background:#0c0c0c;--theme-surface:#161616;--theme-tint:#202020;--theme-panel:#191919;--theme-text:#f4f1e9;--theme-muted:#b5b2aa;--theme-accent:#ff7138;--theme-accent-hover:#ff915e;--theme-on-accent:#17100b;--theme-line:#383735; }
+html[data-theme="ivory"] {--theme-background:#f4f1e9;--theme-surface:#eae5dc;--theme-tint:#e0dacf;--theme-panel:#ece7dd;--theme-text:#171614;--theme-muted:#625e57;--theme-accent:#a4320e;--theme-accent-hover:#7c2309;--theme-on-accent:#fff9ee;--theme-line:#c7c0b5;}
+:root {--signal-orange:#ff7138;--signal-red:#b92f26;--paper:#f1eee6;--ink:#171614;}
+.sales-heading h2,.sales-benefits h2,.studio-copy h2,.custom-apps h2,.faq-section h2 {font-family:Arial,sans-serif;font-weight:600;letter-spacing:-.065em;line-height:.98;}
+.sales-heading em,.sales-benefits em,.studio-copy h2 em,.custom-apps em,.faq-section em {color:inherit;font-style:normal;}
+.eyebrow {font-family:monospace!important;font-weight:400;letter-spacing:1.4px;}
+.orbit-ticker {background:var(--signal-orange);color:var(--ink);border:0;padding-block:26px;font-weight:600;letter-spacing:0;}
+.orbit-ticker b {font-size:24px;}
+/* Application work is an editorial sequence, not a second demo gallery. */
+#selected-work {padding-block:110px 90px;border-bottom:1px solid var(--line);}
+#selected-work h2 {font-size:clamp(54px,8vw,118px);font-weight:600;}
+#selected-work ol {display:grid;grid-template-columns:1fr;gap:0;}
+#selected-work li {margin:0!important;width:100%!important;grid-column:auto!important;border-top:1px solid var(--line);padding-block:40px;}
+#selected-work li>button {display:grid;grid-template-columns:42px minmax(0,1fr) minmax(0,1.25fr) 48px;grid-template-rows:auto auto;align-items:center;gap:16px 30px;padding:0;border:0;}
+#selected-work li>button>span:first-child {grid-column:3;grid-row:1/3;aspect-ratio:16/10;margin:0;border-radius:0;background:#181818;}
+#selected-work li>button>span:nth-child(2) {grid-column:1;grid-row:1;align-self:start;padding-top:10px;color:var(--gold);}
+#selected-work li>button>span:nth-child(3) {grid-column:2;grid-row:1;font-size:clamp(26px,3vw,45px);line-height:1.1;align-self:end;letter-spacing:-1.7px;}
+#selected-work li>button>span:nth-child(4) {grid-column:2;grid-row:2;align-self:start;font-size:12px;}
+#selected-work li>button>span:last-child {grid-column:4;grid-row:1/3;border-radius:0;width:44px;height:44px;}
+/* Paper service chapter: a large statement followed by numbered operating principles. */
+.sales-benefits {--text:var(--ink);--muted:#57534c;--gold:#a4320e;--line:#cac3b6;background:var(--paper);color:var(--ink);width:100%;padding:100px max(5vw,calc((100vw - 1440px)/2));margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8vw;}
+.sales-benefits h2 {font-size:clamp(42px,5.7vw,88px);}
+.benefit-grid {display:block;margin:0;}
+.benefit-grid article {display:grid;grid-template-columns:34px 1fr;gap:8px 20px;padding-block:28px;border-top:1px solid var(--line);}
+.benefit-grid .sales-number {grid-row:1/3;margin:5px 0;}
+.benefit-grid h3 {font-size:27px;}.benefit-grid p {grid-column:2;max-width:420px;font-size:14px;}
+/* Each study gets an image-led spread and its own quiet reading column. */
+.business-showcase {padding-block:110px;border-top:0;}
+.business-showcase .sales-heading {padding-bottom:40px;border-bottom:1px solid var(--line);}
+.business-showcase .sales-heading h2 {font-size:clamp(54px,8vw,116px);}
+.gallery-selector button {border-radius:0;padding-inline:18px;}
+.business-grid,.business-grid:has(>.business-card:only-child) {display:grid;grid-template-columns:1fr;gap:0;}
+.business-card {display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);column-gap:5vw;row-gap:0;padding-block:48px;border-bottom:1px solid var(--line);}
+.business-card .gallery-image-stage {grid-column:1;grid-row:1/3;align-self:start;aspect-ratio:3/2;}
+.business-card .business-card-copy {grid-column:2;grid-row:1;align-self:center;padding:0;}
+.business-card .image-view-controls {grid-column:2;grid-row:2;align-self:end;padding:0;}
+.business-card:nth-child(even) {grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);}
+.business-card:nth-child(even) .gallery-image-stage {grid-column:2;}
+.business-card:nth-child(even) .business-card-copy,.business-card:nth-child(even) .image-view-controls {grid-column:1;}
+.business-card h3 {display:block;font-size:clamp(30px,3.8vw,55px);line-height:1.03;letter-spacing:-2px;margin-block:24px;}
+.business-card .gallery-category {display:block;margin-top:14px;font-size:12px;letter-spacing:0;}
+.business-card-copy>p:not(.demo-label) {font-size:15px;max-width:360px;}
+.business-card-actions {display:flex;flex-direction:column;align-items:start;border:0;margin-top:24px;padding:0;gap:4px;}
+.business-card .business-card-actions a:first-child {padding:12px 18px;min-width:150px;background:var(--signal-orange);color:var(--ink);font-size:13px;justify-content:space-between;}
+.business-card .business-card-actions a {font-size:12px;}
+.showcase-toolbar {border:0;margin-bottom:0;padding-bottom:0;}
+.showcase-note {max-width:750px;}
+/* Vermilion typography chapter. No decorative application artwork. */
+.custom-apps {--text:#fff5e9;--muted:#f1d6c9;--gold:#fff5e9;--line:#ffffff55;background:var(--signal-red);color:var(--text);width:100%;margin:0;padding:85px 5vw;border:0;}
+.custom-apps>div {max-width:1440px;margin:auto;grid-template-columns:1.2fr 1fr;gap:24px 8vw;}
+.custom-apps h2 {font-size:clamp(44px,6.5vw,98px);}
+.custom-apps .button {border-color:#fff5e9;color:#fff5e9;border-radius:0;}
+.custom-apps .button:hover {background:#ffffff14;}
+/* Studio principles become a measured two-column ledger. */
+html[data-theme] .sales-studio {background:var(--background);padding-block:110px;border-bottom:1px solid var(--line);}
+.studio-grid {grid-template-columns:1fr 1.2fr;gap:9vw;}
+.studio-copy h2 {font-size:clamp(48px,6vw,88px);}
+.principles>article {grid-template-columns:28px 1fr;gap:20px;padding-block:30px;}
+.principles>article>svg {display:none;}.principles h3 {font-size:25px;letter-spacing:-.8px;}
+/* A paper process ledger with a sticky introduction and advancing rules. */
+.simple-process {--text:var(--ink);--muted:#5a554e;--gold:#a4320e;--line:#c9c1b4;background:var(--paper);color:var(--ink);width:100%;margin:0;padding:105px 5vw;display:grid;grid-template-columns:1fr 1.2fr;gap:9vw;align-items:start;content-visibility:visible!important;}
+.simple-process>.sales-heading {display:block;position:sticky;top:120px;margin:0;}
+.simple-process .sales-heading>p {margin-top:28px;color:var(--muted);}
+.simple-process h2 {font-size:clamp(52px,6.5vw,96px);}
+.simple-process-grid {display:block;margin:0;padding:0;}
+.simple-process-grid li,.simple-process-grid li:first-child,.simple-process-grid li:last-child {display:grid;grid-template-columns:60px 1fr;gap:10px 20px;padding:32px 0;border:0;border-top:1px solid var(--line);}
+.simple-process .sales-number {grid-row:1/3;font:36px/1.2 monospace;margin:0;}
+.simple-process h3 {font-size:32px;letter-spacing:-1px;margin:0;}.simple-process li>p {grid-column:2;font-size:14px;max-width:430px;}
+/* Pricing is a comparison, on one baseline, with transparent scope. */
+.pricing-section {padding-block:110px;background:var(--background);border-block:1px solid var(--line);}
+.pricing-grid {gap:0;align-items:stretch;border:1px solid var(--line);}
+.price-card,.price-card:nth-child(2),.price-card:nth-child(3) {margin:0;padding:32px;border:0;border-right:1px solid var(--line);background:transparent;}
+.price-card:last-child {border-right:0;}.price-card-featured {--card-text:var(--text);--card-muted:var(--muted);background:transparent;}
+.price-card-featured .plan-kicker>span:last-child {color:var(--gold);}.plan-price {font-size:clamp(45px,5.2vw,74px);}
+.price-card-featured>.button.sales-primary {background:var(--signal-orange);color:var(--ink);border-color:var(--signal-orange);}
+.price-card h3 {font-size:24px;}.plan-kicker {margin-bottom:35px;}.plan-audience {min-height:72px;}
+.price-card .button,.button.sales-primary,.button.sales-secondary {border-radius:0;}
+.faq-section {padding-block:110px;}.faq-section h2 {font-size:clamp(48px,6vw,88px);}
+.contact-panel.contact-panel {background:var(--signal-orange)!important;}.contact-panel .contact-content h2 {font-family:Arial,sans-serif;font-weight:600;letter-spacing:-.07em;}.contact-panel .contact-content h2 em {font:inherit!important;}
+.footer {padding-top:45px;}.footer-signature {font-weight:600;}.footer-signature span {color:var(--signal-orange);}
+@supports(animation-timeline:view()) {
+ @media(prefers-reduced-motion:no-preference) {
+  .simple-process-grid li::after {content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--signal-orange);transform-origin:left;animation:process-rule linear both;animation-timeline:view();animation-range:entry 15% cover 45%;}
+  .simple-process-grid li {position:relative;}
+  .custom-apps h2 {animation:chapter-read linear both;animation-timeline:view();animation-range:entry 0% entry 100%;}
+  .sales-benefits .benefit-grid article {animation:chapter-read linear both;animation-timeline:view();animation-range:entry 0% entry 100%;}
+  @keyframes process-rule {from {transform:scaleX(0);}to {transform:scaleX(1);}}
+  @keyframes chapter-read {from {translate:0 22px;}to {translate:0 0;}}
+ }
+}
+@media(max-width:1000px) {.price-card {padding:26px 20px;}.plan-audience {min-height:95px;}#selected-work li>button {gap:14px 20px;grid-template-columns:26px 1fr 1.2fr 36px;}.business-card {column-gap:30px;}}
+@media(max-width:760px) {
+ #selected-work {padding-block:70px;}#selected-work li {padding-block:28px;}#selected-work li>button {grid-template-columns:24px minmax(0,1fr) 44px;grid-template-rows:auto auto auto;gap:12px;}#selected-work li>button>span:first-child {grid-column:1/-1;grid-row:1;aspect-ratio:16/10;margin-bottom:8px;}#selected-work li>button>span:nth-child(2) {grid-column:1;grid-row:2;}#selected-work li>button>span:nth-child(3) {grid-column:2;grid-row:2;font-size:26px;letter-spacing:-1px;}#selected-work li>button>span:nth-child(4) {grid-column:2;grid-row:3;}#selected-work li>button>span:last-child {grid-column:3;grid-row:2/4;}
+ .sales-benefits {grid-template-columns:1fr;padding:65px 5vw;gap:34px;}.sales-benefits h2 {font-size:45px;}.benefit-grid article {padding-block:24px;}.benefit-grid h3 {font-size:25px;}
+ .business-showcase {padding-block:70px;}.business-showcase .sales-heading {padding-bottom:28px;}.business-showcase .sales-heading h2 {font-size:58px;}.business-card,.business-card:nth-child(even) {grid-template-columns:1fr;gap:0;padding-block:30px;}.business-card .gallery-image-stage,.business-card:nth-child(even) .gallery-image-stage {grid-column:1;grid-row:1;}.business-card .business-card-copy,.business-card:nth-child(even) .business-card-copy {grid-column:1;grid-row:2;padding-top:24px;}.business-card .image-view-controls,.business-card:nth-child(even) .image-view-controls {grid-column:1;grid-row:3;padding-top:14px;}.business-card h3 {font-size:38px;letter-spacing:-1.5px;margin-block:16px;}.business-card-actions {flex-direction:row;flex-wrap:wrap;gap:12px 20px;}.business-card-copy>p:not(.demo-label) {font-size:14px;}
+ .custom-apps {padding:65px 5vw;}.custom-apps>div {grid-template-columns:1fr;gap:22px;}.custom-apps h2 {grid-row:auto;font-size:46px;}.studio-grid {grid-template-columns:1fr;gap:35px;}html[data-theme] .sales-studio {padding-block:70px;}.studio-copy h2 {font-size:54px;}
+ .simple-process {grid-template-columns:1fr;padding:65px 5vw;gap:35px;}.simple-process>.sales-heading {position:static;}.simple-process h2 {font-size:58px;}.simple-process-grid li {grid-template-columns:42px 1fr;gap:10px 15px;padding-block:26px;}.simple-process h3 {font-size:28px;}.simple-process .sales-number {font-size:28px;}
+ .pricing-section {padding-block:70px;}.pricing-grid {grid-template-columns:1fr;}.price-card,.price-card:nth-child(2),.price-card:nth-child(3) {padding:28px;border-right:0;border-bottom:1px solid var(--line);}.price-card:last-child {border-bottom:0;}.plan-audience {min-height:0;}.faq-section {padding-block:70px;}.faq-section h2 {font-size:52px;}
+}

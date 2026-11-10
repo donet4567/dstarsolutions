@@ -7,14 +7,14 @@ export { default as FloatingWhatsApp } from "./FloatingWhatsApp";
 
 export function WebsiteBenefits() {
   return <section className="sales-benefits container" id="services" aria-labelledby="benefits-title">
-    <div><p className="eyebrow"><span className="section-dash" /> THE BUSINESS OF FIRST IMPRESSIONS</p><h2 id="benefits-title">Built to look good.<br /><em>Made to work harder.</em></h2></div>
+    <div><p className="eyebrow"><span className="section-dash" /> THE BUSINESS OF FIRST IMPRESSIONS</p><h2 id="benefits-title">Design for people.<br /><em>Built for business.</em></h2></div>
     <div className="benefit-grid">{[["Look the part.", "Give customers a professional place to discover your business, services and work."], ["Be easy to reach.", "Turn interest into a conversation with WhatsApp enquiries, contact details and directions."], ["Feel right on every screen.", "A fast, mobile-friendly website that makes browsing your business simple."]].map(([title, text], index) => <article key={title}><span className="sales-number">0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
   </section>;
 }
 
 export function WebsitePackages({ showGuide = true }: { showGuide?: boolean }) {
   return <section className="sales-section pricing-section" id="packages" aria-labelledby="packages-title"><div className="container">
-    <div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> WEBSITE PACKAGES</p><h2 id="packages-title">Choose your<br /><em>next chapter.</em></h2></div><p>Three considered starting points.<br />One clear scope. A website that feels like you.</p></div>
+    <div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> WEBSITE PACKAGES</p><h2 id="packages-title">Clear scope.<br /><em>Clear price.</em></h2></div><p>Three considered starting points.<br />One clear scope. A website that feels like you.</p></div>
     <div className="pricing-grid">{packages.map((plan, index) => <article className={`price-card ${index === 0 ? "price-card-featured" : ""}`} key={plan.id} aria-labelledby={`plan-${plan.id}`}>
       <div className="plan-kicker"><span>0{index + 1}</span><span>{index === 0 ? "START HERE" : index === 1 ? "ROOM TO GROW" : "DISTINCTIVELY YOURS"}</span></div>
       <h3 id={`plan-${plan.id}`}>{plan.name}</h3><p className="plan-audience">{plan.audience}</p><p className="plan-price">{plan.price}<span>starting development fee</span></p><a className={`button ${index === 0 ? "sales-primary" : "sales-secondary"}`} href={packageWhatsApp(plan)} target="_blank" rel="noreferrer" aria-label={`Choose This Package: ${plan.name}`}>Choose This Package <Arrow diagonal /></a>
@@ -37,11 +37,11 @@ export function CustomApplications() {
 }
 
 export function SimpleProcess() {
-  return <section className="sales-section container simple-process" id="process" aria-labelledby="process-title"><div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> FROM HELLO TO ONLINE</p><h2 id="process-title">Four steps.<br /><em>One clear path.</em></h2></div><p>You bring your business.<br />We help give it a home online.</p></div><ol className="simple-process-grid">{[["Discover", "Tell us about your business. We agree on the package, scope, costs and what you need to supply."], ["Design", "We arrange your content into a considered visual design and review it with you."], ["Develop", "We develop your responsive website and make changes within your included revision rounds."], ["Launch", "We check layouts, links and enquiries, then connect your domain and agreed hosting."]].map(([title, detail], index) => <li key={title}><span className="sales-number">0{index + 1}</span><h3>{title}</h3><p>{detail}</p></li>)}</ol></section>;
+  return <section className="sales-section container simple-process" id="process" aria-labelledby="process-title"><div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> FROM HELLO TO ONLINE</p><h2 id="process-title">How we<br /><em>get there.</em></h2></div><p>You bring your business.<br />We help give it a home online.</p></div><ol className="simple-process-grid">{[["Discover", "Tell us about your business. We agree on the package, scope, costs and what you need to supply."], ["Design", "We arrange your content into a considered visual design and review it with you."], ["Develop", "We develop your responsive website and make changes within your included revision rounds."], ["Launch", "We check layouts, links and enquiries, then connect your domain and agreed hosting."]].map(([title, detail], index) => <li key={title}><span className="sales-number">0{index + 1}</span><h3>{title}</h3><p>{detail}</p></li>)}</ol></section>;
 }
 
 export function WebsiteFAQ() {
-  return <section className="sales-section faq-section container" id="faq" aria-labelledby="faq-title"><div><p className="eyebrow"><span className="section-dash" /> A LITTLE MORE CLARITY</p><h2 id="faq-title">Good questions.<br /><em>Straight answers.</em></h2><p>Still weighing things up?<br /><a className="text-link" href={defaultWhatsApp} target="_blank" rel="noreferrer">Ask us on WhatsApp <Arrow diagonal /></a></p></div><div className="faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div></section>;
+  return <section className="sales-section faq-section container" id="faq" aria-labelledby="faq-title"><div><p className="eyebrow"><span className="section-dash" /> A LITTLE MORE CLARITY</p><h2 id="faq-title">Before<br /><em>we begin.</em></h2><p>Still weighing things up?<br /><a className="text-link" href={defaultWhatsApp} target="_blank" rel="noreferrer">Ask us on WhatsApp <Arrow diagonal /></a></p></div><div className="faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div></section>;
 }
 
 export function EnquirySection() {

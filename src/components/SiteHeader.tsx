@@ -37,7 +37,7 @@ export default function SiteHeader() {
   return <header className={`topbar ${styles.header} ${scrolled ? "is-scrolled" : ""}`}>
     <div className={`topbar-inner ${styles.inner}`}>
       <Link className={`brand-link ${styles.brand}`} href="/" title="Home" onClick={() => setMenuOpen(false)}><Brand /></Link>
-      <nav className={`desktop-nav ${styles.desktop}`} aria-label="Main navigation">{navigation.map(([href, label]) => <a key={href} href={href}>{label}</a>)}</nav>
+      <nav className={`desktop-nav ${styles.desktop}`} aria-label="Main navigation">{navigation.map(([href, label], index) => <a key={href} href={href}><span className={styles.chapterIndex} aria-hidden="true">0{index + 1}</span>{label}</a>)}</nav>
       <div className={`topbar-end ${styles.end}`}><button className={styles.cta} type="button" data-open-brief="" onClick={() => setMenuOpen(false)}>Let’s talk <Arrow diagonal /></button><button ref={menuRef} className={`menu-trigger ${styles.menu} ${menuOpen ? "is-open" : ""}`} type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}><span /><span /></button></div>
     </div>
     <nav id="mobile-navigation" className={`mobile-navigation ${styles.mobile}`} aria-label="Mobile navigation" hidden={!menuOpen}>

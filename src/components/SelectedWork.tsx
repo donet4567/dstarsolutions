@@ -178,9 +178,10 @@ export default function SelectedWork() {
         <div><p className="eyebrow"><span className="section-dash" /> BEYOND BUSINESS WEBSITES</p><h2 id="selected-work-title">Selected work.</h2></div>
         <p className={styles.intro}>A closer look at our web application work.<br />Illustrative project previews.</p>
       </div>
+      <nav className="work-project-index" aria-label="Selected project index"><span>PROJECT ARCHIVE / 01—03</span>{projects.map((project,index)=><a href={`#work-${project.slug}`} key={project.slug}><small>0{index+1}</small>{project.name}<span aria-hidden="true">↗</span></a>)}</nav>
       <p className={styles.srOnly} id="selected-work-help">Open a project to view its illustrative concept artwork. Screen content and figures are illustrative.</p>
       <ol className={styles.list}>
-        {projects.map((project, index) => <li key={project.slug}>
+        {projects.map((project, index) => <li key={project.slug} id={`work-${project.slug}`}>
           <button className={styles.row} type="button" data-depth-card="" ref={(node) => { rows.current[index] = node; }}
             aria-describedby="selected-work-help" aria-haspopup="dialog"
             data-active={active === index || undefined}
@@ -203,10 +204,11 @@ export default function SelectedWork() {
               if (hovered.current !== null) showPreview(hovered.current); else dismissPreview();
             }}
             onClick={(event) => openProject(index, event.currentTarget)}>
-            <span className={styles.thumbnail} aria-hidden="true">{artVisible && <ProjectArtwork index={index} sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1100px) 42vw, 30vw" />}<span className={styles.viewProject}>EXPLORE PROJECT <PreviewArrow /></span></span>
+            <span className={styles.thumbnail} aria-hidden="true">{artVisible && <ProjectArtwork index={index} sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1100px) 48vw, 48vw" />}<span className={styles.viewProject}>EXPLORE PROJECT <PreviewArrow /></span></span>
             <span className={styles.number} aria-hidden="true">0{index + 1}</span>
             <span className={styles.name}>{project.name}</span>
             <span className={styles.category}>{project.category}</span>
+            <span className="work-project-summary">{project.description}</span>
             <span className={styles.arrow}><PreviewArrow /></span>
           </button>
         </li>)}

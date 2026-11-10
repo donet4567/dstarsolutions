@@ -8,7 +8,7 @@ import { businessExamples, type BusinessExample } from "./website-content";
 import { whatsappUrl } from "./site";
 
 export function ConceptImage({ example, eager = false }: { example: BusinessExample; eager?: boolean }) {
-  return <picture><source type="image/avif" srcSet={`/gallery/${example.tone}-640.avif 640w, /gallery/${example.tone}-1280.avif 1280w`} sizes="(max-width:600px) 90vw, (max-width:1000px) 80vw, 45vw" /><img src={`/gallery/${example.tone}-1280.webp`} srcSet={`/gallery/${example.tone}-640.webp 640w, /gallery/${example.tone}-1280.webp 1280w`} sizes="(max-width:600px) 90vw, (max-width:1000px) 80vw, 45vw" width={1536} height={1024} loading={eager ? "eager" : "lazy"} decoding="async" alt={`${example.brand}: an original ${example.category.toLowerCase()} website design concept`} /></picture>;
+  return <picture><source type="image/avif" srcSet={`/gallery/${example.tone}-640.avif 640w, /gallery/${example.tone}-1280.avif 1280w`} sizes="(max-width:600px) 90vw, (max-width:1000px) 90vw, 55vw" /><img src={`/gallery/${example.tone}-1280.webp`} srcSet={`/gallery/${example.tone}-640.webp 640w, /gallery/${example.tone}-1280.webp 1280w`} sizes="(max-width:600px) 90vw, (max-width:1000px) 90vw, 55vw" width={1536} height={1024} loading={eager ? "eager" : "lazy"} decoding="async" alt={`${example.brand}: an original ${example.category.toLowerCase()} website design concept`} /></picture>;
 }
 
 const categories = ["Café", "Salon", "Architecture", "Boutique", "Hospitality", "Professional"];
@@ -33,7 +33,7 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     notifyShowroomQuery();
   };
   return <section className="sales-section container business-showcase" id="business-websites" aria-labelledby="business-websites-title">
-    <div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> 03 / THE POSSIBILITY GALLERY</p><h2 id="business-websites-title">Six worlds.<br /><em>One imagination.</em></h2></div><p>Explore a direction. Try it on every screen.<br />Imagine what it could do for your business.</p></div>
+    <div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> 03 / THE POSSIBILITY GALLERY</p><h2 id="business-websites-title">Website<br /><em>directions.</em></h2></div><p>Six fictional businesses. Six distinct directions.<br />Open a demo. Find a starting point.</p></div>
     <div className="gallery-selector" role="group" aria-label="Filter website examples"><button type="button" aria-pressed={category === "all"} onClick={() => select("all")}>All studies <span>06</span></button>{businessExamples.map((example, index) => <button type="button" key={example.slug} aria-pressed={category === example.slug} onClick={() => select(example.slug)}>{categories[index]}</button>)}</div>
     <div className="showcase-toolbar"><p>Original imagery. Interactive website concepts.<br />Image composition controls sit below each study.</p><span role="status" aria-live="polite">{category === "all" ? "06 studies" : "01 study"} / Explore below ↓</span></div>
     <div className="business-grid">{businessExamples.map((example, index) => category === "all" || category === example.slug ? <GalleryCard key={example.slug} example={example} index={index} source={source} category={category} /> : null)}</div>

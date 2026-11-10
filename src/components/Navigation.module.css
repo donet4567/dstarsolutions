@@ -7,8 +7,9 @@
 .header .brand :global(.brand-wordmark) { gap:6px; }
 .header .brand :global(.brand-wordmark strong) { font-size:25px; font-weight:700; letter-spacing:-1px; color:var(--text); }
 .header .brand :global(.brand-wordmark>span) { font-size:7px; letter-spacing:2.2px; color:var(--muted); }
-.header .desktop { display:flex; align-items:center; gap:30px; margin:0; }
-.header .desktop a { position:relative; color:var(--muted); font-size:12px; font-weight:500; white-space:nowrap; padding:14px 0; }
+.header .desktop { display:grid; grid-template-columns:repeat(2,max-content); align-items:center; column-gap:36px; row-gap:0; margin:0 16px 0 auto; }
+.header .desktop a { position:relative; display:flex; align-items:center; gap:12px; color:var(--muted); font-size:12px; font-weight:500; white-space:nowrap; padding:9px 0; }
+.chapterIndex { color:var(--gold); font:8px monospace; }
 .header .desktop a:hover,.header .desktop a[aria-current="location"] { color:var(--text); }
 .header .desktop a::after { content:""; position:absolute; left:0; right:0; bottom:7px; height:1px; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform .2s; }
 .header .desktop a:hover::after,.header .desktop a[aria-current="location"]::after { transform:scaleX(1); }
@@ -23,7 +24,7 @@
 .themeControl svg circle { stroke:currentColor; stroke-width:1.5; }
 .themeControl:hover { color:var(--text); background:var(--theme-tint); border-color:var(--muted); }
 .themeControl:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
-@media(max-width:1100px) { .header .inner { gap:20px; }.header .desktop { gap:20px; }.header .desktop a { font-size:11px; }.header .cta { gap:18px; } }
+@media(max-width:1100px) { .header .inner { gap:20px; }.header .desktop { column-gap:20px; row-gap:0; }.header .desktop a { font-size:11px; }.header .cta { gap:18px; } }
 @media(max-width:900px) {
   .header .inner { height:76px; gap:20px; }
   .header .desktop { display:none; }

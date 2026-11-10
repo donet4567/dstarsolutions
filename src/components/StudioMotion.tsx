@@ -9,7 +9,7 @@ export default function StudioMotion({ motionKey = "studio" }: { motionKey?: str
     const start = () => {
       stopAnimations?.();
       if (preference.matches) return;
-      const targets = document.querySelectorAll<HTMLElement>(".sales-heading, .orbit-manifesto h2, #selected-work h2, .benefit-grid, .business-grid, .simple-process-grid, .pricing-grid, [data-reveal], .contact-content, .concept-site-hero, .chapter-heading, .narrative-grid, .concept-enquiry");
+      const targets = document.querySelectorAll<HTMLElement>(".sales-heading, .orbit-manifesto h2, #selected-work h2, .benefit-grid, .business-card, .simple-process-grid, .pricing-grid, [data-reveal], .contact-content, .concept-site-hero, .chapter-heading, .narrative-grid, .concept-enquiry");
       let observer: IntersectionObserver | undefined;
       let active = true;
       const contexts: { revert: () => void }[] = [];
@@ -24,8 +24,16 @@ export default function StudioMotion({ motionKey = "studio" }: { motionKey?: str
             const element = target as HTMLElement;
             const compact = matchMedia("(max-width: 768px)").matches;
             const context = gsap.context(() => {
-              if (element.matches(".business-grid, .pricing-grid, .benefit-grid, .simple-process-grid, .narrative-grid")) {
-                gsap.fromTo(element.children, { y: compact ? 12 : 26, opacity: .45 }, { y: 0, opacity: 1, duration: compact ? .45 : .8, stagger: compact ? .05 : .12, ease: "power3.out", clearProps: "transform,opacity" });
+              if (element.matches(".business-card")) {
+                const image = element.querySelector(".gallery-image-stage");
+                const copy = element.querySelector(".business-card-copy");
+                if (image) gsap.fromTo(image, { y:compact ? 12 : 26, scale:.97, clipPath:"inset(0 0 6% 0)" }, { y:0, scale:1, clipPath:"inset(0)", duration:compact ? .5 : 1, ease:"power3.out", clearProps:"transform,clipPath" });
+                if (copy) gsap.fromTo(copy, { x:compact ? 0 : 14 }, { x:0, duration:.85, ease:"power3.out", clearProps:"transform" });
+              } else if (element.matches(".orbit-manifesto h2, #selected-work h2, .sales-heading")) {
+                const heading = element.querySelector("h2") ?? element;
+                gsap.fromTo(heading, { y:compact ? 12 : 28, clipPath:"inset(0 0 12% 0)" }, { y:0, clipPath:"inset(0)", duration:compact ? .55 : 1.05, ease:"power3.out", clearProps:"transform,clipPath" });
+              } else if (element.matches(".pricing-grid, .benefit-grid, .simple-process-grid, .narrative-grid")) {
+                gsap.fromTo(element.children, { y: compact ? 12 : 26 }, { y: 0, duration: compact ? .45 : .8, stagger: compact ? .05 : .12, ease: "power3.out", clearProps: "transform" });
                 if (element.matches(".simple-process-grid")) gsap.to(element.children, { "--step-progress": 1, duration: .65, stagger: .18, ease: "power2.inOut" });
               } else if (element.matches(".concept-site-hero")) {
                 gsap.fromTo(element.children, { y: 18, opacity: .4 }, { y: 0, opacity: 1, duration: .9, stagger: .14, ease: "power3.out", clearProps: "transform,opacity" });
