@@ -76,8 +76,8 @@ test("custom application section is text only and theme remains usable in the sh
   await expect(page.locator("#custom-applications .custom-apps-art, #custom-applications img")).toHaveCount(0);
   await expect(page.locator("#custom-applications")).toContainText("quoted separately");
   await page.goto("/website-demos/travel-homestays");
-  await page.getByRole("button", { name: "Switch to light theme", exact:true }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "ivory");
+  await page.getByRole("button", { name: "Switch to dark theme", exact:true }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "midnight");
   await page.getByRole("link", { name: /Next Demo/ }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "ivory");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "midnight");
 });

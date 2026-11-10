@@ -10,7 +10,7 @@ const serverReady = () => false;
 function subscribe(update: () => void) {
   const onStorage = (event: StorageEvent) => {
     if (event.key !== key && event.key !== null) return;
-    document.documentElement.dataset.theme = event.newValue === "ivory" ? "ivory" : "midnight";
+    document.documentElement.dataset.theme = event.newValue === "midnight" ? "midnight" : "ivory";
     update();
   };
   window.addEventListener("dstar-theme-change", update);
@@ -20,10 +20,10 @@ function subscribe(update: () => void) {
     window.removeEventListener("storage", onStorage);
   };
 }
-const snapshot = () => document.documentElement.dataset.theme === "ivory" ? "ivory" : "midnight";
+const snapshot = () => document.documentElement.dataset.theme === "midnight" ? "midnight" : "ivory";
 
 export default function ThemeSwitcher() {
-  const selected = useSyncExternalStore(subscribe, snapshot, () => "midnight");
+  const selected = useSyncExternalStore(subscribe, snapshot, () => "ivory");
   const dark = selected === "midnight";
   const ready = useSyncExternalStore(subscribeReady, clientReady, serverReady);
   return <div className="theme-switcher"><button disabled={!ready} className={styles.themeControl} type="button" aria-label={`Switch to ${dark ? "light" : "dark"} theme`} onClick={() => {

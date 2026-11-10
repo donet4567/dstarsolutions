@@ -2,9 +2,9 @@ import { expect, test } from "@playwright/test";
 
 test("new appearance control lives in the footer and persists two readable themes", async ({ page }, testInfo) => {
   await page.goto("/");
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "midnight");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "ivory");
   await expect(page.locator("header").getByRole("button", { name: /Switch to .* theme/ })).toHaveCount(0);
-  for (const [current, next] of [["midnight", "light"], ["ivory", "dark"]]) {
+  for (const [current, next] of [["ivory", "dark"], ["midnight", "light"]]) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
     await page.screenshot({ path: testInfo.outputPath(`${current}-home.png`) });
@@ -22,7 +22,7 @@ test("new appearance control lives in the footer and persists two readable theme
 test("blocked storage retains usable default appearance", async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(window, "localStorage", { get() { throw new DOMException("Blocked", "SecurityError"); } }));
   await page.goto("/");
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "midnight");
-  await page.locator("footer").getByRole("button", { name: "Switch to light theme", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "ivory");
+  await page.locator("footer").getByRole("button", { name: "Switch to dark theme", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "midnight");
 });

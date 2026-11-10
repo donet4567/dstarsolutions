@@ -29,7 +29,7 @@ const resetScrollOnReload = `(() => { const motion = matchMedia('(prefers-reduce
 })();`;
 
 // Synchronous and inline: restore the palette before any body content can paint.
-const restoreTheme = `(() => { let theme = 'midnight'; try { const saved = localStorage.getItem('dstar-appearance-v1'); if (saved === 'ivory' || saved === 'midnight') theme = saved; } catch {} document.documentElement.dataset.theme = theme; })();`;
+const restoreTheme = `(() => { let theme = 'ivory'; try { const saved = localStorage.getItem('dstar-appearance-v1'); if (saved === 'ivory' || saved === 'midnight') theme = saved; } catch {} document.documentElement.dataset.theme = theme; })();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -90,13 +90,13 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#100d15",
-  colorScheme: "dark light",
+  themeColor: "#f4f1e9",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="ivory" suppressHydrationWarning>
       <head><script id="restore-theme" dangerouslySetInnerHTML={{ __html: restoreTheme }} /><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, "\\u003c") }} />

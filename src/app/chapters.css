@@ -98,3 +98,36 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
  .simple-process {grid-template-columns:1fr;padding:65px 5vw;gap:35px;}.simple-process>.sales-heading {position:static;}.simple-process h2 {font-size:58px;}.simple-process-grid li {grid-template-columns:42px 1fr;gap:10px 15px;padding-block:26px;}.simple-process h3 {font-size:28px;}.simple-process .sales-number {font-size:28px;}
  .pricing-section {padding-block:70px;}.pricing-grid {grid-template-columns:1fr;}.price-card,.price-card:nth-child(2),.price-card:nth-child(3) {padding:28px;border-right:0;border-bottom:1px solid var(--line);}.price-card:last-child {border-bottom:0;}.plan-audience {min-height:0;}.faq-section {padding-block:70px;}.faq-section h2 {font-size:52px;}
 }
+
+/* Each spread keeps native scrolling. A filter change or jump link samples the
+   current position immediately, including sections inserted after hydration. */
+@supports (animation-timeline:view()) {
+  @media (prefers-reduced-motion:no-preference) {
+    .sales-heading h2, .studio-copy h2, .contact-content h2, #selected-work h2 {
+      animation:folio-heading linear both;
+      animation-timeline:view();
+      animation-range:entry 0% entry 95%;
+    }
+    .business-card {view-timeline-name:--spread;}
+    .business-card .gallery-image-stage {
+      animation:folio-image linear both;
+      animation-timeline:--spread;
+      animation-range:entry 0% entry 90%;
+    }
+    .business-card:nth-child(even) {--wipe-origin:0 0 0 9%;}
+    .business-card .business-card-copy, .principles article, .pricing-grid .plan-price {
+      animation:folio-copy linear both;
+      animation-timeline:view();
+      animation-range:entry 0% entry 100%;
+    }
+    .orbit-ticker b {
+      animation:folio-register linear both;
+      animation-timeline:view();
+      animation-range:entry 0% exit 100%;
+    }
+    @keyframes folio-heading {from {clip-path:inset(0 0 14% 0);translate:0 .18em;}to {clip-path:inset(0);translate:0 0;}}
+    @keyframes folio-image {from {clip-path:inset(var(--wipe-origin,0 9% 0 0));scale:.97;}to {clip-path:inset(0);scale:1;}}
+    @keyframes folio-copy {from {translate:0 15px;}to {translate:0 0;}}
+    @keyframes folio-register {from {rotate:-30deg;}to {rotate:60deg;}}
+  }
+}
