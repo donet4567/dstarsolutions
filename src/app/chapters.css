@@ -182,3 +182,26 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
   .gallery-tabs .gallery-selector button {padding-inline:16px;}
   .gallery-scroll {width:36px;min-height:44px;}
 }
+
+/* The original demo images form a swipeable row of complete studies. */
+.study-navigation {display:flex;justify-content:flex-end;gap:8px;margin:16px 0;}
+.business-showcase .business-grid,.business-showcase .business-grid:has(>.business-card:only-child) {
+  display:flex;gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;padding:0 0 24px;scrollbar-width:thin;
+  scrollbar-color:var(--gold) transparent;
+}
+.business-showcase .business-card,.business-showcase .business-card:nth-child(even) {
+  display:flex;flex-direction:column;flex:0 0 78%;min-width:0;gap:0;
+  margin:0;padding:0 0 24px;scroll-snap-align:start;border-bottom:1px solid var(--line);
+}
+.business-showcase .business-card .gallery-image-stage {width:100%;aspect-ratio:3/2;}
+.business-showcase .business-card .business-card-copy {padding:28px 0 0;order:1;}
+.business-showcase .business-card .image-view-controls {padding-top:16px;order:2;}
+.business-showcase .business-card h3 {font-size:clamp(30px,4vw,58px);}
+.business-showcase .business-card-actions {flex-direction:row;flex-wrap:wrap;gap:14px 24px;}
+.business-showcase .business-card-copy>p:not(.demo-label) {max-width:600px;}
+@media(max-width:760px) {
+  .business-showcase .business-grid {gap:28px;}
+  .business-showcase .business-card,.business-showcase .business-card:nth-child(even) {flex-basis:92%;}
+  .business-showcase .business-card h3 {font-size:34px;}
+}
