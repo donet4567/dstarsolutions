@@ -3,6 +3,7 @@
 // Picture supplies the existing pre-encoded AVIF/WebP responsive sources.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import SelectedWorkVideoCard from "./SelectedWorkVideoCard";
 import styles from "./SelectedWork.module.css";
 
 const projects = [
@@ -176,6 +177,7 @@ export default function SelectedWork() {
         <div><p className="eyebrow"><span className="section-dash" /> BEYOND BUSINESS WEBSITES</p><h2 id="selected-work-title" data-title-motion="stamp">Selected work.</h2></div>
         <p className={styles.intro}>A closer look at our web application work.<br />Illustrative project previews.</p>
       </div>
+      <div className="selected-work-layout"><SelectedWorkVideoCard /><div className="selected-work-content">
       <nav className="work-project-index" aria-label="Selected project index"><span>PROJECT ARCHIVE / 01—03</span>{projects.map((project,index)=><a href={`#work-${project.slug}`} key={project.slug}><small>0{index+1}</small>{project.name}</a>)}</nav>
       <p className={styles.srOnly} id="selected-work-help">Open a project to view its illustrative concept artwork. Screen content and figures are illustrative.</p>
       <ol className={styles.list}>
@@ -210,7 +212,7 @@ export default function SelectedWork() {
             <span className={styles.arrow}>View</span>
           </button>
         </li>)}
-      </ol>
+      </ol></div></div>
     </section>
 
     {frame && createPortal(<div className={styles.preview} aria-hidden="true"

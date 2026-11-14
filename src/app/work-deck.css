@@ -38,3 +38,32 @@
  #selected-work li>button>span:nth-child(3) {font-size:28px;}
  #selected-work .work-project-summary {font-size:12px;line-height:1.5;}
 }
+
+.selected-work-layout {display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,28%);gap:36px;align-items:start;}
+.selected-work-content {min-width:0;grid-column:1;grid-row:1;}
+.selected-work-media {grid-column:2;grid-row:1;position:sticky;top:120px;max-width:420px;width:100%;}
+.selected-work-video {position:relative;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:0 15px 40px #00000018;}
+.selected-work-video video {display:block;width:100%;aspect-ratio:4/5;object-fit:cover;}
+.selected-work-video figcaption {padding:18px 18px 8px;font-size:12px;color:var(--muted);line-height:1.6;}
+.selected-work-video button {margin:0 18px 18px;padding:8px 0;background:none;border:0;border-bottom:1px solid var(--line);color:var(--text);font-size:11px;}
+@media(min-width:1101px) {
+ #selected-work .work-project-index {flex-wrap:wrap;}
+ #selected-work .work-project-index>span {width:100%;}
+ #selected-work .work-project-index a {padding:14px 10px;font-size:11px;}
+ #selected-work .selected-work-content li {padding:26px;}
+ #selected-work .selected-work-content li>button {column-gap:22px;}
+ #selected-work .selected-work-content li>button>span:nth-child(3) {font-size:32px;}
+}
+@media(max-width:1100px) {
+ .selected-work-layout {display:flex;flex-direction:column;gap:30px;}
+ .selected-work-media {position:static;max-width:340px;align-self:center;}
+ .selected-work-content {width:100%;}
+}
+@media(prefers-reduced-motion:no-preference) {
+ .selected-work-video {transition:transform .3s,box-shadow .3s;}
+ @media(hover:hover) {.selected-work-video:hover {transform:translateY(-2px);box-shadow:0 19px 44px #00000024;}}
+ @supports(animation-timeline:view()) {
+  .selected-work-video {animation:work-video-enter linear both;animation-timeline:view();animation-range:entry 0% entry 90%;}
+  @keyframes work-video-enter {from {opacity:.65;transform:translateY(14px) scale(.98);}to {opacity:1;transform:none;}}
+ }
+}
