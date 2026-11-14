@@ -65,7 +65,7 @@ test("cinematic controls and business actions remain readable across screen size
   }
 });
 
-test("feature headings have distinct entrances and the signature uses the D monogram", async ({ page }) => {
+test("feature headings have distinct entrances and the footer signature has no extra monogram", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("#hero-title")).toHaveClass(/title-in-view/);
   for (const [selector, effect] of [["#custom-apps-title", "title-assemble"], ["#contact-title", "title-roll"]]) {
@@ -82,5 +82,5 @@ test("feature headings have distinct entrances and the signature uses the D mono
   const signature = page.locator(".footer-signature");
   await signature.scrollIntoViewIfNeeded();
   await expect(signature).not.toContainText("\u2733");
-  await expect(signature.locator("img")).toHaveAttribute("src", "/brand/dstar-letter.svg");
+  await expect(signature.locator("img")).toHaveCount(0);
 });

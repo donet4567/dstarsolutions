@@ -125,7 +125,7 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
   }
 }
 
-.footer-signature > img {width:.83em;height:auto;flex:none;margin-inline:.02em;background:transparent;}
+
 .title-line {display:block;}
 @media (prefers-reduced-motion:no-preference) {
   .title-in-view {--title-ease:cubic-bezier(.18,.74,.18,1);}
@@ -155,4 +155,30 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
   @keyframes title-step {0% {transform:translate(-.18em,.18em);}50% {transform:translate(0,.18em);}100% {transform:none;}}
   @keyframes title-aperture {from {clip-path:inset(34% -.05em);}to {clip-path:inset(-.1em -.05em);}}
   @keyframes title-underline {from {background-size:0% 1px;}to {background-size:100% 1px;}}
+}
+
+/* Keep the supplied gold mark while letting the page show through its dark field. */
+.brand-symbol-clear {
+  display:block;flex:none;width:42px;height:42px;
+  background:linear-gradient(135deg,#ffe7a4,#d7a73e 45%,#fff0c0 58%,#b37b23);
+  mask-image:url("/brand/dstar-monogram.webp");
+  mask-mode:luminance;mask-size:contain;mask-position:center;mask-repeat:no-repeat;
+}
+.brand--footer {display:flex;align-items:center;gap:14px;}
+.brand--footer .brand-symbol-clear {width:68px;height:68px;}
+.brand--footer .brand-wordmark strong {font-size:30px;}
+.gallery-tabs {display:flex;align-items:center;gap:12px;margin-block:20px;}
+.gallery-tabs .gallery-selector {position:relative;flex:1;min-width:0;gap:0;margin:0;padding:0 0 10px;scroll-snap-type:x proximity;overscroll-behavior-x:contain;}
+.gallery-tabs .gallery-selector button {scroll-snap-align:center;min-height:52px;font-family:Arial,sans-serif;font-size:14px;font-weight:500;line-height:1.3;white-space:nowrap;padding:15px 23px;border-width:0 0 1px;letter-spacing:0;}
+.gallery-scroll {display:grid;place-items:center;flex:none;width:44px;height:44px;background:transparent;border:1px solid var(--line);color:var(--text);font-size:22px;}
+.gallery-scroll:hover {background:var(--surface);}
+@media (prefers-reduced-motion:no-preference) {
+  .business-grid {animation:study-enter .55s cubic-bezier(.2,.7,.2,1);}
+  @keyframes study-enter {from {translate:24px 0;opacity:.65;}to {translate:0 0;opacity:1;}}
+}
+@media (max-width:600px) {
+  .gallery-tabs {gap:6px;}
+  .gallery-tabs .gallery-selector {margin:0;padding-right:0;}
+  .gallery-tabs .gallery-selector button {padding-inline:16px;}
+  .gallery-scroll {width:36px;min-height:44px;}
 }
