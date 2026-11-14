@@ -52,9 +52,7 @@ function ProjectArtwork({ index, sizes, onLoad, onError }: {
   </picture>;
 }
 
-function PreviewArrow() {
-  return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" /></svg>;
-}
+function PreviewArrow() { return null; }
 
 export default function SelectedWork() {
   const [active, setActive] = useState<number | null>(null);
@@ -178,7 +176,7 @@ export default function SelectedWork() {
         <div><p className="eyebrow"><span className="section-dash" /> BEYOND BUSINESS WEBSITES</p><h2 id="selected-work-title" data-title-motion="stamp">Selected work.</h2></div>
         <p className={styles.intro}>A closer look at our web application work.<br />Illustrative project previews.</p>
       </div>
-      <nav className="work-project-index" aria-label="Selected project index"><span>PROJECT ARCHIVE / 01—03</span>{projects.map((project,index)=><a href={`#work-${project.slug}`} key={project.slug}><small>0{index+1}</small>{project.name}<span aria-hidden="true">↗</span></a>)}</nav>
+      <nav className="work-project-index" aria-label="Selected project index"><span>PROJECT ARCHIVE / 01—03</span>{projects.map((project,index)=><a href={`#work-${project.slug}`} key={project.slug}><small>0{index+1}</small>{project.name}</a>)}</nav>
       <p className={styles.srOnly} id="selected-work-help">Open a project to view its illustrative concept artwork. Screen content and figures are illustrative.</p>
       <ol className={styles.list}>
         {projects.map((project, index) => <li key={project.slug} id={`work-${project.slug}`}>
@@ -209,7 +207,7 @@ export default function SelectedWork() {
             <span className={styles.name}>{project.name}</span>
             <span className={styles.category}>{project.category}</span>
             <span className="work-project-summary">{project.description}</span>
-            <span className={styles.arrow}><PreviewArrow /></span>
+            <span className={styles.arrow}>View</span>
           </button>
         </li>)}
       </ol>

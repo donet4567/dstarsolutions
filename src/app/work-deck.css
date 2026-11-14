@@ -25,3 +25,16 @@
 @media(max-width:1050px) {.work-project-index {flex-wrap:wrap;}.work-project-index>span {width:100%;border-bottom:1px solid var(--line);padding:14px 0;}.work-project-index a {padding-inline:15px;}.work-project-index a:first-of-type {border-left:0;}#selected-work li {padding:28px;}#selected-work li>button {column-gap:28px;min-height:440px;}#selected-work li>button>span:nth-child(2) {font-size:68px;}}
 @media(max-width:760px) {#selected-work {padding-block:70px 50px;}#selected-work h2 {font-size:72px;}#selected-work>div:first-child {margin-bottom:30px;}.work-project-index {display:block;margin-bottom:28px;}.work-project-index>span {width:auto;}.work-project-index a {min-height:52px;border-left:0;border-bottom:1px solid var(--line);padding:12px 0;}.work-project-index a:last-child {border-bottom:0;}#selected-work li,#selected-work li:nth-child(2),#selected-work li:nth-child(3) {position:relative;top:auto;padding:22px;margin-bottom:24px!important;}#selected-work li>button {grid-template-columns:1fr 44px;grid-template-rows:auto auto auto auto auto;gap:16px;min-height:0;}#selected-work li>button>span:first-child {grid-column:1/-1;grid-row:2;aspect-ratio:16/10;margin:0;}#selected-work li>button>span:nth-child(2) {grid-column:1;grid-row:1;font-size:54px;letter-spacing:-3px;}#selected-work li>button>span:nth-child(3) {grid-column:1/-1;grid-row:3;font-size:34px;letter-spacing:-1.2px;}#selected-work li>button>span:nth-child(4) {grid-column:1/-1;grid-row:4;}#selected-work .work-project-summary {grid-column:1/-1;grid-row:5;font-size:13px;}#selected-work li>button>span:last-child {grid-column:2;grid-row:1;width:44px;height:44px;align-self:start;}}
 @media(prefers-reduced-motion:reduce) {#selected-work li,#selected-work li:nth-child(2),#selected-work li:nth-child(3) {position:relative;top:auto;}}
+
+/* Keep the desktop stack on touch screens, with space for every card to read. */
+@media(max-width:760px) and (prefers-reduced-motion:no-preference) {
+ #selected-work li,#selected-work li:nth-child(2),#selected-work li:nth-child(3) {position:sticky;top:90px;margin-bottom:48px!important;}
+ #selected-work li:nth-child(2) {top:100px;}
+ #selected-work li:nth-child(3) {top:110px;}
+ #selected-work li {padding:18px;}
+ #selected-work li>button {gap:10px;}
+ #selected-work li>button>span:first-child {aspect-ratio:auto;height:clamp(110px,24svh,230px);}
+ #selected-work li>button>span:nth-child(2) {font-size:38px;}
+ #selected-work li>button>span:nth-child(3) {font-size:28px;}
+ #selected-work .work-project-summary {font-size:12px;line-height:1.5;}
+}

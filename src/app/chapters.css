@@ -220,3 +220,10 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
  .study-journey[data-pinned="true"] .business-card h3 {font-size:28px;}
  .study-journey[data-pinned="true"] .business-card-actions {gap:4px;}
 }
+
+.study-journey[data-pinned="true"] .business-card,
+.study-journey[data-pinned="true"] .gallery-image-stage,
+.study-journey[data-pinned="true"] .business-card-copy {animation:none!important;translate:none!important;transform:none!important;clip-path:none!important;}
+.study-journey[data-pinned="true"] .business-grid {overflow-anchor:none;scroll-behavior:auto;}
+.orbit-round {font-size:10px;text-align:center;}
+.work-project-index a>span {display:none;}

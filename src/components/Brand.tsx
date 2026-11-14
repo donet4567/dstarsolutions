@@ -1,7 +1,8 @@
 // The supplied monogram is rendered as a luminance mask to remove its dark field.
 
 export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
-  return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={diagonal ? "M6 18 18 6M6 6h12v12" : "M4 12h16m-6-6 6 6-6 6"} /></svg>;
+  void diagonal;
+  return null;
 }
 export function Star({ className = "" }: { className?: string }) {
   return <svg className={className} viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="m16 0 3.8 12.2L32 16l-12.2 3.8L16 32l-3.8-12.2L0 16l12.2-3.8Z" /></svg>;
