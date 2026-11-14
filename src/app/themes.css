@@ -1,4 +1,4 @@
-/* Two purposeful appearances. Ivory is the initial appearance. */
+/* Two purposeful appearances. Midnight is the initial appearance. */
 :root,html[data-theme="midnight"] {
   --theme-background:#10120f; --theme-surface:#191c17; --theme-tint:#23271e; --theme-panel:#20251b;
   --theme-text:#f5f5ef; --theme-muted:#aeb5a6; --theme-accent:#d8ef79; --theme-accent-hover:#e6fa9b; --theme-on-accent:#1b2310; --theme-line:#343a2e;

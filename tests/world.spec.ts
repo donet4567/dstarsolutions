@@ -12,6 +12,7 @@ test("full-screen 3D world supports release, pause, reduced motion and route cle
   expect(Math.round(bounds!.width)).toBe(viewport.width);
   expect(Math.round(bounds!.height)).toBe(viewport.height);
   const viewportHost=page.locator(".world-viewport");
+  await expect(viewportHost).toHaveAttribute("data-flight",/flying|landing/);
   const launch=page.getByRole("button",{name:"Take flight",exact:true});
   await expect(viewportHost).toHaveAttribute("data-flight","perched",{timeout:25000});
   const garden=await page.locator(".world-proof").evaluate(el=>el.getBoundingClientRect().toJSON());

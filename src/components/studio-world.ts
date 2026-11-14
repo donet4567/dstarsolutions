@@ -84,6 +84,10 @@ export function mountStudioWorld(host: HTMLElement, stage: HTMLElement): WorldCo
   function selectPerch() {
     if (!perches.length) return point(.32,.37);
     const flower=garden.flowerPosition();
+    if (trip===0 || (state==="landing" && trip===1)) {
+      onFlower=true;
+      return flower;
+    }
     const spots=[...perches,flower];
     const index=state==="landing" ? trip-1 : trip;
     const ordered=spots.map((_,i)=>spots[(index+i+spots.length)%spots.length]);
@@ -133,7 +137,12 @@ export function mountStudioWorld(host: HTMLElement, stage: HTMLElement): WorldCo
     garden.mesh.rotation.x=.11;
     garden.mesh.updateMatrixWorld();
     perches=measurePerches();
-    if (!route || state==="perched") {
+    if (!route) {
+      rig.position.copy(point(.84,compact?.28:.34,-.25));
+      rig.rotation.set(-.12,-.32,-.32);
+      rig.scale.setScalar(flightScale);
+      depart();
+    } else if (state==="perched") {
       if(onFlower) perch.copy(garden.flowerPosition());
       else perch.copy(selectPerch());
       state="perched";elapsed=duration;
