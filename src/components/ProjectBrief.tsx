@@ -42,7 +42,9 @@ export default function ProjectBrief({ children }: { children: ReactNode }) {
     if (!(event.target instanceof Element)) return;
     const button = event.target.closest<HTMLButtonElement>("button[data-open-brief]");
     if (!button) return;
-    lastTrigger.current = button;
+    lastTrigger.current = button.closest("#mobile-navigation")
+      ? document.querySelector<HTMLButtonElement>(".menu-trigger")
+      : button;
     setProjectType(button.dataset.openBrief || "Website");
     setPackageInterest(button.dataset.package || (button.dataset.openBrief === "Web application" ? "Custom web application" : "Help me choose"));
     dialogRef.current?.showModal();

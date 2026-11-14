@@ -14,7 +14,15 @@ export default function ExperienceMotion() {
       links.forEach((link) => { if (link.hash === `#${active.target.id}`) link.setAttribute("aria-current", "location"); else link.removeAttribute("aria-current"); });
     }, { rootMargin: "-15% 0px -65% 0px" });
     document.querySelectorAll("#packages, #business-websites, #selected-work, #process").forEach((section) => observer.observe(section));
-    return () => { motion.removeEventListener("change", updateMotion); observer.disconnect(); };
+    const titles = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add("title-in-view");
+        titles.unobserve(entry.target);
+      }
+    }, { threshold: .15 });
+    document.querySelectorAll("[data-title-motion]").forEach(title => titles.observe(title));
+    return () => { titles.disconnect(); motion.removeEventListener("change", updateMotion); observer.disconnect(); };
   }, []);
   return null;
 }

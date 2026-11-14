@@ -1,8 +1,9 @@
 /* Full-screen spatial scene, composed from procedural 3D geometry. */
 .orbit-story { --text:#f0eeeb; --muted:#bbb8c0; --gold:#d9b66f; --line:#5a576055; --background:#08090b; --theme-on-accent:#17131c; position:relative; isolation:isolate; overflow:clip; color:var(--text); background:#08090b; }
+.flight-stage {position:relative;isolation:isolate;overflow:clip;}
 .studio-world { display:contents; }
 .world-layer { position:absolute; inset:0; z-index:0; pointer-events:none; }
-.world-viewport { position:sticky; top:0; width:100%; height:100svh; overflow:hidden; background:#07080a; }
+.world-viewport { position:relative; width:100%; height:100svh; overflow:hidden; background:#07080a; }
 .world-viewport canvas { position:absolute; inset:0; width:100%; height:100%; }
 /* The printed plate also supplies the background under the transparent WebGL stage. */
 .world-viewport, .world-fallback {
@@ -19,15 +20,8 @@ html[data-theme="ivory"] .orbit-story {
 }
 .world-fallback {position:absolute;inset:0;}
 .world-viewport[data-ready="true"] .world-fallback {visibility:hidden;}
-.world-proof {position:absolute;left:76.5%;top:43.5%;width:min(36vw,55vh);aspect-ratio:1;transform:translate(-50%,-50%) rotate(-25deg);}
-.world-proof i,.world-proof b {position:absolute;border-radius:50%;}
-.world-proof i {inset:0;background:conic-gradient(#585854,#e8e6df 11%,#5b5953 35%,#fff 53%,#66655f 78%,#b4b1a7);mask:radial-gradient(transparent 58%,#000 59%);transform:rotateY(28deg);}
-.world-proof i:nth-child(2) {inset:12%;background:conic-gradient(#161719,#73716b,#171718,#adaaa0,#242425);transform:rotate(-30deg) scaleY(.68);}
-.world-proof i:nth-child(3) {inset:25%;background:conic-gradient(#a93412,#ff7b41,#af2d0e,#fe7c42);transform:rotate(55deg) scaleX(.7);}
-.world-proof b {inset:41%;background:linear-gradient(115deg,#dedad1,#333 60%,#9b978e);clip-path:polygon(28% 0,80% 9%,100% 58%, 60% 100%,8% 70%);}
-.studio-world[data-dispersed="true"] .world-proof i:first-child {translate:-14% -6%;}
-.studio-world[data-dispersed="true"] .world-proof i:nth-child(3) {translate:24% 12%;}
-@media(max-width:768px) {.world-proof {left:72%;top:31%;width:53vw;}}
+.world-proof {position:absolute;left:77%;top:61.5%;width:clamp(230px,32vw,440px);aspect-ratio:439/313;background:url("/models/monarch/resting.webp") center / contain no-repeat;transform:translate(-50%,-95%);}
+@media(max-width:768px) {.world-proof {left:71.5%;top:40.5%;width:clamp(140px,47vw,265px);}}
 .orbit-hero { position:relative; z-index:1; display:flex; flex-direction:column; min-height:100svh; padding-top:132px; }
 .orbit-kicker,.orbit-edition,.orbit-hero h1,.orbit-hero-bottom,.orbit-coordinate { position:relative; z-index:1; }
 .orbit-edition { margin-top:30px; font-size:9px; letter-spacing:1.2px; }
@@ -57,7 +51,7 @@ html[data-theme="midnight"] body:has(.studio-world) .topbar:not(.is-scrolled) { 
  .orbit-manifesto { min-height:auto; padding-block:80px; grid-template-columns:1fr; }.orbit-manifesto h2 { font-size:clamp(39px,7vw,60px); }.orbit-manifesto .orbit-note { width:auto; }
 }
 @media(max-width:600px) and (max-height:700px) { .orbit-hero { min-height:100svh; }.orbit-hero h1 { margin-top:13vh; }.orbit-hero-bottom { margin-top:22px; }.world-controls { top:calc(100svh - 96px); bottom:auto; }.world-controls>div { flex-direction:row; }.world-controls button { font-size:9px; min-height:44px; padding:8px 10px; }.orbit-coordinate { padding-block:12px; }.orbit-package { padding-block:10px; } }
-@media(prefers-reduced-motion:no-preference) { .world-proof i { transition:translate .8s cubic-bezier(.2,.65,.2,1); }.world-controls button { transition:color .2s,border-color .2s; } }
+@media(prefers-reduced-motion:no-preference) { .world-controls button { transition:color .2s,border-color .2s; } }
 html[data-theme="ivory"] .orbit-hero h1,
 html[data-theme="ivory"] .orbit-hero h1 :is(span,em),
 html[data-theme="ivory"] .orbit-hero-bottom>p,
@@ -76,4 +70,15 @@ html[data-theme="ivory"] .orbit-manifesto {background:linear-gradient(90deg,tran
 }
 @media(max-width:600px) and (max-height:700px) {
   .orbit-hero h1 {margin-top:17svh;}
+}
+
+.wing-credit {margin-left:.6em;color:inherit;text-decoration:underline;text-underline-offset:.24em;}
+
+@media (max-width:768px) {
+  .orbit-hero {min-height:max(100svh,700px);}
+  .orbit-hero-bottom {padding-bottom:100px;}
+  .world-controls {top:auto;bottom:62px;left:var(--gutter);right:auto;max-width:calc(100% - 48px);}
+  .world-controls>div {flex-direction:row;gap:8px;}
+  .world-controls button {min-height:44px;padding:10px 14px;font-size:11px;}
+  .orbit-coordinate {gap:12px;}
 }

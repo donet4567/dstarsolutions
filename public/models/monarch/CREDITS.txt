@@ -1,0 +1,6 @@
+The wing and body textures and rendered butterfly poster are adaptations of “Danaus plexippus MHNT dos.jpg” by Didier Descouens, Muséum de Toulouse.
+Source: https://commons.wikimedia.org/wiki/File:Danaus_plexippus_MHNT_dos.jpg
+License for these images: Creative Commons Attribution-ShareAlike 4.0 International (https://creativecommons.org/licenses/by-sa/4.0/).
+Changes: the dorsal photograph was cropped, converted to WebP, mirrored across articulated 3D wing surfaces, lit and rendered for the poster.
+Ventral photograph: “Danaus plexippus MHNT ventre.jpg” by Didier Descouens, Muséum de Toulouse (CC BY-SA 4.0). Cropped and registered to the back of each wing.
+https://commons.wikimedia.org/wiki/File:Danaus_plexippus_MHNT_ventre.jpg

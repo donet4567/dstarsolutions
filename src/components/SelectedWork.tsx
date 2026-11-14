@@ -175,7 +175,7 @@ export default function SelectedWork() {
   return <>
     <section ref={section} className={`${styles.section} container`} id="selected-work" aria-labelledby="selected-work-title" data-depth-section="">
       <div className={styles.heading}>
-        <div><p className="eyebrow"><span className="section-dash" /> BEYOND BUSINESS WEBSITES</p><h2 id="selected-work-title">Selected work.</h2></div>
+        <div><p className="eyebrow"><span className="section-dash" /> BEYOND BUSINESS WEBSITES</p><h2 id="selected-work-title" data-title-motion="stamp">Selected work.</h2></div>
         <p className={styles.intro}>A closer look at our web application work.<br />Illustrative project previews.</p>
       </div>
       <nav className="work-project-index" aria-label="Selected project index"><span>PROJECT ARCHIVE / 01—03</span>{projects.map((project,index)=><a href={`#work-${project.slug}`} key={project.slug}><small>0{index+1}</small>{project.name}<span aria-hidden="true">↗</span></a>)}</nav>
