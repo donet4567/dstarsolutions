@@ -24,6 +24,7 @@ function GalleryCard({ example, index, source, category }: { example: BusinessEx
 }
 
 export default function BusinessShowcase({ source = "home" }: { source?: "home" | "guide" }) {
+  const journey = useRef<HTMLDivElement>(null);
   const studies = useRef<HTMLDivElement>(null);
   const selector = useRef<HTMLDivElement>(null);
   const value = useShowroomQuery().get("category");
@@ -37,6 +38,32 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
       behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",
     });
   },[category]);
+  useEffect(() => {
+    const runway=journey.current,rail=studies.current;
+    if (!runway || !rail) return;
+    const motion=matchMedia("(prefers-reduced-motion: reduce)");
+    let frame=0;
+    const update=()=>{
+      frame=0;
+      if(motion.matches) return;
+      const distance=rail.scrollWidth-rail.clientWidth;
+      rail.scrollLeft=Math.min(distance,Math.max(0,110-runway.getBoundingClientRect().top));
+    };
+    const schedule=()=>{if(!frame) frame=requestAnimationFrame(update);};
+    const measure=()=>{
+      const distance=rail.scrollWidth-rail.clientWidth;
+      runway.dataset.pinned=String(!motion.matches && distance>1);
+      runway.style.height=!motion.matches && distance>1 ? (rail.offsetHeight+distance)+"px" : "";
+      schedule();
+    };
+    const observer=new ResizeObserver(measure);
+    observer.observe(rail);
+    rail.querySelectorAll("img").forEach(img=>observer.observe(img));
+    addEventListener("scroll",schedule,{passive:true});
+    motion.addEventListener("change",measure);
+    measure();
+    return()=>{observer.disconnect();cancelAnimationFrame(frame);removeEventListener("scroll",schedule);motion.removeEventListener("change",measure);};
+  },[category]);
   const scrollTabs = (direction:number) => {
     const rail=selector.current;
     rail?.scrollBy({left:direction*rail.clientWidth*.65,
@@ -46,6 +73,11 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     const rail=studies.current;
     const card=rail?.querySelector<HTMLElement>(".business-card");
     if (!rail || !card) return;
+    if(journey.current?.dataset.pinned==="true") {
+      const top=scrollY+journey.current.getBoundingClientRect().top-110;
+      window.scrollTo({top:top+Math.min(rail.scrollWidth-rail.clientWidth,Math.max(0,rail.scrollLeft+direction*(card.offsetWidth+28))),behavior:"smooth"});
+      return;
+    }
     rail.scrollBy({left:direction*(card.offsetWidth+28),
       behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
   };
@@ -60,7 +92,7 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     <div className="gallery-tabs"><button className="gallery-scroll" type="button" aria-label="Previous website categories" onClick={()=>scrollTabs(-1)}>←</button><div ref={selector} className="gallery-selector" role="group" aria-label="Filter website examples"><button type="button" aria-pressed={category === "all"} onClick={() => select("all")}>All studies <span>06</span></button>{businessExamples.map((example, index) => <button type="button" key={example.slug} aria-pressed={category === example.slug} onClick={() => select(example.slug)}>{categories[index]}</button>)}</div><button className="gallery-scroll" type="button" aria-label="Next website categories" onClick={()=>scrollTabs(1)}>→</button></div>
     <div className="showcase-toolbar"><p>Original imagery. Interactive website concepts.<br />Image composition controls sit below each study.</p><span role="status" aria-live="polite">{category === "all" ? "06 studies" : "01 study"} / Swipe to explore →</span></div>
     <div className="study-navigation" role="group" aria-label="Scroll website demos"><button type="button" className="gallery-scroll" aria-label="Previous website demo" onClick={()=>scrollStudies(-1)}>←</button><button type="button" className="gallery-scroll" aria-label="Next website demo" onClick={()=>scrollStudies(1)}>→</button></div>
-    <div ref={studies} className="business-grid" key={category} tabIndex={0} role="region" aria-label="Website demo images">{businessExamples.map((example, index) => category === "all" || category === example.slug ? <GalleryCard key={example.slug} example={example} index={index} source={source} category={category} /> : null)}</div>
+    <div ref={journey} className="study-journey"><div className="study-pin"><div ref={studies} className="business-grid" key={category} tabIndex={0} role="region" aria-label="Website demo images">{businessExamples.map((example, index) => category === "all" || category === example.slug ? <GalleryCard key={example.slug} example={example} index={index} source={source} category={category} /> : null)}</div></div></div>
     <p className="showcase-note">These fictional brands and generated design studies illustrate visual possibilities, not client projects or finished website screenshots. Final design and features are agreed with your package.</p>
   </section>;
 }

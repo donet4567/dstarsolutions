@@ -205,3 +205,18 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
   .business-showcase .business-card,.business-showcase .business-card:nth-child(even) {flex-basis:92%;}
   .business-showcase .business-card h3 {font-size:34px;}
 }
+
+.business-showcase:has(.study-journey[data-pinned="true"]) {content-visibility:visible;}
+.study-journey[data-pinned="true"] .study-pin {position:sticky;top:110px;}
+.study-journey[data-pinned="true"] .business-grid {scroll-snap-type:none;animation:none;overflow-x:hidden;}
+.study-journey[data-pinned="true"] .business-card .gallery-image-stage {aspect-ratio:auto;height:32svh;min-height:150px;}
+.study-journey[data-pinned="true"] .business-card h3 {font-size:30px;margin-block:12px;}
+.study-journey[data-pinned="true"] .business-card .business-card-copy {padding-top:16px;}
+.study-journey[data-pinned="true"] .business-card-copy>p:not(.demo-label) {font-size:13px;}
+.study-journey[data-pinned="true"] .business-card-actions {margin-top:14px;}
+.study-journey[data-pinned="true"] .business-card .image-view-controls {padding-top:10px;}
+@media(max-width:760px) {
+ .study-journey[data-pinned="true"] .business-card .gallery-image-stage {height:25svh;}
+ .study-journey[data-pinned="true"] .business-card h3 {font-size:28px;}
+ .study-journey[data-pinned="true"] .business-card-actions {gap:4px;}
+}
