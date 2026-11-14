@@ -10,5 +10,5 @@ export function ServiceIcon({ app = false }: { app?: boolean }) {
   return <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">{app ? <><rect x="3" y="3" width="9" height="9" rx="2" /><rect x="16" y="3" width="9" height="9" rx="2" /><rect x="3" y="16" width="9" height="9" rx="2" /><path d="M16 20.5h9m-4.5-4.5v9" /></> : <><rect x="2" y="4" width="24" height="20" rx="3" /><path d="M2 10h24M6 7h.1M10 7h.1m1 8-3 3 3 3m6-6 3 3-3 3" /></>}</svg>;
 }
 export function Brand({ footer = false }: { footer?: boolean }) {
-  return <span className={footer ? "brand brand--footer" : "brand"}><span className="brand-symbol brand-symbol-clear" aria-hidden="true" /><span className="brand-wordmark"><strong>D Star</strong><span>IT Solutions</span></span></span>;
+  return <span className={footer ? "brand brand--footer" : "brand"}><span className="brand-symbol brand-symbol-clear" aria-hidden="true" /><span className="brand-wordmark"><strong>D Star</strong><span>Solutions</span></span></span>;
 }

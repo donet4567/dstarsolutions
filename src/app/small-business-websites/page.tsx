@@ -9,7 +9,7 @@ import { Arrow } from "@/components/Brand";
 import { CustomApplications, EnquirySection, FloatingWhatsApp, SimpleProcess, SiteFooter, WebsiteBenefits, WebsiteFAQ, WebsitePackages, WhyDStar } from "@/components/WebsiteSales";
 import { whatsappUrl } from "@/components/site";
 
-const title = "Small Business Websites from ₹8,000 in Kerala | D Star IT Solutions";
+const title = "Small Business Websites from ₹8,000 in Kerala | D Star Solutions";
 const description = "Compare ₹8,000, ₹15,000 and ₹25,000 business website packages. Responsive design, WhatsApp enquiries and personal service from Pala, Kottayam. Domain and hosting extra.";
 export const metadata: Metadata = { title, description, alternates: { canonical: "/small-business-websites" }, openGraph: { title, description, url: "/small-business-websites" }, twitter: { title, description } };
 

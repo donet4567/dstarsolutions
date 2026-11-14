@@ -66,7 +66,7 @@ export default function DemoShowroom({ example }: { example: BusinessExample }) 
     <StudioMotion motionKey={example.slug} />
     <a href="#demo-content" className="skip-link">Skip to demo</a>
     <header className="showroom-toolbar"><Link href={`${source === "home" ? "/" : "/small-business-websites"}${category ? `?category=${category}` : ""}#business-websites`}>← Back to Examples</Link><p><span>0{index + 1} / 06</span><strong>{example.brand}</strong></p><div className="showroom-tools"><div className="device-toggle" role="group" aria-label="Demo preview viewport"><button type="button" aria-pressed={!mobile} onClick={() => changeView(false)}><DeviceIcon />Desktop</button><button type="button" aria-pressed={mobile} onClick={() => changeView(true)}><DeviceIcon mobile />Mobile</button></div><ThemeSwitcher /></div></header>
-    <div className="showroom-caption container"><p>DEMO CONCEPT · FICTIONAL BUSINESS</p><span>Interactive direction by D Star IT Solutions · {mobile ? "Mobile layout" : "Desktop layout · fits your screen"}</span></div>
+    <div className="showroom-caption container"><p>DEMO CONCEPT · FICTIONAL BUSINESS</p><span>Interactive direction by D Star Solutions · {mobile ? "Mobile layout" : "Desktop layout · fits your screen"}</span></div>
     <div className="showroom-stage" data-viewport={mobile ? "mobile" : "desktop"}>
       <div className={`concept-site concept-site-${example.tone}`} id="demo-content">
         <nav className="concept-site-nav" aria-label={`${example.brand} concept navigation`}><a href="#demo-content" className="concept-wordmark">{example.brand}<span aria-hidden="true">{example.mark}</span></a><a href="#demo-services">Explore</a><a href="#demo-contact">About this design ↗</a></nav>

@@ -33,9 +33,9 @@ const restoreTheme = `(() => { let theme = 'midnight'; try { const saved = local
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Business Websites from ₹8,000 in Kerala | D Star IT Solutions",
+  title: "Business Websites from ₹8,000 in Kerala | D Star Solutions",
   description:
-    "Beautiful, mobile-friendly business websites from ₹8,000. D Star IT Solutions in Bharananganam, Pala serves Kottayam, Kerala and beyond. Domain and hosting extra.",
+    "Beautiful, mobile-friendly business websites from ₹8,000. D Star Solutions in Bharananganam, Pala serves Kottayam, Kerala and beyond. Domain and hosting extra.",
   applicationName: SITE_NAME,
   keywords: [
     "website development Kerala",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Beautiful Business Websites from ₹8,000 | D Star IT Solutions",
+    title: "Beautiful Business Websites from ₹8,000 | D Star Solutions",
     description: "Professional business websites for shops, startups and growing businesses in Kerala and beyond. One-time development fee; domain and hosting extra.",
     type: "website",
     url: "/",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Beautiful Business Websites from ₹8,000 | D Star IT Solutions",
+    title: "Beautiful Business Websites from ₹8,000 | D Star Solutions",
     description: "Mobile-friendly business websites from Pala, Kerala. Starting development fee ₹8,000; domain and hosting extra.",
     images: ["/brand/dstar-lockup.webp"],
   },

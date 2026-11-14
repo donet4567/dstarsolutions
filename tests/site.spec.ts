@@ -4,12 +4,12 @@ test("brand, business metadata and crawlable routes are consistent", async ({ pa
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
-  await expect(page).toHaveTitle(/D Star IT Solutions/);
+  await expect(page).toHaveTitle(/D Star Solutions/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Small studio.");
   await expect(page.locator("footer address")).toContainText("Bharananganam, Pala");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /^https:\/\/www\.dstarsolutions\.in\/?$/);
   const business = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText());
-  expect(business.name).toBe("D Star IT Solutions");
+  expect(business.name).toBe("D Star Solutions");
   expect(business["@type"]).toBe("LocalBusiness");
   expect(business.telephone).toBe("+917558920076");
   const sitemap = await request.get("/sitemap.xml");
@@ -18,7 +18,7 @@ test("brand, business metadata and crawlable routes are consistent", async ({ pa
   const robots = await request.get("/robots.txt");
   expect(await robots.text()).toContain("Sitemap: https://www.dstarsolutions.in/sitemap.xml");
   const manifest = await request.get("/manifest.webmanifest");
-  expect((await manifest.json()).name).toBe("D Star IT Solutions");
+  expect((await manifest.json()).name).toBe("D Star Solutions");
   expect(errors).toEqual([]);
 });
 

@@ -160,7 +160,7 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
 /* Keep the supplied gold mark while letting the page show through its dark field. */
 .brand-symbol-clear {
   display:block;flex:none;width:42px;height:42px;
-  background:linear-gradient(135deg,#ffe7a4,#d7a73e 45%,#fff0c0 58%,#b37b23);
+  background:url("/brand/dstar-monogram.webp") center / contain no-repeat;
   mask-image:url("/brand/dstar-monogram.webp");
   mask-mode:luminance;mask-size:contain;mask-position:center;mask-repeat:no-repeat;
 }

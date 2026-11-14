@@ -7,7 +7,7 @@ export function generateStaticParams() { return businessExamples.map(({ slug }) 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const example = businessExamples.find((item) => item.slug === slug);
-  return { title: example ? `${example.brand} — Website Demo Concept | D Star IT Solutions` : "Demo not found", robots: { index: false, follow: true }, alternates: { canonical: `/website-demos/${slug}` } };
+  return { title: example ? `${example.brand} — Website Demo Concept | D Star Solutions` : "Demo not found", robots: { index: false, follow: true }, alternates: { canonical: `/website-demos/${slug}` } };
 }
 
 export default async function WebsiteDemo({ params }: { params: Promise<{ slug: string }> }) {
