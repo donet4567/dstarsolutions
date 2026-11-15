@@ -16,7 +16,7 @@ html[data-theme="ivory"] {--theme-background:#f4f1e9;--theme-surface:#eae5dc;--t
 #selected-work li>button>span:first-child {grid-column:3;grid-row:1/3;aspect-ratio:16/10;margin:0;border-radius:0;background:#181818;}
 #selected-work li>button>span:nth-child(2) {grid-column:1;grid-row:1;align-self:start;padding-top:10px;color:var(--gold);}
 #selected-work li>button>span:nth-child(3) {grid-column:2;grid-row:1;font-size:clamp(26px,3vw,45px);line-height:1.1;align-self:end;letter-spacing:-1.7px;}
-#selected-work li>button>span:nth-child(4) {grid-column:2;grid-row:2;align-self:start;font-size:12px;}
+#selected-work li>button>span:nth-child(4) {grid-column:2;grid-row:2;align-self:start;font-size:18px;}
 #selected-work li>button>span:last-child {grid-column:4;grid-row:1/3;border-radius:0;width:44px;height:44px;}
 /* Paper service chapter: a large statement followed by numbered operating principles. */
 .sales-benefits {--text:var(--ink);--muted:#57534c;--gold:#a4320e;--line:#cac3b6;background:var(--paper);color:var(--ink);width:100%;padding:100px max(5vw,calc((100vw - 1440px)/2));margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8vw;}
@@ -24,7 +24,7 @@ html[data-theme="ivory"] {--theme-background:#f4f1e9;--theme-surface:#eae5dc;--t
 .benefit-grid {display:block;margin:0;}
 .benefit-grid article {display:grid;grid-template-columns:34px 1fr;gap:8px 20px;padding-block:28px;border-top:1px solid var(--line);}
 .benefit-grid .sales-number {grid-row:1/3;margin:5px 0;}
-.benefit-grid h3 {font-size:27px;}.benefit-grid p {grid-column:2;max-width:420px;font-size:14px;}
+.benefit-grid h3 {font-size:27px;}.benefit-grid p {grid-column:2;max-width:420px;font-size:18px;}
 /* Each study gets an image-led spread and its own quiet reading column. */
 .business-showcase {padding-block:110px;border-top:0;}
 .business-showcase .sales-heading {padding-bottom:40px;border-bottom:1px solid var(--line);}
@@ -39,11 +39,11 @@ html[data-theme="ivory"] {--theme-background:#f4f1e9;--theme-surface:#eae5dc;--t
 .business-card:nth-child(even) .gallery-image-stage {grid-column:2;}
 .business-card:nth-child(even) .business-card-copy,.business-card:nth-child(even) .image-view-controls {grid-column:1;}
 .business-card h3 {display:block;font-size:clamp(30px,3.8vw,55px);line-height:1.03;letter-spacing:-2px;margin-block:24px;}
-.business-card .gallery-category {display:block;margin-top:14px;font-size:12px;letter-spacing:0;}
-.business-card-copy>p:not(.demo-label) {font-size:15px;max-width:360px;}
+.business-card .gallery-category {display:block;margin-top:14px;font-size:18px;letter-spacing:0;}
+.business-card-copy>p:not(.demo-label) {font-size:18px;max-width:360px;}
 .business-card-actions {display:flex;flex-direction:column;align-items:start;border:0;margin-top:24px;padding:0;gap:4px;}
-.business-card .business-card-actions a:first-child {padding:12px 18px;min-width:150px;background:var(--signal-orange);color:var(--ink);font-size:13px;justify-content:space-between;}
-.business-card .business-card-actions a {font-size:12px;}
+.business-card .business-card-actions a:first-child {padding:12px 18px;min-width:150px;background:var(--signal-orange);color:var(--ink);font-size:18px;justify-content:space-between;}
+.business-card .business-card-actions a {font-size:18px;}
 .showcase-toolbar {border:0;margin-bottom:0;padding-bottom:0;}
 .showcase-note {max-width:750px;}
 /* Vermilion typography chapter. No decorative application artwork. */
@@ -66,7 +66,7 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
 .simple-process-grid {display:block;margin:0;padding:0;}
 .simple-process-grid li,.simple-process-grid li:first-child,.simple-process-grid li:last-child {display:grid;grid-template-columns:60px 1fr;gap:10px 20px;padding:32px 0;border:0;border-top:1px solid var(--line);}
 .simple-process .sales-number {grid-row:1/3;font:36px/1.2 monospace;margin:0;}
-.simple-process h3 {font-size:32px;letter-spacing:-1px;margin:0;}.simple-process li>p {grid-column:2;font-size:14px;max-width:430px;}
+.simple-process h3 {font-size:32px;letter-spacing:-1px;margin:0;}.simple-process li>p {grid-column:2;font-size:18px;max-width:430px;}
 /* Pricing is a comparison, on one baseline, with transparent scope. */
 .pricing-section {padding-block:110px;background:var(--background);border-block:1px solid var(--line);}
 .pricing-grid {gap:0;align-items:stretch;border:1px solid var(--line);}
@@ -92,7 +92,7 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
 @media(max-width:760px) {
  #selected-work {padding-block:70px;}#selected-work li {padding-block:28px;}#selected-work li>button {grid-template-columns:24px minmax(0,1fr) 44px;grid-template-rows:auto auto auto;gap:12px;}#selected-work li>button>span:first-child {grid-column:1/-1;grid-row:1;aspect-ratio:16/10;margin-bottom:8px;}#selected-work li>button>span:nth-child(2) {grid-column:1;grid-row:2;}#selected-work li>button>span:nth-child(3) {grid-column:2;grid-row:2;font-size:26px;letter-spacing:-1px;}#selected-work li>button>span:nth-child(4) {grid-column:2;grid-row:3;}#selected-work li>button>span:last-child {grid-column:3;grid-row:2/4;}
  .sales-benefits {grid-template-columns:1fr;padding:65px 5vw;gap:34px;}.sales-benefits h2 {font-size:45px;}.benefit-grid article {padding-block:24px;}.benefit-grid h3 {font-size:25px;}
- .business-showcase {padding-block:70px;}.business-showcase .sales-heading {padding-bottom:28px;}.business-showcase .sales-heading h2 {font-size:58px;}.business-card,.business-card:nth-child(even) {grid-template-columns:1fr;gap:0;padding-block:30px;}.business-card .gallery-image-stage,.business-card:nth-child(even) .gallery-image-stage {grid-column:1;grid-row:1;}.business-card .business-card-copy,.business-card:nth-child(even) .business-card-copy {grid-column:1;grid-row:2;padding-top:24px;}.business-card .image-view-controls,.business-card:nth-child(even) .image-view-controls {grid-column:1;grid-row:3;padding-top:14px;}.business-card h3 {font-size:38px;letter-spacing:-1.5px;margin-block:16px;}.business-card-actions {flex-direction:row;flex-wrap:wrap;gap:12px 20px;}.business-card-copy>p:not(.demo-label) {font-size:14px;}
+ .business-showcase {padding-block:70px;}.business-showcase .sales-heading {padding-bottom:28px;}.business-showcase .sales-heading h2 {font-size:58px;}.business-card,.business-card:nth-child(even) {grid-template-columns:1fr;gap:0;padding-block:30px;}.business-card .gallery-image-stage,.business-card:nth-child(even) .gallery-image-stage {grid-column:1;grid-row:1;}.business-card .business-card-copy,.business-card:nth-child(even) .business-card-copy {grid-column:1;grid-row:2;padding-top:24px;}.business-card .image-view-controls,.business-card:nth-child(even) .image-view-controls {grid-column:1;grid-row:3;padding-top:14px;}.business-card h3 {font-size:38px;letter-spacing:-1.5px;margin-block:16px;}.business-card-actions {flex-direction:row;flex-wrap:wrap;gap:12px 20px;}.business-card-copy>p:not(.demo-label) {font-size:18px;}
  .custom-apps {padding:65px 5vw;}.custom-apps>div {grid-template-columns:1fr;gap:22px;}.custom-apps h2 {grid-row:auto;font-size:46px;}.studio-grid {grid-template-columns:1fr;gap:35px;}html[data-theme] .sales-studio {padding-block:70px;}.studio-copy h2 {font-size:54px;}
  .simple-process {grid-template-columns:1fr;padding:65px 5vw;gap:35px;}.simple-process>.sales-heading {position:static;}.simple-process h2 {font-size:58px;}.simple-process-grid li {grid-template-columns:42px 1fr;gap:10px 15px;padding-block:26px;}.simple-process h3 {font-size:28px;}.simple-process .sales-number {font-size:28px;}
  .pricing-section {padding-block:70px;}.pricing-grid {grid-template-columns:1fr;}.price-card,.price-card:nth-child(2),.price-card:nth-child(3) {padding:28px;border-right:0;border-bottom:1px solid var(--line);}.price-card:last-child {border-bottom:0;}.plan-audience {min-height:0;}.faq-section {padding-block:70px;}.faq-section h2 {font-size:52px;}
@@ -169,7 +169,7 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
 .brand--footer .brand-wordmark strong {font-size:30px;}
 .gallery-tabs {display:flex;align-items:center;gap:12px;margin-block:20px;}
 .gallery-tabs .gallery-selector {position:relative;flex:1;min-width:0;gap:0;margin:0;padding:0 0 10px;scroll-snap-type:x proximity;overscroll-behavior-x:contain;}
-.gallery-tabs .gallery-selector button {scroll-snap-align:center;min-height:52px;font-family:Arial,sans-serif;font-size:14px;font-weight:500;line-height:1.3;white-space:nowrap;padding:15px 23px;border-width:0 0 1px;letter-spacing:0;}
+.gallery-tabs .gallery-selector button {scroll-snap-align:center;min-height:52px;font-family:Arial,sans-serif;font-size:18px;font-weight:500;line-height:1.3;white-space:nowrap;padding:15px 23px;border-width:0 0 1px;letter-spacing:0;}
 .gallery-scroll {display:grid;place-items:center;flex:none;width:44px;height:44px;background:transparent;border:1px solid var(--line);color:var(--text);font-size:22px;}
 .gallery-scroll:hover {background:var(--surface);}
 @media (prefers-reduced-motion:no-preference) {
@@ -212,7 +212,7 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
 .study-journey[data-pinned="true"] .business-card .gallery-image-stage {aspect-ratio:auto;height:32svh;min-height:150px;}
 .study-journey[data-pinned="true"] .business-card h3 {font-size:30px;margin-block:12px;}
 .study-journey[data-pinned="true"] .business-card .business-card-copy {padding-top:16px;}
-.study-journey[data-pinned="true"] .business-card-copy>p:not(.demo-label) {font-size:13px;}
+.study-journey[data-pinned="true"] .business-card-copy>p:not(.demo-label) {font-size:18px;}
 .study-journey[data-pinned="true"] .business-card-actions {margin-top:14px;}
 .study-journey[data-pinned="true"] .business-card .image-view-controls {padding-top:10px;}
 @media(max-width:760px) {
@@ -225,5 +225,5 @@ html[data-theme] .sales-studio {background:var(--background);padding-block:110px
 .study-journey[data-pinned="true"] .gallery-image-stage,
 .study-journey[data-pinned="true"] .business-card-copy {animation:none!important;translate:none!important;transform:none!important;clip-path:none!important;}
 .study-journey[data-pinned="true"] .business-grid {overflow-anchor:none;scroll-behavior:auto;}
-.orbit-round {font-size:10px;text-align:center;}
+.orbit-round {font-size:18px;text-align:center;}
 .work-project-index a>span {display:none;}

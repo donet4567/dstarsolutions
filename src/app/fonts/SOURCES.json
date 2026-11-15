@@ -1,0 +1,60 @@
+{
+  "reference": "https://myfrida.com/",
+  "script_alternative": "Caveat is an openly licensed alternative to the reference commercial Glamour Palace font",
+  "assets": [
+    {
+      "family": "Caveat",
+      "weight": "600",
+      "source": "https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjSx6SII.ttf",
+      "file": "caveat-600.woff2",
+      "sha256": "b92d17a38b7806b0fc0f11b18ab41c7a2cefcd7c50f674b8e5512530dc15d22a"
+    },
+    {
+      "family": "Josefin Sans",
+      "weight": "400",
+      "source": "https://fonts.gstatic.com/s/josefinsans/v34/Qw3PZQNVED7rKGKxtqIqX5E-AVSJrOCfjY46_DjQXME.ttf",
+      "file": "josefin-sans-400.woff2",
+      "sha256": "71624cae418e27d01a08acf739343daa29ef45b77b783d5cd814527acfae9f65"
+    },
+    {
+      "family": "Josefin Sans",
+      "weight": "700",
+      "source": "https://fonts.gstatic.com/s/josefinsans/v34/Qw3PZQNVED7rKGKxtqIqX5E-AVSJrOCfjY46_N_XXME.ttf",
+      "file": "josefin-sans-700.woff2",
+      "sha256": "f184cf7fa9236b05f915c532c3a128cd73e20d93305b2a6f018e4d251f073d48"
+    },
+    {
+      "family": "Source Sans Pro",
+      "weight": "400",
+      "source": "https://fonts.gstatic.com/s/sourcesanspro/v24/6xK3dSBYKcSV-LCoeQqfX1RYOo3aPw.ttf",
+      "file": "source-sans-pro-400.woff2",
+      "sha256": "801adbfedd74d4e811b145f86e92a84a88ea578e737419b0d89c40030b222770"
+    },
+    {
+      "family": "Source Sans Pro",
+      "weight": "600",
+      "source": "https://fonts.gstatic.com/s/sourcesanspro/v24/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rAkA.ttf",
+      "file": "source-sans-pro-600.woff2",
+      "sha256": "d97b0f02f6f32f12e21a4e53a5aee307a020b1c4cbada53f3d85a256f42db847"
+    },
+    {
+      "family": "Source Sans Pro",
+      "weight": "700",
+      "source": "https://fonts.gstatic.com/s/sourcesanspro/v24/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vAkA.ttf",
+      "file": "source-sans-pro-700.woff2",
+      "sha256": "bc2db4e9698e7a76876c2339be5270f2cf30573562503d7cc0c76dfc11132c83"
+    },
+    {
+      "family": "Source Sans Pro",
+      "weight": "900",
+      "source": "https://fonts.gstatic.com/s/sourcesanspro/v24/6xKydSBYKcSV-LCoeQqfX1RYOo3iu4nAkA.ttf",
+      "file": "source-sans-pro-900.woff2",
+      "sha256": "2d69da714a24dd4df0163568ae999efd075fae020905bc972f78e72b9905a961"
+    }
+  ],
+  "licenses": {
+    "source-sans-pro": "https://raw.githubusercontent.com/adobe-fonts/source-sans/release/LICENSE.md",
+    "josefin-sans": "https://raw.githubusercontent.com/google/fonts/main/ofl/josefinsans/OFL.txt",
+    "caveat": "https://raw.githubusercontent.com/google/fonts/main/ofl/caveat/OFL.txt"
+  }
+}

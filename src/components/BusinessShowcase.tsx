@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { notifyShowroomQuery, useShowroomQuery } from "./useShowroomQuery";
 import { Arrow } from "./Brand";
 import { businessExamples, type BusinessExample } from "./website-content";
@@ -27,6 +27,11 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
   const journey = useRef<HTMLDivElement>(null);
   const studies = useRef<HTMLDivElement>(null);
   const selector = useRef<HTMLDivElement>(null);
+  const [studyIndex, setStudyIndex] = useState(0);
+  const attachStudies=useCallback((node:HTMLDivElement|null)=>{
+    studies.current=node;
+    if(node) setStudyIndex(0);
+  },[]);
   const value = useShowroomQuery().get("category");
   const category = businessExamples.some((item) => item.slug === value) ? value : "all";
   useEffect(() => {
@@ -42,29 +47,62 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     const runway=journey.current,rail=studies.current;
     if (!runway || !rail) return;
     const motion=matchMedia("(prefers-reduced-motion: reduce)");
-    let frame=0;
-    const update=()=>{
+    const desktop=matchMedia("(min-width: 901px) and (pointer: fine)");
+    let frame=0, previousTime=0, distance=0, start=0, position=rail.scrollLeft, pinned=false;
+    const update=(time:number)=>{
       frame=0;
-      if(motion.matches) return;
-      const distance=rail.scrollWidth-rail.clientWidth;
-      rail.scrollLeft=Math.min(distance,Math.max(0,110-runway.getBoundingClientRect().top));
+      if(!pinned) return;
+      const target=Math.min(distance,Math.max(0,window.scrollY-start));
+      // Time-based easing stays consistent across 60/120Hz screens. No layout reads per frame.
+      const elapsed=previousTime ? Math.min(time-previousTime,64) : 16;
+      previousTime=time;
+      position+=(target-position)*(1-Math.exp(-elapsed/85));
+      if(Math.abs(target-position)<.35) position=target;
+      rail.scrollLeft=position;
+      if(position!==target) frame=requestAnimationFrame(update); else previousTime=0;
     };
-    const schedule=()=>{if(!frame) frame=requestAnimationFrame(update);};
+    const schedule=()=>{if(pinned && !frame) frame=requestAnimationFrame(update);};
     const measure=()=>{
-      const distance=rail.scrollWidth-rail.clientWidth;
-      runway.dataset.pinned=String(!motion.matches && distance>1);
-      runway.style.height=!motion.matches && distance>1 ? (rail.offsetHeight+distance)+"px" : "";
+      distance=Math.max(0,rail.scrollWidth-rail.clientWidth);
+      const top=parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||110;
+      pinned=!motion.matches && desktop.matches && innerHeight>=640 && distance>1;
+      runway.dataset.pinned=String(pinned);
+      runway.style.setProperty("--study-pin-top",`${top}px`);
+      runway.style.height=pinned ? `${(rail.parentElement?.offsetHeight??rail.offsetHeight)+distance}px` : "";
+      start=runway.getBoundingClientRect().top+window.scrollY-top;
+      position=rail.scrollLeft;previousTime=0;
       schedule();
+    };
+    const focusStudy=(event:FocusEvent)=>{
+      if(!pinned || !(event.target instanceof Element)) return;
+      const card=event.target.closest<HTMLElement>(".business-card");
+      if(card) window.scrollTo({top:start+Math.min(distance,card.offsetLeft-rail.offsetLeft),behavior:"smooth"});
     };
     const observer=new ResizeObserver(measure);
     observer.observe(rail);
     rail.querySelectorAll(".business-card").forEach(card=>observer.observe(card));
     addEventListener("scroll",schedule,{passive:true});
+    addEventListener("resize",measure,{passive:true});
+    rail.addEventListener("focusin",focusStudy);
     motion.addEventListener("change",measure);
+    desktop.addEventListener("change",measure);
     measure();
     void document.fonts.ready.then(()=>{if(runway.isConnected) measure();});
-    return()=>{observer.disconnect();cancelAnimationFrame(frame);removeEventListener("scroll",schedule);motion.removeEventListener("change",measure);};
+    return()=>{observer.disconnect();cancelAnimationFrame(frame);removeEventListener("scroll",schedule);removeEventListener("resize",measure);rail.removeEventListener("focusin",focusStudy);motion.removeEventListener("change",measure);desktop.removeEventListener("change",measure);runway.style.height="";};
   },[category]);
+  const visibleExamples=businessExamples.filter(example=>category==="all" || category===example.slug);
+  const currentStudy=Math.min(studyIndex,visibleExamples.length-1);
+  const moveStudy=(index:number)=>{
+    const rail=studies.current,runway=journey.current;
+    const card=rail?.querySelectorAll<HTMLElement>(".business-card")[index];
+    if(!rail || !runway || !card) return;
+    const left=Math.min(rail.scrollWidth-rail.clientWidth,card.offsetLeft-rail.offsetLeft);
+    const behavior=matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth";
+    if(runway.dataset.pinned==="true") {
+      const top=parseFloat(runway.style.getPropertyValue("--study-pin-top"))||110;
+      window.scrollTo({top:runway.getBoundingClientRect().top+scrollY-top+left,behavior});
+    } else rail.scrollTo({left,behavior});
+  };
   const select = (value: string) => {
     const url = new URL(location.href);
     if (value === "all") url.searchParams.delete("category"); else url.searchParams.set("category", value);
@@ -76,7 +114,10 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     <div className="gallery-tabs"><div ref={selector} className="gallery-selector" role="group" aria-label="Filter website examples"><button type="button" aria-pressed={category === "all"} onClick={() => select("all")}>All studies <span>06</span></button>{businessExamples.map((example, index) => <button type="button" key={example.slug} aria-pressed={category === example.slug} onClick={() => select(example.slug)}>{categories[index]}</button>)}</div></div>
     <div className="showcase-toolbar"><p>Original imagery. Interactive website concepts.<br />Image composition controls sit below each study.</p><span role="status" aria-live="polite">{category === "all" ? "06 studies" : "01 study"} / Scroll to explore</span></div>
 
-    <div ref={journey} className="study-journey"><div className="study-pin"><div ref={studies} className="business-grid" key={category} tabIndex={0} role="region" aria-label="Website demo images">{businessExamples.map((example, index) => category === "all" || category === example.slug ? <GalleryCard key={example.slug} example={example} index={index} source={source} category={category} /> : null)}</div></div></div>
+    <div ref={journey} className="study-journey"><div className="study-pin"><div ref={attachStudies} className="business-grid" key={category} tabIndex={0} role="region" aria-label="Website demo images" onScroll={()=>{
+      const rail=studies.current,first=rail?.querySelector<HTMLElement>(".business-card");
+      if(rail && first) setStudyIndex(Math.round(rail.scrollLeft/(first.offsetWidth+parseFloat(getComputedStyle(rail).columnGap))));
+    }}>{businessExamples.map((example, index) => category === "all" || category === example.slug ? <GalleryCard key={example.slug} example={example} index={index} source={source} category={category} /> : null)}</div><div className="study-navigation" aria-label="Browse website studies"><span>{String(currentStudy+1).padStart(2,"0")} / {String(visibleExamples.length).padStart(2,"0")}</span><button type="button" disabled={currentStudy===0} onClick={()=>moveStudy(currentStudy-1)}>Previous study</button><button type="button" disabled={currentStudy===visibleExamples.length-1} onClick={()=>moveStudy(currentStudy+1)}>Next study</button></div></div></div>
     <p className="showcase-note">These fictional brands and generated design studies illustrate visual possibilities, not client projects or finished website screenshots. Final design and features are agreed with your package.</p>
   </section>;
 }

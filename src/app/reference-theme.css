@@ -1,0 +1,101 @@
+/* MyFrida reference: generous Source Sans typography, hand-written accents,
+   near-black/white, raspberry, lilac, golden yellow and fresh lime.
+   The supplied D Star artwork and existing butterfly/garden are untouched. */
+:root,html[data-theme="midnight"] {
+  --theme-background:#020a0a;--theme-surface:#101919;--theme-tint:#192323;--theme-panel:#142020;
+  --theme-text:#fff;--theme-muted:#c0cccc;--theme-accent:#f162a4;--theme-accent-hover:#ff8fbd;
+  --theme-on-accent:#020a0a;--theme-line:#354343;
+}
+html[data-theme="ivory"] {
+  --theme-background:#fff;--theme-surface:#faf6f8;--theme-tint:#f6edf2;--theme-panel:#f9f0f5;
+  --theme-text:#020a0a;--theme-muted:#526060;--theme-accent:#a72064;--theme-accent-hover:#86154f;
+  --theme-on-accent:#fff;--theme-line:#d6dfdd;
+}
+:root {--signal-orange:#f162a4;--signal-red:#c8aad7;--paper:#fff;--ink:#020a0a;}
+body {font-family:var(--font-source-sans),Arial,sans-serif;}
+h1,h2,h3 {font-family:var(--font-source-sans),Arial,sans-serif;}
+.sales-heading h2,.sales-benefits h2,.studio-copy h2,.custom-apps h2,.faq-section h2,.contact-panel .contact-content h2 {
+  font-family:var(--font-source-sans),Arial,sans-serif;font-weight:900;letter-spacing:-.035em;line-height:1.02;
+}
+.eyebrow {font-family:var(--font-josefin),sans-serif!important;font-weight:700;letter-spacing:.1em;font-size:18px;}
+.desktop-nav,.gallery-tabs .gallery-selector button,.plan-kicker,.orbit-kicker,.orbit-edition,.orbit-coordinate,.gallery-image-index,.demo-label,.showcase-toolbar,.work-project-index>span,.simple-process .sales-number {
+  font-family:var(--font-josefin),sans-serif;
+}
+.gallery-tabs .gallery-selector button {font-size:18px;line-height:1.5;}
+.orbit-hero h1 {font-family:var(--font-source-sans),Arial,sans-serif;font-weight:900;letter-spacing:-.045em;line-height:1.03;text-transform:none;}
+.orbit-hero h1 em,.orbit-manifesto h2 em,.studio-copy h2 em,.sales-heading h2 em,.sales-benefits h2 em,.faq-section h2 em {
+  font-family:var(--font-handwriting),cursive;font-weight:600;font-style:normal;letter-spacing:-.025em;line-height:1.05;
+}
+.orbit-hero h1 em {display:inline-block;font-size:1.08em;}
+.orbit-story {--plate:#020a0a;--plate-glow:#25322b;--text:#fff;--muted:#c0cccc;--gold:#f162a4;--background:#020a0a;background:var(--plate);}
+html[data-theme="ivory"] .orbit-story {--plate:#fff;--plate-glow:#f4e7ee;--plate-dot:#596f5a30;--text:#020a0a;--muted:#526060;--gold:#a72064;--background:#fff;}
+.orbit-story .orbit-hero h1,.orbit-story .orbit-hero h1>span,.orbit-story .orbit-hero h1 em,.orbit-story .orbit-manifesto h2 {color:var(--text);}
+.orbit-story .orbit-manifesto h2 em {color:var(--text);}
+.orbit-story .orbit-hero-bottom>p,.orbit-story .orbit-package,.orbit-story .orbit-coordinate {color:var(--text);}
+.orbit-story .orbit-hero-bottom>p span,.orbit-story .orbit-manifesto>div>p {color:var(--muted);}
+.orbit-ticker {background:#f162a4;color:#020a0a;font-family:var(--font-josefin),sans-serif;font-weight:700;}
+.ticker-divider {width:30px;height:1px;background:currentColor;flex:none;}
+.sales-benefits {--text:#020a0a;--muted:#4d3543;--gold:#85204f;--line:#caa5b7;background:#fae1ed;color:var(--text);}
+.custom-apps {--text:#020a0a;--muted:#392b40;--gold:#020a0a;--line:#705b7c;background:#c8aad7;color:var(--text);}
+.custom-apps .button {color:#020a0a;border-color:#5b4268;border-radius:999px;}
+.simple-process {--text:#020a0a;--muted:#36410a;--gold:#344307;--line:#839527;background:#b3cd32;color:var(--text);}
+.simple-process .sales-number {font-size:32px;}
+.simple-process h3,.benefit-grid h3 {font-weight:700;}
+.simple-process-grid li::after {background:#020a0a;}
+#selected-work li:nth-child(3) {--case-paper:#b3cd32;--case-ink:#020a0a;--case-muted:#36410a;border-color:#7b9026;}
+#selected-work li>button>span:nth-child(2) {font-family:var(--font-source-sans),sans-serif;font-weight:900;letter-spacing:-.035em;}
+.business-showcase .business-card h3 {font-family:var(--font-source-sans),sans-serif;font-weight:900;letter-spacing:-.025em;}
+.business-card .business-card-actions a:first-child,.price-card-featured>.button.sales-primary {border-radius:999px;background:#f162a4;color:#020a0a;border-color:#f162a4;}
+.button.sales-primary,.button.sales-secondary {border-radius:999px;}
+.contact-panel.contact-panel {background:#e7b806!important;}
+.contact-panel .contact-content h2,.contact-panel .contact-content h2 em {color:#020a0a!important;}
+.contact-panel .contact-content p,.contact-panel .contact-panel-top .eyebrow,.contact-panel .contact-panel-bottom,.contact-panel .contact-panel-bottom a {color:#403307!important;}
+.contact-panel .button {background:#020a0a!important;color:#fff!important;border-color:#020a0a!important;border-radius:999px;}
+.contact-panel .contact-content h2 em {font-family:var(--font-handwriting),cursive!important;font-weight:600!important;}
+.footer-signature {font-weight:900;letter-spacing:-.04em;}
+.footer-signature span {color:var(--gold);}
+/* Keep the brand palette fixed across both appearances. */
+html[data-theme] .brand {background:transparent;border-radius:0;padding:0;gap:10px;}
+html[data-theme] .brand-wordmark strong {color:#ac7416!important;font-family:Arial,"Helvetica Neue",sans-serif;}
+html[data-theme] .brand-wordmark>span {color:#747474!important;font-family:Arial,"Helvetica Neue",sans-serif;font-weight:700;}
+/* The original gold and blue-purple artwork is identical in both themes. */
+html[data-theme] .brand-symbol {filter:none;opacity:1;mix-blend-mode:normal;mask-image:none;}
+html[data-theme] .brand-symbol img {filter:none!important;opacity:1;mix-blend-mode:normal!important;border-radius:0;}
+.study-journey[data-pinned="true"] .study-pin {top:var(--study-pin-top,110px);}
+.business-showcase .business-grid {position:relative;scroll-snap-type:x proximity;touch-action:pan-x pan-y;}
+.business-showcase .business-card,.business-showcase .gallery-image-stage,.business-showcase .business-card-copy {animation:none!important;translate:none!important;transform:none!important;clip-path:none!important;}
+.study-journey[data-pinned="true"] .business-grid {scroll-behavior:auto;scroll-snap-type:none;}
+.study-navigation {display:flex;align-items:center;gap:8px;min-height:58px;margin:0;padding:4px 0 12px;}
+.study-navigation>span {margin-right:auto;font-family:var(--font-josefin),sans-serif;font-size:18px;}
+.study-navigation button {min-height:44px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:18px;}
+.study-navigation button:not(:disabled):hover {background:var(--gold);color:var(--theme-on-accent);border-color:var(--gold);}
+.study-navigation button:disabled {opacity:.4;cursor:default;}
+@media(max-width:900px) {
+  .study-journey .study-pin {position:static;}
+  .business-showcase .business-grid {scroll-padding-inline:0;overscroll-behavior-x:contain;}
+  .business-showcase .business-card .gallery-image-stage {aspect-ratio:3/2;height:auto;}
+  html[data-theme] .brand {padding:0;}
+}
+@media(prefers-reduced-motion:reduce) {.business-showcase .business-grid {scroll-behavior:auto;scroll-snap-type:none;}}
+/* Readable supporting copy; remove nonessential micro-labels. */
+.orbit-edition,.orbit-coordinate,.orbit-note,.gallery-image-index,.work-project-index>span,.work-project-index a small {display:none!important;}
+.orbit-kicker {font-size:18px!important;letter-spacing:.02em!important;line-height:1.5;gap:20px;flex-wrap:wrap;}
+.eyebrow {font-size:18px!important;letter-spacing:.04em!important;line-height:1.5;}
+.business-card-copy p,.orbit-hero-bottom>p {font-size:18px!important;line-height:1.6;}
+.business-card-actions {flex-wrap:wrap;}
+.business-card-copy {height:auto;}
+.footer-meta,.contact-panel-bottom {flex-wrap:wrap;gap:18px;}
+#selected-work li>button>span:nth-child(4) {font-size:18px;letter-spacing:0;line-height:1.45;}
+#selected-work .work-project-summary {font-size:18px;line-height:1.5;}
+#selected-work li>button>span:first-child>span {display:none;}
+@media(max-width:760px) {
+  .orbit-kicker>span:last-child {display:none;}
+  .orbit-hero-bottom {gap:20px;}
+  .orbit-hero-bottom>p br {display:none;}
+  .orbit-hero-bottom>p span {display:block;}
+  #selected-work li,#selected-work li:nth-child(2),#selected-work li:nth-child(3) {position:relative;top:auto;}
+  .business-card-actions a {white-space:normal;}
+}
+body {font-size:18px;}
+html[data-theme] .brand-wordmark>span {text-transform:none;letter-spacing:0;}
+.orbit-round {min-width:64px;min-height:64px;}

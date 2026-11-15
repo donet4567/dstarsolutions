@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Arrow, Brand, Star } from "./Brand";
+import { Arrow, Brand } from "./Brand";
 import { defaultWhatsApp, DISPLAY_PHONE, PHONE, whatsappUrl } from "./site";
 import { exclusions, faqs, packages, packageWhatsApp } from "./website-content";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -20,7 +20,7 @@ export function WebsitePackages({ showGuide = true }: { showGuide?: boolean }) {
       <h3 id={`plan-${plan.id}`}>{plan.name}</h3><p className="plan-audience">{plan.audience}</p><p className="plan-price">{plan.price}<span>starting development fee</span></p><a className={`button ${index === 0 ? "sales-primary" : "sales-secondary"}`} href={packageWhatsApp(plan)} target="_blank" rel="noreferrer" aria-label={`Choose This Package: ${plan.name}`}>Choose This Package <Arrow diagonal /></a>
       <p className="plan-note">{plan.note}</p><ul>{plan.features.map((feature) => <li key={feature}><span aria-hidden="true">✓</span>{feature}</li>)}</ul>
     </article>)}</div>
-    <div className="pricing-disclosure"><Star /><div><h3>A clear scope, from the start.</h3><p>{exclusions}</p></div></div>
+    <div className="pricing-disclosure"><div><h3>A clear scope, from the start.</h3><p>{exclusions}</p></div></div>
     {showGuide && <Link className="text-link sales-package-link" href="/small-business-websites">Explore the small business website guide <Arrow diagonal /></Link>}
   </div></section>;
 }
@@ -28,7 +28,7 @@ export function WebsitePackages({ showGuide = true }: { showGuide?: boolean }) {
 export function WhyDStar() {
   return <section className="studio-section sales-studio" id="engineering" aria-labelledby="studio-title"><div className="container studio-grid">
     <div className="studio-copy"><p className="eyebrow"><span className="section-dash" /> THE D STAR DIFFERENCE</p><h2 id="studio-title" data-title-motion="align">Small by choice.<br />Personal<br /><em>by design.</em></h2><p>A focused studio in Bharananganam, Pala, working with businesses across Kottayam, Kerala and beyond. You speak directly with the person shaping your website.</p><a className="text-link" href="#contact">Tell us about your business <Arrow /></a></div>
-    <div className="principles">{[["Design that feels like your business.", "Considered typography, responsive layouts and details that help customers find what they need."], ["Clear prices. Honest conversations.", "An agreed scope, defined revision rounds and a clear explanation of additional costs before work begins."], ["One studio, from brief to launch.", "A direct conversation throughout design, development and launch. Your business stays at the centre."]].map(([title, text], index) => <article key={title}><span className="principle-number">0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div><Star /></article>)}</div>
+    <div className="principles">{[["Design that feels like your business.", "Considered typography, responsive layouts and details that help customers find what they need."], ["Clear prices. Honest conversations.", "An agreed scope, defined revision rounds and a clear explanation of additional costs before work begins."], ["One studio, from brief to launch.", "A direct conversation throughout design, development and launch. Your business stays at the centre."]].map(([title, text], index) => <article key={title}><span className="principle-number">0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
   </div></section>;
 }
 
@@ -45,7 +45,7 @@ export function WebsiteFAQ() {
 }
 
 export function EnquirySection() {
-  return <section className="contact-section container" id="contact" aria-labelledby="contact-title"><div className="contact-panel"><div className="contact-panel-top"><p className="eyebrow"><span className="status-dot" /> YOUR BUSINESS DESERVES A BEAUTIFUL WEBSITE</p><Star /></div><div className="contact-content"><h2 id="contact-title" data-title-motion="roll"><span className="title-line">Your next customer</span>{" "}<span className="title-line">could start <em>here.</em></span></h2><div><p>Tell us what you do. We’ll help you find the right website package, starting at ₹8,000.</p><button className="button button-dark" type="button" data-open-brief="Website">Get a Free Quote <Arrow diagonal /></button></div></div><div className="contact-panel-bottom"><span>ONE-TIME DEVELOPMENT FEE. DOMAIN & HOSTING EXTRA.</span><a href={whatsappUrl("Hello D Star, I would like a free quote for a business website. Please help me choose a package.")} target="_blank" rel="noreferrer">Get a Free Quote on WhatsApp <Arrow diagonal /></a></div></div></section>;
+  return <section className="contact-section container" id="contact" aria-labelledby="contact-title"><div className="contact-panel"><div className="contact-panel-top"><p className="eyebrow"><span className="status-dot" /> YOUR BUSINESS DESERVES A BEAUTIFUL WEBSITE</p></div><div className="contact-content"><h2 id="contact-title" data-title-motion="roll"><span className="title-line">Your next customer</span>{" "}<span className="title-line">could start <em>here.</em></span></h2><div><p>Tell us what you do. We’ll help you find the right website package, starting at ₹8,000.</p><button className="button button-dark" type="button" data-open-brief="Website">Get a Free Quote <Arrow diagonal /></button></div></div><div className="contact-panel-bottom"><span>ONE-TIME DEVELOPMENT FEE. DOMAIN & HOSTING EXTRA.</span><a href={whatsappUrl("Hello D Star, I would like a free quote for a business website. Please help me choose a package.")} target="_blank" rel="noreferrer">Get a Free Quote on WhatsApp <Arrow diagonal /></a></div></div></section>;
 }
 
 export function SiteFooter() {

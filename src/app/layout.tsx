@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import WebVitals from "@/components/WebVitals";
 import { PHONE, SITE_NAME, SITE_URL } from "@/components/site";
 import "./foundation.css";
@@ -10,6 +11,25 @@ import "./showroom.css";
 import "./perspective.css";
 import "./chapters.css";
 import "./work-deck.css";
+import "./reference-theme.css";
+
+const sourceSans = localFont({
+  src: [
+    { path: "./fonts/source-sans-pro-400.woff2", weight: "400" },
+    { path: "./fonts/source-sans-pro-600.woff2", weight: "600" },
+    { path: "./fonts/source-sans-pro-700.woff2", weight: "700" },
+    { path: "./fonts/source-sans-pro-900.woff2", weight: "900" },
+  ],
+  variable: "--font-source-sans", display: "swap", fallback: ["Arial"],
+});
+const josefin = localFont({
+  src: [{ path: "./fonts/josefin-sans-400.woff2", weight: "400" }, { path: "./fonts/josefin-sans-700.woff2", weight: "700" }],
+  variable: "--font-josefin", display: "swap", preload: false,
+});
+const handwriting = localFont({
+  src: [{ path: "./fonts/caveat-600.woff2", weight: "600" }],
+  variable: "--font-handwriting", display: "swap", preload: false,
+});
 
 // Run before the page is parsed so a refresh cannot restore a lower section.
 // Normal section links and back/forward navigation keep their usual behavior.
@@ -54,13 +74,13 @@ export const metadata: Metadata = {
     url: "/",
     siteName: SITE_NAME,
     locale: "en_IN",
-    images: [{ url: "/brand/dstar-lockup.webp", width: 640, height: 597, alt: SITE_NAME }],
+    images: [{ url: "/brand/dstar-monogram.webp", width: 256, height: 224, alt: SITE_NAME }],
   },
   twitter: {
     card: "summary",
     title: "Beautiful Business Websites from ₹8,000 | D Star Solutions",
     description: "Mobile-friendly business websites from Pala, Kerala. Starting development fee ₹8,000; domain and hosting extra.",
-    images: ["/brand/dstar-lockup.webp"],
+    images: ["/brand/dstar-monogram.webp"],
   },
   icons: {
     icon: "/brand/dstar-icon-256.png",
@@ -74,8 +94,8 @@ const business = {
   "@id": `${SITE_URL}/#business`,
   name: SITE_NAME,
   url: SITE_URL,
-  logo: `${SITE_URL}/brand/dstar-lockup.webp`,
-  image: `${SITE_URL}/brand/dstar-lockup.webp`,
+  logo: `${SITE_URL}/brand/dstar-monogram.webp`,
+  image: `${SITE_URL}/brand/dstar-monogram.webp`,
   telephone: `+${PHONE}`,
   description: "Website design, development and custom web applications.",
   address: {
@@ -96,7 +116,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="midnight" suppressHydrationWarning>
+    <html lang="en" data-theme="midnight" className={`${sourceSans.variable} ${josefin.variable} ${handwriting.variable}`} suppressHydrationWarning>
       <head><script id="restore-theme" dangerouslySetInnerHTML={{ __html: restoreTheme }} /><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, "\\u003c") }} />
