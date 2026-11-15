@@ -14,22 +14,19 @@ test("the package landing page contains the complete customer journey", async ({
 
 test("reduced motion keeps packages and the four steps readable", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/pricing");
   await page.locator("#packages").scrollIntoViewIfNeeded();
   await expect(page.locator(".price-card").first()).toHaveCSS("transition-duration", "0s");
+  await page.goto("/services");
   await expect(page.locator(".simple-process-grid li")).toHaveCount(4);
   for (const card of await page.locator(".simple-process-grid li").all()) await expect(card).not.toHaveCSS("position", "sticky");
 });
 
-test("project gallery presents all three previews in document order", async ({ page }) => {
-  await page.goto("/");
-  const gallery = page.locator("#selected-work");
-  await gallery.scrollIntoViewIfNeeded();
-  const images = gallery.locator("picture img");
-  await expect(images).toHaveCount(3);
-  await expect(images.nth(0)).toHaveAttribute("alt", /Mecardee Rental Management/);
-  await expect(images.nth(1)).toHaveAttribute("alt", /Mecardee Manager/);
-  await expect(images.nth(2)).toHaveAttribute("alt", /HireVify/);
-  await gallery.getByRole("button", { name: /HireVify Recruitment/ }).click();
-  await expect(page.getByRole("dialog").getByRole("heading", { name: "HireVify", exact: true })).toBeVisible();
+test("project selector presents all three projects in document order",async({page})=>{
+ await page.goto("/work");
+ const tabs=page.getByRole("tablist",{name:"Selected project index"}).getByRole("tab");
+ await expect(tabs).toHaveText(["Mecardee Rental","Mecardee Manager","HireVify"]);
+ await tabs.nth(2).click();
+ await page.getByRole("button",{name:"Open HireVify project preview",exact:true}).click();
+ await expect(page.getByRole("dialog").getByRole("heading",{name:"HireVify",exact:true})).toBeVisible();
 });

@@ -6,7 +6,9 @@ test("reduced motion keeps the full customer journey readable without pinning", 
   await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.locator("#top canvas")).toHaveCount(0);
+  await page.goto("/services");
   await expect(page.locator(".simple-process-grid li")).toHaveCount(4);
+  await page.goto("/about");
   await page.getByRole("region", { name: "Great ideas deserve to become something real." }).scrollIntoViewIfNeeded();
   await expect(page.locator("#founder-title")).toBeVisible();
   await page.emulateMedia({ reducedMotion: "no-preference" });

@@ -40,16 +40,16 @@ function ConceptSections({ example }: { example: BusinessExample }) {
         else return;
         event.preventDefault(); setSelected(next); document.getElementById(`${id}-tab-${next}`)?.focus();
       }}><span>0{index + 1}</span>{item}</button>)}</div>
-      {example.items.map((item, index) => <div className="chapter-panel" role="tabpanel" id={`${id}-panel-${index}`} aria-labelledby={`${id}-tab-${index}`} hidden={selected !== index} tabIndex={0} key={item}><span className="chapter-mark" aria-hidden="true">{example.mark}</span><div><p className="concept-overline">AN ILLUSTRATIVE DIRECTION / 0{index + 1}</p><h3>{item}</h3><p>{direction.details[index]}</p><a href="#demo-contact">Imagine this for your business <Arrow diagonal /></a></div></div>)}
+      {example.items.map((item, index) => <div className="chapter-panel" role="tabpanel" id={`${id}-panel-${index}`} aria-labelledby={`${id}-tab-${index}`} hidden={selected !== index} tabIndex={0} key={item}><span className="chapter-mark" aria-hidden="true">{example.mark}</span><div><h3>{item}</h3><p>{direction.details[index]}</p><a href="#demo-contact">Discuss your project <Arrow diagonal /></a></div></div>)}
     </div> : example.tone === "salon" ? <div className="ritual-list">{example.items.map((item, index) => <details key={item} open={index === 0}><summary><span>0{index + 1}</span>{item}<span aria-hidden="true">+</span></summary><p>{direction.details[index]}</p></details>)}</div> : <div className={`narrative-grid narrative-${example.tone}`}>{example.items.map((item, index) => <article key={item}><span className="narrative-number">0{index + 1}</span><h3>{item}</h3><p>{direction.details[index]}</p><span className="narrative-rule" aria-hidden="true" /></article>)}</div>}
-    <p className="concept-truth">{direction.note}</p>
+
   </section>;
 }
 
 export default function DemoShowroom({ example }: { example: BusinessExample }) {
   const params = useShowroomQuery();
   const mobile = params.get("view") === "mobile";
-  const source = params.get("from") === "home" ? "home" : "guide";
+  const source = params.get("from") === "guide" ? "guide" : "work";
   const value = params.get("category");
   const category = businessExamples.some((item) => item.slug === value) ? value : "";
   const index = businessExamples.findIndex((item) => item.slug === example.slug);
@@ -65,17 +65,17 @@ export default function DemoShowroom({ example }: { example: BusinessExample }) 
   return <main className="showroom-page">
     <StudioMotion motionKey={example.slug} />
     <a href="#demo-content" className="skip-link">Skip to demo</a>
-    <header className="showroom-toolbar"><Link href={`${source === "home" ? "/" : "/small-business-websites"}${category ? `?category=${category}` : ""}#business-websites`}>← Back to Examples</Link><p><span>0{index + 1} / 06</span><strong>{example.brand}</strong></p><div className="showroom-tools"><div className="device-toggle" role="group" aria-label="Demo preview viewport"><button type="button" aria-pressed={!mobile} onClick={() => changeView(false)}><DeviceIcon />Desktop</button><button type="button" aria-pressed={mobile} onClick={() => changeView(true)}><DeviceIcon mobile />Mobile</button></div><ThemeSwitcher /></div></header>
-    <div className="showroom-caption container"><p>DEMO CONCEPT · FICTIONAL BUSINESS</p><span>Interactive direction by D Star Solutions · {mobile ? "Mobile layout" : "Desktop layout · fits your screen"}</span></div>
+    <header className="showroom-toolbar"><Link href={`${source === "guide" ? "/small-business-websites" : "/work"}${category ? `?category=${category}` : ""}#business-websites`}>← Back to Examples</Link><p><span>0{index + 1} / 06</span><strong>{example.brand}</strong></p><div className="showroom-tools"><div className="device-toggle" role="group" aria-label="Demo preview viewport"><button type="button" aria-pressed={!mobile} onClick={() => changeView(false)}><DeviceIcon />Desktop</button><button type="button" aria-pressed={mobile} onClick={() => changeView(true)}><DeviceIcon mobile />Mobile</button></div><ThemeSwitcher /></div></header>
+    <div className="showroom-caption container"><p>Website demo</p></div>
     <div className="showroom-stage" data-viewport={mobile ? "mobile" : "desktop"}>
       <div className={`concept-site concept-site-${example.tone}`} id="demo-content">
-        <nav className="concept-site-nav" aria-label={`${example.brand} concept navigation`}><a href="#demo-content" className="concept-wordmark">{example.brand}<span aria-hidden="true">{example.mark}</span></a><a href="#demo-services">Explore</a><a href="#demo-contact">About this design ↗</a></nav>
-        <section className="concept-site-hero"><div className="concept-hero-copy"><p className="concept-overline">{directions[example.tone].eyebrow}</p><h1>{example.line}</h1><p>{example.detail}</p><a className="concept-action" href="#demo-services">{example.action} <Arrow diagonal /></a><span className="concept-hero-footnote">A FICTIONAL {example.tone === "travel" ? "HOSPITALITY" : example.tone.toUpperCase()} DESIGN STUDY / D STAR</span></div><figure><ConceptImage example={example} eager /><figcaption>01 / Original {example.brand} design study</figcaption></figure></section>
+        <nav className="concept-site-nav" aria-label={`${example.brand} concept navigation`}><a href="#demo-content" className="concept-wordmark">{example.brand}<span aria-hidden="true">{example.mark}</span></a><a href="#demo-services">Explore</a><a href="#demo-contact">Contact</a></nav>
+        <section className="concept-site-hero"><div className="concept-hero-copy"><p className="concept-overline">{directions[example.tone].eyebrow}</p><h1>{example.line}</h1><p>{example.detail}</p><a className="concept-action" href="#demo-services">{example.action} <Arrow diagonal /></a></div><figure><ConceptImage example={example} eager /></figure></section>
         <ConceptSections key={example.slug} example={example} />
-        <section className="concept-enquiry" id="demo-contact"><p className="concept-overline">YOUR BUSINESS. YOUR OWN STORY.</p><h2>Picture your<br /><em>business here.</em></h2><div><p>{example.brand} is a fictional design demonstration by D Star, not a client business. Like this direction? Packages start at ₹8,000; domain and hosting are additional.</p><a className="concept-action" href={enquiry} target="_blank" rel="noreferrer">Enquire for a Similar Website <Arrow diagonal /></a></div><small>Design concept only. No real menu, product inventory, appointment service or booking system is provided.</small></section>
-        <footer className="concept-site-footer"><span>{example.brand} / FICTIONAL CONCEPT</span><Link href="/">Designed & developed by D Star ↗</Link></footer>
+        <section className="concept-enquiry" id="demo-contact"><p className="concept-overline">YOUR BUSINESS. YOUR OWN STORY.</p><h2>Picture your<br /><em>business here.</em></h2><div><p>Website packages start at ₹8,000. Domain and hosting are additional.</p><a className="concept-action" href={enquiry} target="_blank" rel="noreferrer">Enquire for a Similar Website <Arrow diagonal /></a></div></section>
+        <footer className="concept-site-footer"><span>{example.brand}</span><Link href="/">Designed & developed by D Star ↗</Link></footer>
       </div>
     </div>
-    <nav className="showroom-pagination container" aria-label="Browse demo concepts"><Link href={`/website-demos/${previous.slug}?${context}`}><span>← Previous Demo</span><strong>{previous.brand}</strong></Link><p>Find your direction.<br /><span>Every study is a starting point.</span></p><Link href={`/website-demos/${next.slug}?${context}`}><span>Next Demo →</span><strong>{next.brand}</strong></Link></nav>
+    <nav className="showroom-pagination container" aria-label="Browse demo concepts"><Link href={`/website-demos/${previous.slug}?${context}`}><span>← Previous Demo</span><strong>{previous.brand}</strong></Link><Link href={`/website-demos/${next.slug}?${context}`}><span>Next Demo →</span><strong>{next.brand}</strong></Link></nav>
   </main>;
 }

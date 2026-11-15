@@ -77,3 +77,8 @@
   .header .brand :global(.brand-wordmark strong) { font-size:22px; }
   .header .cta { padding-inline:10px; }
 }
+/* Five destinations fit in two generous rows above the mobile breakpoint. */
+.header .desktop {grid-template-columns:repeat(3,max-content);column-gap:28px;}
+.header .desktop a[aria-current="page"] {color:var(--text);}
+.header .desktop a[aria-current="page"]::after {transform:scaleX(1);}
+.header .mobile a[aria-current="page"] {color:var(--gold);font-weight:700;}

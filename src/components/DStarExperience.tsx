@@ -1,12 +1,4 @@
-import SelectedWork from "./SelectedWork";
+import Link from "next/link";
 import CinematicHero from "./CinematicHero";
-import ExperienceMotion from "./ExperienceMotion";
-import SiteHeader from "./SiteHeader";
-import ProjectBrief from "./ProjectBrief";
-import FounderNote from "./FounderNote";
-import BusinessShowcase from "./BusinessShowcase";
-import { CustomApplications, EnquirySection, FloatingWhatsApp, SimpleProcess, SiteFooter, WebsiteBenefits, WebsiteFAQ, WebsitePackages, WhyDStar } from "./WebsiteSales";
-
-export default function DStarExperience() {
-  return <ProjectBrief><a href="#main" className="skip-link">Skip to content</a><SiteHeader /><ExperienceMotion /><main id="main"><CinematicHero /><div className="orbit-ticker" aria-hidden="true"><span>IDEAS WITH AMBITION</span><span className="ticker-divider" /><span>DIGITAL WITH CHARACTER</span><span className="ticker-divider" /><span>MADE TO MATTER</span></div><SelectedWork /><WebsiteBenefits /><BusinessShowcase /><CustomApplications /><WhyDStar /><SimpleProcess /><WebsitePackages /><FounderNote /><WebsiteFAQ /><EnquirySection /></main><SiteFooter /><FloatingWhatsApp /></ProjectBrief>;
-}
+import PageFrame from "./PageFrame";
+export default function DStarExperience(){return <PageFrame home><CinematicHero showManifesto={false}/><section className="home-directory container" aria-label="Explore D Star Solutions"><Link href="/work" className="home-work"><img src="/selected-work/hirevify-640.webp" alt="HireVify application preview" width={640} height={360} loading="lazy"/><h2>See our work.</h2></Link><Link href="/services" className="home-services"><h2>Websites.<br/>Web applications.</h2><span>Explore services</span></Link><Link href="/pricing" className="home-pricing"><h2>Websites from<br/>₹8,000.</h2><span>Compare packages</span><small>Domain and hosting extra.</small></Link><div className="home-links"><Link href="/about">Meet the studio</Link><Link href="/contact">Start a conversation</Link></div></section></PageFrame>;}

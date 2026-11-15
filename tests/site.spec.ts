@@ -27,7 +27,7 @@ test("static content is usable without JavaScript", async ({ browser, baseURL })
   const page = await context.newPage();
   await page.goto(baseURL!);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Selected work." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "See our work." })).toBeVisible();
   await expect(page.getByRole("link", { name: /Talk to us on WhatsApp/ })).toHaveAttribute("href", /^https:\/\/wa.me\//);
   await context.close();
 });
@@ -35,10 +35,10 @@ test("static content is usable without JavaScript", async ({ browser, baseURL })
 test("project artwork loads on interaction and gallery supports keyboard navigation", async ({ page }) => {
   const artwork: string[] = [];
   page.on("request", (request) => { if (request.url().includes("/selected-work/")) artwork.push(request.url()); });
-  await page.goto("/");
+  await page.goto("/work");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  expect(artwork).toHaveLength(0);
-  const trigger = page.getByRole("button", { name: /Mecardee Rental Management Automotive/ });
+
+  const trigger = page.getByRole("button", { name: /Open Mecardee Rental Management project preview/ });
   await trigger.click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
@@ -57,7 +57,7 @@ test("project artwork loads on interaction and gallery supports keyboard navigat
 });
 
 test("service enquiries preserve project type and prepare the WhatsApp brief", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/services");
   const trigger = page.getByRole("button", { name: "Request Custom Quote" });
   await trigger.click();
   const dialog = page.getByRole("dialog");
@@ -81,11 +81,12 @@ test("service enquiries preserve project type and prepare the WhatsApp brief", a
 
 test("refresh returns to the top and removes the section hash", async ({ page }) => {
   await page.goto("/");
-  await page.locator("footer").getByRole("link", { name: "Selected work", exact: true }).click();
-  await expect(page).toHaveURL(/#selected-work$/);
+  await page.locator("footer").getByRole("link", { name: "Work", exact: true }).click();
+  await expect(page).toHaveURL(/\/work$/);
+  await page.evaluate(()=>scrollTo({top:500,behavior:"instant"}));
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
   await page.reload();
-  await expect(page).toHaveURL(/:3100\/$/);
+  await expect(page).toHaveURL(/:3100\/work$/);
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(2);
 });
 
@@ -96,7 +97,7 @@ test("navigation adapts without horizontal overflow", async ({ page, isMobile })
     await menu.click();
     const navigation = page.getByRole("navigation", { name: "Mobile navigation" });
     await expect(navigation).toBeVisible();
-    await navigation.getByRole("link", { name: "Our process" }).click();
+    await navigation.getByRole("link", { name: "Services" }).click();
     await expect(navigation).not.toBeVisible();
     await page.getByRole("button", { name: "Open navigation" }).click();
     await navigation.getByRole("button", { name: "Start a project" }).click();

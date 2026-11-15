@@ -54,7 +54,8 @@ function ProjectArtwork({ index, sizes, onLoad, onError }: {
 const labels = ["Mecardee Rental", "Mecardee Manager", "HireVify"];
 const words = ["Drive.", "Organise.", "Connect."];
 
-export default function SelectedWork() {
+export default function SelectedWork({standalone=false}:{standalone?:boolean}) {
+  const Heading=standalone?"h1":"h2";
   const [selected,setSelected]=useState(0);
   const [modalProject,setModalProject]=useState<number|null>(null);
   const [expanded,setExpanded]=useState(false);
@@ -96,7 +97,7 @@ export default function SelectedWork() {
   return <>
     <section ref={section} className={scene.section} id="selected-work" aria-labelledby="selected-work-title" data-project={selected} data-running={inView&&!paused}>
       <div className={scene.inner}>
-        <div className={scene.heading}><div><p className="eyebrow">DIGITAL WITH CHARACTER</p><h2 id="selected-work-title">Selected work.</h2></div><p>Different ideas.<br/>One considered experience.</p></div>
+        <div className={scene.heading}><div><p className="eyebrow">DIGITAL WITH CHARACTER</p><Heading id="selected-work-title">Selected work.</Heading></div></div>
         <div className={scene.layout}>
           <div className={scene.showcase}>
             <div className={scene.tabs} role="tablist" aria-label="Selected project index">{projects.map((project,index)=><button key={project.slug} ref={node=>{tabs.current[index]=node;}} type="button" role="tab" id={`work-tab-${index}`} aria-selected={selected===index} aria-controls={`work-${project.slug}`} tabIndex={selected===index?0:-1} onClick={()=>select(index)} onKeyDown={event=>{let next:number|undefined;if(event.key==="ArrowRight")next=selected+1;if(event.key==="ArrowLeft")next=selected-1;if(event.key==="Home")next=0;if(event.key==="End")next=projects.length-1;if(next!==undefined){event.preventDefault();select(next,true);}}}><span className={scene.tabImage} aria-hidden="true">{artVisible&&<ProjectArtwork index={index} sizes="100px"/>}</span><span>{labels[index]}</span></button>)}</div>
@@ -114,7 +115,7 @@ export default function SelectedWork() {
               </article>)}
             </div>
             <div className={scene.controls}><button type="button" aria-label="Previous selected project" onClick={()=>select(selected-1)}>Previous</button><span aria-live="polite" aria-atomic="true">{selected+1} / {projects.length}</span><button type="button" aria-label="Next selected project" onClick={()=>select(selected+1)}>Next</button><button type="button" className={scene.pause} aria-pressed={paused} onClick={()=>setPaused(!paused)}>{paused?"Play motion":"Pause motion"}</button></div>
-            <p className={scene.note}>Illustrative project previews. Screen content and figures are illustrative.</p>
+
           </div>
           <SelectedWorkVideoCard/>
         </div>

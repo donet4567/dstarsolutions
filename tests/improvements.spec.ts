@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("new appearance control lives in the footer and persists two readable themes", async ({ page }, testInfo) => {
-  await page.goto("/");
+  await page.goto("/pricing");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "midnight");
   await expect(page.locator("header").getByRole("button", { name: /Switch to .* theme/ })).toHaveCount(0);
   for (const [current, next] of [["midnight", "light"], ["ivory", "dark"]]) {

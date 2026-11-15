@@ -2,7 +2,7 @@ import {expect,test} from "@playwright/test";
 
 test("project selector supports keyboard, preview and restored focus",async({page})=>{
   await page.emulateMedia({reducedMotion:"reduce"});
-  await page.goto("/");
+  await page.goto("/work");
   const tabs=page.getByRole("tablist",{name:"Selected project index"});
   await tabs.getByRole("tab",{name:"HireVify",exact:true}).click();
   await expect(page.getByRole("tabpanel")).toHaveCount(1);
@@ -22,7 +22,7 @@ test("project selector supports keyboard, preview and restored focus",async({pag
 });
 
 test("motion reel plays only in view, pauses and respects reduced motion",async({page})=>{
-  await page.goto("/");
+  await page.goto("/work");
   const reel=page.locator('.motion-reel canvas');
   await reel.scrollIntoViewIfNeeded();
   await expect(reel).toHaveAttribute('data-running','true');
@@ -41,7 +41,7 @@ test("motion reel plays only in view, pauses and respects reduced motion",async(
 
 test("demo gallery reverses horizontally before releasing vertical scroll",async({page})=>{
   test.setTimeout(120000);
-  await page.goto('/');
+  await page.goto('/work');
   await page.evaluate(()=>document.fonts.ready);
   for(const [width,height] of [[320,700],[390,844],[768,1024],[1440,900]]){
     await page.setViewportSize({width,height});

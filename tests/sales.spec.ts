@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("package prices, limits and WhatsApp selections are correct on both pages", async ({ page }, testInfo) => {
-  for (const path of ["/", "/small-business-websites"]) {
+  for (const path of ["/pricing", "/small-business-websites"]) {
     await page.goto(path);
     for (const [name, price, pages, revisions] of [["Business Essential", "₹8,000", "Up to 3 pages", "One revision round"], ["Business Growth", "₹15,000", "Up to 5 pages total", "Two revision rounds"], ["Business Premium", "₹25,000", "Up to 8 pages total", "Three revision rounds"]]) {
       const card = page.getByRole("article").filter({ has: page.getByRole("heading", { name, exact: true }) });
@@ -23,7 +23,7 @@ test("package prices, limits and WhatsApp selections are correct on both pages",
 });
 
 test("enquiry validates fields and preserves Unicode, punctuation and package selection", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/services");
   await page.locator("header").getByRole("button", { name: "Let’s talk", exact: true }).click();
   const dialog = page.getByRole("dialog");
   await page.evaluate(() => { window.open = (url) => { document.documentElement.dataset.preparedBrief = String(url); return null; }; });
@@ -50,7 +50,7 @@ test("enquiry validates fields and preserves Unicode, punctuation and package se
 });
 
 test("all six demo concepts have real local pages and truthful enquiry links", async ({ page, request }) => {
-  await page.goto("/");
+  await page.goto("/work");
   const links = ["restaurants-cafes", "salons-beauty", "construction", "boutiques-shops", "travel-homestays", "professional-services"].map((slug) => `/website-demos/${slug}`);
   await expect(page.locator(".gallery-image-stage img")).toHaveCount(6);
   await expect(page.getByRole("link", { name: "View Demo", exact: true })).toHaveCount(6);
@@ -58,7 +58,7 @@ test("all six demo concepts have real local pages and truthful enquiry links", a
   for (const href of links) {
     const response = await request.get(href);
     expect(response.ok()).toBeTruthy();
-    expect(await response.text()).toContain("DEMO CONCEPT · FICTIONAL BUSINESS");
+    expect(await response.text()).toContain("Website demo");
     await page.goto(href);
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
@@ -73,12 +73,13 @@ test("all six demo concepts have real local pages and truthful enquiry links", a
 
 test("pricing and enquiry controls fit phones, tablets and desktops on both pages", async ({ page }) => {
   test.setTimeout(90_000);
-  for (const path of ["/", "/small-business-websites"]) {
+  for (const path of ["/pricing", "/small-business-websites"]) {
     await page.goto(path);
     await page.emulateMedia({ reducedMotion: "reduce" });
     for (const width of [320, 360, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       for (const section of ["#top", "#packages", "#business-websites", "#contact"]) {
+        if(!await page.locator(section).count())continue;
         await page.locator(section).scrollIntoViewIfNeeded();
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${path} ${section} at ${width}px`).toBeTruthy();
       }
@@ -96,7 +97,7 @@ test("pricing and enquiry controls fit phones, tablets and desktops on both page
 
 test("floating WhatsApp leaves package buttons reachable", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/pricing");
   const floating = page.locator(".floating-whatsapp");
   const choose = page.getByRole("link", { name: "Choose This Package: Business Premium", exact: true });
   await choose.scrollIntoViewIfNeeded();

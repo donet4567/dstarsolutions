@@ -12,6 +12,7 @@ import "./perspective.css";
 import "./chapters.css";
 import "./work-deck.css";
 import "./reference-theme.css";
+import "./pages.css";
 
 const sourceSans = localFont({
   src: [
@@ -30,6 +31,18 @@ const handwriting = localFont({
   src: [{ path: "./fonts/caveat-600.woff2", weight: "600" }],
   variable: "--font-handwriting", display: "swap", preload: false,
 });
+
+// Resolve old one-page bookmarks before loading the homepage experience.
+const legacySections = `(() => {
+  const pages = {"selected-work":"/work","business-websites":"/work",services:"/services","custom-applications":"/services",process:"/services",packages:"/pricing",faq:"/pricing",studio:"/about",engineering:"/about",contact:"/contact"};
+  const follow = () => {
+    if(location.pathname !== "/") return;
+    const hash = location.hash.slice(1);
+    const path = pages[hash] || (hash.startsWith("work-") ? "/work" : "");
+    if(path) location.replace(path + location.search + location.hash);
+  };
+  follow(); addEventListener("hashchange", follow);
+})();`;
 
 // Run before the page is parsed so a refresh cannot restore a lower section.
 // Normal section links and back/forward navigation keep their usual behavior.
@@ -117,7 +130,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-theme="midnight" className={`${sourceSans.variable} ${josefin.variable} ${handwriting.variable}`} suppressHydrationWarning>
-      <head><script id="restore-theme" dangerouslySetInnerHTML={{ __html: restoreTheme }} /><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
+      <head><script id="legacy-sections" dangerouslySetInnerHTML={{ __html: legacySections }} /><script id="restore-theme" dangerouslySetInnerHTML={{ __html: restoreTheme }} /><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, "\\u003c") }} />
         {children}

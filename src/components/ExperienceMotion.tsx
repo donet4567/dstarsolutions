@@ -7,7 +7,7 @@ export default function ExperienceMotion() {
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
     const updateMotion = () => { document.documentElement.dataset.motion = motion.matches ? "reduced" : "full"; };
     updateMotion(); motion.addEventListener("change", updateMotion);
-    const links = [...document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a, .mobile-navigation a")];
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.desktop-nav a[href^="#"], .mobile-navigation a[href^="#"]')];
     const observer = new IntersectionObserver((entries) => {
       const active = entries.find((entry) => entry.isIntersecting);
       if (!active) return;

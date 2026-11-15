@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("image composition controls act independently and demo links are available", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/work");
   const controls = page.getByRole("group", { name: "Fern & Flour image composition" });
   for (const [name, detail] of [["Detail crop", "true"], ["Full composition", "false"]]) {
     await controls.getByRole("button", { name, exact: true }).click();

@@ -1,13 +1,13 @@
 /* The interactive showcase owns its layout; shared motion-reel treatment. */
 #selected-work {content-visibility:visible;contain-intrinsic-block-size:none;padding-block:90px 70px;}
-#selected-work h2 {font-size:clamp(62px,8vw,120px);letter-spacing:-.055em;line-height:.95;}
+#selected-work :is(h1,h2) {font-size:clamp(62px,8vw,120px);letter-spacing:-.055em;line-height:.95;}
 .selected-work-video {margin:0;overflow:hidden;}
 @media(max-width:760px) {#selected-work {padding-block:65px 50px;}#selected-work h2 {font-size:clamp(54px,11vw,72px);}}
 /* Full-bleed motion reel with controls kept outside the artwork. */
 .motion-reel canvas {display:block;width:100%;aspect-ratio:4/5;background:#071110;}
 .motion-reel .motion-reel-controls {padding:18px;color:#fff;font-size:18px;}
 .motion-reel-controls>div {display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;}
-.motion-reel .motion-reel-controls button {margin:0;padding:8px 0;min-height:44px;border-color:#ffffff60;color:#fff;font-size:18px;}
+.motion-reel .motion-reel-controls button {background:transparent;border:0;border-bottom:1px solid #ffffff60;margin:0;padding:8px 0;min-height:44px;border-color:#ffffff60;color:#fff;font-size:18px;}
 .motion-reel:fullscreen {width:100vw;height:100dvh;border-radius:0!important;display:flex;flex-direction:column;justify-content:center;background:#071110;}
 .motion-reel:fullscreen canvas {height:calc(100dvh - 120px);width:100%;aspect-ratio:auto;}
 .motion-reel:fullscreen .motion-reel-controls {display:flex;align-items:center;justify-content:space-between;gap:20px;}

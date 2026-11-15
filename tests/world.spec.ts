@@ -69,6 +69,7 @@ test("feature headings have distinct entrances and the footer signature has no e
   await page.goto("/");
   await expect(page.locator("#hero-title")).toHaveClass(/title-in-view/);
   for (const [selector, effect] of [["#custom-apps-title", "title-assemble"], ["#contact-title", "title-roll"]]) {
+    await page.goto(selector==="#custom-apps-title"?"/services":"/contact");
     const heading = page.locator(selector);
     await expect(async () => {
       await heading.evaluate(el=>el.scrollIntoView({block:"center",behavior:"instant"}));
