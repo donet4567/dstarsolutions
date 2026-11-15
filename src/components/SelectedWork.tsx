@@ -1,10 +1,9 @@
-﻿"use client";
-
-// Picture supplies the existing pre-encoded AVIF/WebP responsive sources.
-import { useCallback, useEffect, useRef, useState } from "react";
+"use client";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import SelectedWorkVideoCard from "./SelectedWorkVideoCard";
 import styles from "./SelectedWork.module.css";
+import scene from "./SelectedWorkShowcase.module.css";
 
 const projects = [
   {
@@ -30,8 +29,6 @@ const projects = [
   },
 ] as const;
 
-type Frame = { left: number; top: number; width: number };
-
 function ProjectArtwork({ index, sizes, onLoad, onError }: {
   index: number;
   sizes: string;
@@ -53,183 +50,76 @@ function ProjectArtwork({ index, sizes, onLoad, onError }: {
   </picture>;
 }
 
-function PreviewArrow() { return null; }
+
+const labels = ["Mecardee Rental", "Mecardee Manager", "HireVify"];
+const words = ["Drive.", "Organise.", "Connect."];
 
 export default function SelectedWork() {
-  const [active, setActive] = useState<number | null>(null);
-  const [displayed, setDisplayed] = useState<number | null>(null);
-  const [visited, setVisited] = useState(0);
-  const [failed, setFailed] = useState(0);
-  const [frame, setFrame] = useState<Frame | null>(null);
-  const [modalProject, setModalProject] = useState<number | null>(null);
-  const [expanded, setExpanded] = useState(false);
-  const [artVisible, setArtVisible] = useState(false);
-  const section = useRef<HTMLElement>(null);
-  const rows = useRef<(HTMLButtonElement | null)[]>([]);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const trigger = useRef<HTMLButtonElement | null>(null);
-  const hovered = useRef<number | null>(null);
-  const focused = useRef<number | null>(null);
-  const pending = useRef<number | null>(null);
-  const ready = useRef(0);
-  const suppressFocus = useRef(false);
-  const scrollPosition = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const element = section.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setArtVisible(true); observer.disconnect(); }
-    }, { rootMargin: "150px" });
+  const [selected,setSelected]=useState(0);
+  const [modalProject,setModalProject]=useState<number|null>(null);
+  const [expanded,setExpanded]=useState(false);
+  const [failed,setFailed]=useState(0);
+  const [artVisible,setArtVisible]=useState(false);
+  const [inView,setInView]=useState(false);
+  const [paused,setPaused]=useState(false);
+  const section=useRef<HTMLElement>(null);
+  const dialog=useRef<HTMLDialogElement>(null);
+  const trigger=useRef<HTMLButtonElement|null>(null);
+  const tabs=useRef<(HTMLButtonElement|null)[]>([]);
+  const swipe=useRef<{x:number;y:number}|null>(null);
+  const scrollPosition=useRef({x:0,y:0});
+  useEffect(()=>{
+    const element=section.current;if(!element)return;
+    const observer=new IntersectionObserver(([entry])=>{
+      setInView(entry.isIntersecting);
+      if(entry.isIntersecting)setArtVisible(true);
+    },{rootMargin:"120px"});
     observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
-  const dismissPreview = useCallback(() => {
-    hovered.current = null;
-    focused.current = null;
-    pending.current = null;
-    setActive(null);
-  }, []);
-
-  const showPreview = (index: number) => {
-    if (artVisible) return;
-    const row = rows.current[index];
-    if (!row || modalProject !== null || dialog.current?.open || document.querySelector("dialog[open]")) return;
-    if (!window.matchMedia("(min-width: 761px)").matches) return;
-
-    const bounds = row.getBoundingClientRect();
-    const viewport = window.visualViewport;
-    const viewportLeft = viewport?.offsetLeft ?? 0;
-    const viewportTop = viewport?.offsetTop ?? 0;
-    const viewportWidth = viewport?.width ?? window.innerWidth;
-    const viewportHeight = viewport?.height ?? window.innerHeight;
-    const safeTop = Math.max(viewportTop + 16, (document.querySelector("header")?.getBoundingClientRect().bottom ?? 92) + 16);
-    const bottom = viewportTop + viewportHeight - 16;
-    const above = bounds.top - safeTop - 14;
-    const below = bottom - bounds.bottom - 14;
-    const placeAbove = above >= below;
-    const room = Math.max(above, below);
-    const width = Math.floor(Math.min(480, viewportWidth * .42, (room - 52) * 16 / 9));
-
-    // At high zoom or in short landscape windows, activation still opens the
-    // accessible dialog instead of squeezing art over a row or the fixed header.
-    if (width < 240) { dismissPreview(); return; }
-    const height = width * 9 / 16 + 52;
-    setFrame({
-      left: Math.max(viewportLeft + 16, Math.min(bounds.right - width, viewportLeft + viewportWidth - width - 16)),
-      top: placeAbove ? bounds.top - height - 14 : bounds.bottom + 14,
-      width,
-    });
-    pending.current = index;
-    setVisited((value) => value | (1 << index));
-    if (ready.current & (1 << index)) setDisplayed(index);
-    setActive(index);
+    const syncHash=()=>{const index=projects.findIndex(p=>location.hash===`#work-${p.slug}`);if(index>=0)setSelected(index);};
+    syncHash();addEventListener("hashchange",syncHash);
+    return()=>{observer.disconnect();removeEventListener("hashchange",syncHash);};
+  },[]);
+  useEffect(()=>{if(modalProject!==null)dialog.current?.showModal();},[modalProject]);
+  const select=(index:number,focus=false)=>{
+    const next=(index+projects.length)%projects.length;
+    setSelected(next);
+    if(focus)tabs.current[next]?.focus({preventScroll:true});
   };
-
-  useEffect(() => {
-    if (active === null) return;
-    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") dismissPreview(); };
-    window.addEventListener("scroll", dismissPreview, true);
-    window.addEventListener("resize", dismissPreview);
-    window.addEventListener("blur", dismissPreview);
-    window.visualViewport?.addEventListener("resize", dismissPreview);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("scroll", dismissPreview, true);
-      window.removeEventListener("resize", dismissPreview);
-      window.removeEventListener("blur", dismissPreview);
-      window.visualViewport?.removeEventListener("resize", dismissPreview);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [active, dismissPreview]);
-
-  useEffect(() => {
-    if (modalProject === null) return;
-    dialog.current?.showModal();
-  }, [modalProject]);
-
-  const openProject = (index: number, button: HTMLButtonElement) => {
-    dismissPreview();
-    trigger.current = button;
-    scrollPosition.current = { x: window.scrollX, y: window.scrollY };
-    setModalProject(index);
+  const openProject=(index:number,button:HTMLButtonElement)=>{
+    trigger.current=button;scrollPosition.current={x:scrollX,y:scrollY};setModalProject(index);
   };
-
-  const returnFocus = () => {
-    dismissPreview();
-    setModalProject(null);
-    setExpanded(false);
-    suppressFocus.current = true;
-    trigger.current?.focus({ preventScroll: true });
-    suppressFocus.current = false;
-    // Native modal focus restoration should not move the page on touch browsers.
-    window.scrollTo({ left: scrollPosition.current.x, top: scrollPosition.current.y, behavior: "instant" });
+  const returnFocus=()=>{
+    setModalProject(null);setExpanded(false);trigger.current?.focus({preventScroll:true});
+    window.scrollTo({left:scrollPosition.current.x,top:scrollPosition.current.y,behavior:"instant"});
   };
-
-  const changeProject = (direction: number) => {
-    setModalProject((index) => index === null ? null : (index + direction + projects.length) % projects.length);
-  };
-
+  const changeProject=(direction:number)=>setModalProject(index=>index===null?null:(index+direction+projects.length)%projects.length);
   return <>
-    <section ref={section} className={`${styles.section} container`} id="selected-work" aria-labelledby="selected-work-title" data-depth-section="">
-      <div className={styles.heading}>
-        <div><p className="eyebrow"><span className="section-dash" /> BEYOND BUSINESS WEBSITES</p><h2 id="selected-work-title" data-title-motion="stamp">Selected work.</h2></div>
-        <p className={styles.intro}>A closer look at our web application work.<br />Illustrative project previews.</p>
+    <section ref={section} className={scene.section} id="selected-work" aria-labelledby="selected-work-title" data-project={selected} data-running={inView&&!paused}>
+      <div className={scene.inner}>
+        <div className={scene.heading}><div><p className="eyebrow">DIGITAL WITH CHARACTER</p><h2 id="selected-work-title">Selected work.</h2></div><p>Different ideas.<br/>One considered experience.</p></div>
+        <div className={scene.layout}>
+          <div className={scene.showcase}>
+            <div className={scene.tabs} role="tablist" aria-label="Selected project index">{projects.map((project,index)=><button key={project.slug} ref={node=>{tabs.current[index]=node;}} type="button" role="tab" id={`work-tab-${index}`} aria-selected={selected===index} aria-controls={`work-${project.slug}`} tabIndex={selected===index?0:-1} onClick={()=>select(index)} onKeyDown={event=>{let next:number|undefined;if(event.key==="ArrowRight")next=selected+1;if(event.key==="ArrowLeft")next=selected-1;if(event.key==="Home")next=0;if(event.key==="End")next=projects.length-1;if(next!==undefined){event.preventDefault();select(next,true);}}}><span className={scene.tabImage} aria-hidden="true">{artVisible&&<ProjectArtwork index={index} sizes="100px"/>}</span><span>{labels[index]}</span></button>)}</div>
+            <div className={scene.stage} onPointerDown={event=>{if(event.pointerType!=="mouse")swipe.current={x:event.clientX,y:event.clientY};}} onPointerCancel={()=>{swipe.current=null;}} onPointerUp={event=>{const start=swipe.current;swipe.current=null;if(start&&Math.abs(event.clientX-start.x)>55&&Math.abs(event.clientX-start.x)>Math.abs(event.clientY-start.y)*1.5)select(selected+(event.clientX<start.x?1:-1));}}>
+              {projects.map((project,index)=><article className={scene.panel} role="tabpanel" id={`work-${project.slug}`} aria-labelledby={`work-tab-${index}`} aria-hidden={selected!==index} inert={selected!==index} data-active={selected===index} key={project.slug}>
+                <div className={scene.composition}>
+                  <span className={scene.word} aria-hidden="true">{words[index]}</span>
+                  <span className={scene.halo} aria-hidden="true"/>
+                  <div className={scene.satelliteLeft} aria-hidden="true"><div className={scene.float}>{artVisible&&<ProjectArtwork index={index} sizes="220px"/>}</div></div>
+                  <button className={scene.mainArtwork} type="button" aria-label={`Open ${project.name} project preview`} aria-haspopup="dialog" onClick={event=>openProject(index,event.currentTarget)}><span className={scene.float}>{artVisible&&<ProjectArtwork index={index} sizes="(max-width:760px) 85vw, 55vw"/>}</span><span className={scene.artworkCta}>Explore project</span></button>
+                  <div className={scene.satelliteRight} aria-hidden="true"><div className={scene.float}><span className={scene.phoneCamera}/>{artVisible&&<ProjectArtwork index={index} sizes="220px"/>}</div></div>
+                  <span className={scene.orbitDot} aria-hidden="true"/>
+                </div>
+                <div className={scene.copy}><div><p>{project.category}</p><h3>{project.name}</h3></div><p>{project.description}</p></div>
+              </article>)}
+            </div>
+            <div className={scene.controls}><button type="button" aria-label="Previous selected project" onClick={()=>select(selected-1)}>Previous</button><span aria-live="polite" aria-atomic="true">{selected+1} / {projects.length}</span><button type="button" aria-label="Next selected project" onClick={()=>select(selected+1)}>Next</button><button type="button" className={scene.pause} aria-pressed={paused} onClick={()=>setPaused(!paused)}>{paused?"Play motion":"Pause motion"}</button></div>
+            <p className={scene.note}>Illustrative project previews. Screen content and figures are illustrative.</p>
+          </div>
+          <SelectedWorkVideoCard/>
+        </div>
       </div>
-      <div className="selected-work-layout"><SelectedWorkVideoCard /><div className="selected-work-content">
-      <nav className="work-project-index" aria-label="Selected project index"><span>PROJECT ARCHIVE / 01—03</span>{projects.map((project,index)=><a href={`#work-${project.slug}`} key={project.slug}><small>0{index+1}</small>{project.name}</a>)}</nav>
-      <p className={styles.srOnly} id="selected-work-help">Open a project to view its illustrative concept artwork. Screen content and figures are illustrative.</p>
-      <ol className={styles.list}>
-        {projects.map((project, index) => <li key={project.slug} id={`work-${project.slug}`}>
-          <button className={styles.row} type="button" data-depth-card="" ref={(node) => { rows.current[index] = node; }}
-            aria-describedby="selected-work-help" aria-haspopup="dialog"
-            data-active={active === index || undefined}
-            onPointerEnter={(event) => {
-              if (event.pointerType !== "mouse" || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-              hovered.current = index;
-              showPreview(index);
-            }}
-            onPointerLeave={() => {
-              hovered.current = null;
-              if (focused.current !== null) showPreview(focused.current); else dismissPreview();
-            }}
-            onFocus={(event) => {
-              if (suppressFocus.current || modalProject !== null || !event.currentTarget.matches(":focus-visible")) return;
-              focused.current = index;
-              showPreview(index);
-            }}
-            onBlur={() => {
-              focused.current = null;
-              if (hovered.current !== null) showPreview(hovered.current); else dismissPreview();
-            }}
-            onClick={(event) => openProject(index, event.currentTarget)}>
-            <span className={styles.thumbnail} aria-hidden="true">{artVisible && <ProjectArtwork index={index} sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1100px) 48vw, 48vw" />}<span className={styles.viewProject}>EXPLORE PROJECT <PreviewArrow /></span></span>
-            <span className={styles.number} aria-hidden="true">0{index + 1}</span>
-            <span className={styles.name}>{project.name}</span>
-            <span className={styles.category}>{project.category}</span>
-            <span className="work-project-summary">{project.description}</span>
-            <span className={styles.arrow}>View</span>
-          </button>
-        </li>)}
-      </ol></div></div>
     </section>
-
-    {frame && createPortal(<div className={styles.preview} aria-hidden="true"
-      data-open={active !== null && (displayed !== null || (failed & (1 << active)) !== 0)}
-      style={{ left: frame.left, top: frame.top, width: frame.width }}>
-      <div className={styles.artwork}>
-        {projects.map((project, index) => (visited & (1 << index)) !== 0 && <div
-          className={styles.layer} data-visible={displayed === index} key={project.slug}>
-          <ProjectArtwork index={index} sizes={`${frame.width}px`}
-            onLoad={() => { ready.current |= 1 << index; if (pending.current === index) setDisplayed(index); }}
-            onError={() => { ready.current |= 1 << index; setFailed((value) => value | (1 << index)); if (pending.current === index) setDisplayed(index); }} />
-        </div>)}
-        {displayed !== null && (failed & (1 << displayed)) !== 0 && <p className={styles.fallback}>Artwork is unavailable.<br />Open the project for its description.</p>}
-      </div>
-      <div className={styles.caption}><span>{projects[displayed ?? active ?? 0].name}</span><small>CONCEPT PREVIEW</small></div>
-    </div>, document.body)}
-
     {modalProject !== null && createPortal(<dialog className={styles.dialog} ref={dialog}
       data-expanded={expanded || undefined}
       aria-labelledby="work-dialog-title" aria-describedby="work-dialog-description work-dialog-note" onClose={returnFocus}
@@ -258,9 +148,9 @@ export default function SelectedWork() {
         <div className={styles.dialogCopy} aria-live="polite" aria-atomic="true"><p className={styles.dialogCategory}>{projects[modalProject].category}</p><h2 id="work-dialog-title">{projects[modalProject].name}</h2><p id="work-dialog-description">{projects[modalProject].description}</p><small id="work-dialog-note">Illustrative concept artwork. Screen content and figures are illustrative.</small></div>
       </div>
       <div className={styles.dialogNavigation}>
-        <button type="button" className={styles.previous} aria-label="Previous project" onClick={() => changeProject(-1)}><PreviewArrow /><span>Previous</span></button>
+        <button type="button" className={styles.previous} aria-label="Previous project" onClick={() => changeProject(-1)}><span>Previous</span></button>
         <span className={styles.projectCount} aria-label={`Project ${modalProject + 1} of ${projects.length}`}><strong>0{modalProject + 1}</strong><span>/</span>0{projects.length}</span>
-        <button type="button" className={styles.next} aria-label="Next project" onClick={() => changeProject(1)}><span>Next project</span><PreviewArrow /></button>
+        <button type="button" className={styles.next} aria-label="Next project" onClick={() => changeProject(1)}><span>Next project</span></button>
       </div>
     </dialog>, document.body)}
   </>;

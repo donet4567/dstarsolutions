@@ -47,36 +47,34 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     const runway=journey.current,rail=studies.current;
     if (!runway || !rail) return;
     const motion=matchMedia("(prefers-reduced-motion: reduce)");
-    const desktop=matchMedia("(min-width: 901px) and (pointer: fine)");
-    let frame=0, previousTime=0, distance=0, start=0, position=rail.scrollLeft, pinned=false;
-    const update=(time:number)=>{
+    let frame=0, distance=0, start=0, pinned=false;
+    const update=()=>{
       frame=0;
-      if(!pinned) return;
-      const target=Math.min(distance,Math.max(0,window.scrollY-start));
-      // Time-based easing stays consistent across 60/120Hz screens. No layout reads per frame.
-      const elapsed=previousTime ? Math.min(time-previousTime,64) : 16;
-      previousTime=time;
-      position+=(target-position)*(1-Math.exp(-elapsed/85));
-      if(Math.abs(target-position)<.35) position=target;
-      rail.scrollLeft=position;
-      if(position!==target) frame=requestAnimationFrame(update); else previousTime=0;
+      if(!pinned)return;
+      // A single reversible scroll coordinate: no independent easing or scroll lock.
+      const top=parseFloat(runway.style.getPropertyValue("--study-pin-top"))||100;
+      rail.scrollLeft=Math.min(distance,Math.max(0,top-runway.getBoundingClientRect().top));
     };
     const schedule=()=>{if(pinned && !frame) frame=requestAnimationFrame(update);};
     const measure=()=>{
       distance=Math.max(0,rail.scrollWidth-rail.clientWidth);
-      const top=parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||110;
-      pinned=!motion.matches && desktop.matches && innerHeight>=640 && distance>1;
+      const top=(document.querySelector("header")?.getBoundingClientRect().height??88)+12;
+      const contentHeight=rail.parentElement?.offsetHeight??rail.offsetHeight;
+      pinned=!motion.matches && contentHeight<=innerHeight-top-12 && distance>1;
       runway.dataset.pinned=String(pinned);
       runway.style.setProperty("--study-pin-top",`${top}px`);
       runway.style.height=pinned ? `${(rail.parentElement?.offsetHeight??rail.offsetHeight)+distance}px` : "";
       start=runway.getBoundingClientRect().top+window.scrollY-top;
-      position=rail.scrollLeft;previousTime=0;
+
       schedule();
     };
     const focusStudy=(event:FocusEvent)=>{
       if(!pinned || !(event.target instanceof Element)) return;
       const card=event.target.closest<HTMLElement>(".business-card");
-      if(card) window.scrollTo({top:start+Math.min(distance,card.offsetLeft-rail.offsetLeft),behavior:"smooth"});
+      if(card) {
+        start=runway.getBoundingClientRect().top+scrollY-(parseFloat(runway.style.getPropertyValue("--study-pin-top"))||100);
+        window.scrollTo({top:start+Math.min(distance,card.offsetLeft-rail.offsetLeft),behavior:"smooth"});
+      }
     };
     const observer=new ResizeObserver(measure);
     observer.observe(rail);
@@ -85,10 +83,9 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     addEventListener("resize",measure,{passive:true});
     rail.addEventListener("focusin",focusStudy);
     motion.addEventListener("change",measure);
-    desktop.addEventListener("change",measure);
     measure();
     void document.fonts.ready.then(()=>{if(runway.isConnected) measure();});
-    return()=>{observer.disconnect();cancelAnimationFrame(frame);removeEventListener("scroll",schedule);removeEventListener("resize",measure);rail.removeEventListener("focusin",focusStudy);motion.removeEventListener("change",measure);desktop.removeEventListener("change",measure);runway.style.height="";};
+    return()=>{observer.disconnect();cancelAnimationFrame(frame);removeEventListener("scroll",schedule);removeEventListener("resize",measure);rail.removeEventListener("focusin",focusStudy);motion.removeEventListener("change",measure);runway.style.height="";};
   },[category]);
   const visibleExamples=businessExamples.filter(example=>category==="all" || category===example.slug);
   const currentStudy=Math.min(studyIndex,visibleExamples.length-1);
