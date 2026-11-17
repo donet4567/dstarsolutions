@@ -38,7 +38,6 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     if (!runway || !rail) return;
     const motion=matchMedia("(prefers-reduced-motion: reduce)");
     let frame=0, distance=0, start=0, pinned=false;
-    const imageStage=rail.querySelector<HTMLElement>(".gallery-image-stage");
     const update=()=>{
       frame=0;
       if(!pinned)return;
@@ -51,19 +50,7 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
       distance=Math.max(0,rail.scrollWidth-rail.clientWidth);
       const top=(document.querySelector("header")?.getBoundingClientRect().height??88)+12;
       const contentHeight=rail.parentElement?.offsetHeight??rail.offsetHeight;
-      const imageHeight=imageStage?.offsetHeight??0;
-      const fixedContent=contentHeight-imageHeight;
-      const available=innerHeight-top-12-fixedContent;
-      const smallScreen=innerWidth<=760;
-      const preferredHeight=smallScreen
-        ? Math.min(320,Math.max(220,innerHeight*.36))
-        : Math.min(470,Math.max(300,innerHeight*.42));
-      const minimumHeight=smallScreen?160:240;
-      pinned=!motion.matches && available>=minimumHeight && distance>1;
-      if(imageStage) {
-        if(pinned) imageStage.style.setProperty("--study-image-fit",`${Math.min(preferredHeight,available)}px`);
-        else imageStage.style.removeProperty("--study-image-fit");
-      }
+      pinned=!motion.matches && innerWidth>900 && contentHeight<=innerHeight-top-12 && distance>1;
       runway.dataset.pinned=String(pinned);
       runway.style.setProperty("--study-pin-top",`${top}px`);
       runway.style.height=pinned ? `${(rail.parentElement?.offsetHeight??rail.offsetHeight)+distance}px` : "";
@@ -105,10 +92,10 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
   };
   return <section className="sales-section container business-showcase" id="business-websites" aria-labelledby="business-websites-title">
     <div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> 03 / THE POSSIBILITY GALLERY</p><h2 id="business-websites-title" data-title-motion="shutter">Website<br /><em>directions.</em></h2></div></div>
-    <div ref={journey} className="study-journey"><div className="study-pin">
     <div className="gallery-tabs"><div className="gallery-selector" role="group" aria-label="Website studio categories"><span className="gallery-category-label gallery-category-all">All studies <span>06</span></span>{businessExamples.map((example, index) => <span className="gallery-category-label" key={example.slug}>{categories[index]}</span>)}</div></div>
     <div className="showcase-toolbar"><span role="status" aria-live="polite">{category === "all" ? "06 studies" : "01 study"} / Scroll to explore</span></div>
-    <div ref={attachStudies} className="business-grid" key={category} tabIndex={0} role="region" aria-label="Website demo images" onScroll={()=>{
+
+    <div ref={journey} className="study-journey"><div className="study-pin"><div ref={attachStudies} className="business-grid" key={category} tabIndex={0} role="region" aria-label="Website demo images" onScroll={()=>{
       const rail=studies.current,first=rail?.querySelector<HTMLElement>(".business-card");
       if(rail && first) setStudyIndex(Math.round(rail.scrollLeft/(first.offsetWidth+parseFloat(getComputedStyle(rail).columnGap))));
     }}>{businessExamples.map((example, index) => category === "all" || category === example.slug ? <GalleryCard key={example.slug} example={example} index={index} source={source} category={category} /> : null)}</div><div className="study-navigation" aria-label="Browse website studies"><span>{String(currentStudy+1).padStart(2,"0")} / {String(visibleExamples.length).padStart(2,"0")}</span><button type="button" disabled={currentStudy===0} onClick={()=>moveStudy(currentStudy-1)}>Previous study</button><button type="button" disabled={currentStudy===visibleExamples.length-1} onClick={()=>moveStudy(currentStudy+1)}>Next study</button></div></div></div>
