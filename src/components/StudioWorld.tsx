@@ -13,6 +13,7 @@ function subscribe(callback: () => void) {
 export default function StudioWorld() {
   const host=useRef<HTMLDivElement>(null);
   const world=useRef<WorldController|undefined>(undefined);
+  const activateWorld=useRef<(()=>void)|undefined>(undefined);
   const [paused,setPaused]=useState(false);
   const [ready,setReady]=useState(false);
   const pausePreference=useRef(false);
@@ -20,7 +21,7 @@ export default function StudioWorld() {
   useEffect(()=>{
     const element=host.current,stage=element?.closest<HTMLElement>(".flight-stage");
     if (!element || !stage || reduced) return;
-    let disposed=false,loading=false,visible=false,idle:number|undefined;
+    let disposed=false,loading=false,visible=false,activated=false;
     const load=async()=>{
       if(disposed || loading || !visible) return;
       loading=true;
@@ -31,12 +32,23 @@ export default function StudioWorld() {
         world.current?.setPaused(pausePreference.current);
       } catch { /* The still render remains on screen. */ }
     };
+    const activate=()=>{
+      activated=true;
+      if(visible) void load();
+    };
+    const activateNearButterfly=(event:PointerEvent)=>{
+      const proof=element.querySelector<HTMLElement>(".world-proof");
+      const bounds=proof?.getBoundingClientRect();
+      if(bounds && event.clientX>=bounds.left && event.clientX<=bounds.right &&
+        event.clientY>=bounds.top && event.clientY<=bounds.bottom) activate();
+    };
+    activateWorld.current=activate;
     const observer=new IntersectionObserver(([entry])=>{
       visible=entry.isIntersecting;
-      if(!visible || loading) return;
-      if("requestIdleCallback" in window) idle=requestIdleCallback(load,{timeout:900});
-      else void load();
+      if(visible && activated) void load();
     });
+    stage.addEventListener("pointermove",activateNearButterfly,{passive:true});
+    stage.addEventListener("pointerdown",activateNearButterfly,{passive:true});
     const canvasReady=new MutationObserver(()=>{
       if(element.dataset.ready==="true") {setReady(true);canvasReady.disconnect();}
     });
@@ -44,7 +56,9 @@ export default function StudioWorld() {
     observer.observe(stage);
     return ()=>{
       disposed=true;observer.disconnect();canvasReady.disconnect();
-      if(idle!==undefined) cancelIdleCallback(idle);
+      stage.removeEventListener("pointermove",activateNearButterfly);
+      stage.removeEventListener("pointerdown",activateNearButterfly);
+      activateWorld.current=undefined;
       world.current?.dispose();world.current=undefined;setReady(false);
     };
   },[reduced]);
@@ -53,7 +67,10 @@ export default function StudioWorld() {
     <div className="world-layer" aria-hidden="true"><div ref={host} className="world-viewport"><div className="world-fallback"><div className="world-proof"/></div></div></div>
     <div className="world-controls">
       <p>Approach the butterfly to see it fly. <a className="wing-credit" href="/models/monarch/CREDITS.txt" aria-label="Butterfly photograph credit">Image credit</a></p>
-      <div><button type="button" disabled={isStatic||paused} onClick={()=>world.current?.takeFlight()}>Take flight <span aria-hidden="true">↗</span></button>
+      <div><button type="button" disabled={reduced||paused} onClick={()=>{
+        if(!ready) {activateWorld.current?.();return;}
+        world.current?.takeFlight();
+      }}>{ready?"Take flight":reduced?"Static scene":"Enable 3D"} <span aria-hidden="true">↗</span></button>
       <button type="button" aria-label="Pause scene motion" aria-pressed={paused||reduced} disabled={isStatic} onClick={()=>{
         const next=!paused;pausePreference.current=next;setPaused(next);world.current?.setPaused(next);
       }}>{reduced?"Static scene":paused?"Resume motion":"Pause motion"}</button></div>
