@@ -50,7 +50,7 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
       distance=Math.max(0,rail.scrollWidth-rail.clientWidth);
       const top=(document.querySelector("header")?.getBoundingClientRect().height??88)+12;
       const contentHeight=rail.parentElement?.offsetHeight??rail.offsetHeight;
-      pinned=!motion.matches && innerWidth>900 && contentHeight<=innerHeight-top-12 && distance>1;
+      pinned=!motion.matches && contentHeight<=innerHeight-top-12 && distance>1;
       runway.dataset.pinned=String(pinned);
       runway.style.setProperty("--study-pin-top",`${top}px`);
       runway.style.height=pinned ? `${(rail.parentElement?.offsetHeight??rail.offsetHeight)+distance}px` : "";
