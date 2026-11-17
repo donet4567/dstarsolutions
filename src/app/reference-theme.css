@@ -130,11 +130,11 @@ html[data-theme] .brand-wordmark>span {text-transform:none;letter-spacing:0;}
 .business-showcase .study-journey .business-card .gallery-image-stage img {object-fit:cover;}
 @media(min-width:761px) {
  .business-showcase .business-card,.business-showcase .business-card:nth-child(even) {flex-basis:88%;}
- .business-showcase .study-journey .business-card .gallery-image-stage {width:min(100%,clamp(420px,57svh,630px));height:clamp(280px,38svh,420px);min-height:0;aspect-ratio:3/2;margin-inline:auto;}
+ .business-showcase .study-journey .business-card .gallery-image-stage {width:min(100%,clamp(510px,76svh,820px));height:auto;min-height:0;aspect-ratio:3/2;margin-inline:auto;}
 }
 @media(max-width:760px) {
  .business-showcase .business-card,.business-showcase .business-card:nth-child(even) {flex-basis:94%;}
- .business-showcase .study-journey .business-card .gallery-image-stage {width:min(100%,clamp(300px,39svh,345px));height:clamp(200px,26svh,230px);aspect-ratio:3/2;margin-inline:auto;}
+ .business-showcase .study-journey .business-card .gallery-image-stage {width:min(100%,clamp(320px,55svh,420px));height:auto;aspect-ratio:3/2;margin-inline:auto;}
  .business-showcase .study-journey .business-card h3 {font-size:28px;}
  .business-showcase .study-journey .business-card-actions {gap:8px;flex-direction:column;align-items:flex-start;}
  .business-showcase .study-journey .business-card-actions a {min-height:40px;}
