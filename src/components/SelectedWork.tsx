@@ -45,7 +45,7 @@ function ProjectArtwork({ index, sizes, onLoad, onError }: {
     <source type="image/avif" srcSet={sourceSet("avif")} sizes={sizes} />
     <source type="image/webp" srcSet={sourceSet("webp")} sizes={sizes} />
     <img src={`/selected-work/${project.slug}-960.webp`} alt={project.alt}
-      width={960} height={540} loading="eager" decoding="async"
+      width={960} height={540} sizes={sizes} loading="lazy" decoding="async"
       onLoad={onLoad} onError={onError} />
   </picture>;
 }
