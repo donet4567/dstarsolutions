@@ -38,7 +38,6 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
     if (!runway || !rail) return;
     const motion=matchMedia("(prefers-reduced-motion: reduce)");
     let frame=0, distance=0, start=0, pinned=false;
-    const imageStage=rail.querySelector<HTMLElement>(".gallery-image-stage");
     const update=()=>{
       frame=0;
       if(!pinned)return;
@@ -51,27 +50,7 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
       distance=Math.max(0,rail.scrollWidth-rail.clientWidth);
       const top=(document.querySelector("header")?.getBoundingClientRect().height??88)+12;
       const contentHeight=rail.parentElement?.offsetHeight??rail.offsetHeight;
-      const imageHeight=imageStage?.offsetHeight??0;
-      const fixedContent=contentHeight-imageHeight;
-      const availableHeight=innerHeight-top-12-fixedContent;
-      const smallScreen=innerWidth<=760;
-      const requestedHeight=smallScreen
-        ? Math.min(280,Math.max(200,innerHeight*.34))
-        : Math.min(540,Math.max(320,innerHeight*.55));
-      const imageWidth=Math.min(imageStage?.parentElement?.clientWidth??requestedHeight*1.5,requestedHeight*1.5);
-      const desiredHeight=Math.min(requestedHeight,imageWidth/1.5);
-      const minimumHeight=smallScreen?150:240;
-      pinned=!motion.matches && availableHeight>=minimumHeight && distance>1;
-      if(imageStage) {
-        if(pinned) {
-          const fittedHeight=Math.min(desiredHeight,availableHeight);
-          imageStage.style.setProperty("--study-image-fit",`${fittedHeight}px`);
-          imageStage.style.setProperty("--study-image-fit-width",`${fittedHeight*1.5}px`);
-        } else {
-          imageStage.style.removeProperty("--study-image-fit");
-          imageStage.style.removeProperty("--study-image-fit-width");
-        }
-      }
+      pinned=!motion.matches && innerWidth>900 && contentHeight<=innerHeight-top-12 && distance>1;
       runway.dataset.pinned=String(pinned);
       runway.style.setProperty("--study-pin-top",`${top}px`);
       runway.style.height=pinned ? `${(rail.parentElement?.offsetHeight??rail.offsetHeight)+distance}px` : "";
