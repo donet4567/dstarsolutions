@@ -23,6 +23,11 @@ h1,h2,h3 {font-family:var(--font-source-sans),Arial,sans-serif;}
 }
 .gallery-tabs .gallery-selector button {font-size:18px;line-height:1.5;}
 .orbit-hero h1 {font-family:var(--font-source-sans),Arial,sans-serif;font-weight:900;letter-spacing:-.045em;line-height:1.03;text-transform:none;}
+.orbit-story .orbit-hero h1 {font-size:clamp(62px,7.6vw,118px);line-height:.99;letter-spacing:-.055em;text-wrap:balance;}
+.orbit-story .orbit-hero-bottom {gap:28px;margin-top:38px;}
+.orbit-hero-copy {max-width:510px;}
+.orbit-hero-copy h2 {margin:0 0 12px;font:700 clamp(22px,2vw,30px)/1.2 var(--font-source-sans),Arial,sans-serif;letter-spacing:-.025em;color:var(--text);}
+.orbit-story .orbit-hero-copy>p {margin:0;max-width:490px;font:18px/1.65 Arial,"Helvetica Neue",sans-serif;color:var(--muted);}
 .orbit-hero h1 em,.orbit-manifesto h2 em,.studio-copy h2 em,.sales-heading h2 em,.sales-benefits h2 em,.faq-section h2 em {
   font-family:var(--font-handwriting),cursive;font-weight:600;font-style:normal;letter-spacing:-.025em;line-height:1.05;
 }
@@ -89,6 +94,10 @@ html[data-theme] .brand-symbol img {filter:none!important;opacity:1;mix-blend-mo
 #selected-work .work-project-summary {font-size:18px;line-height:1.5;}
 #selected-work li>button>span:first-child>span {display:none;}
 @media(max-width:760px) {
+ .orbit-story .orbit-hero h1 {font-size:clamp(36px,9.6vw,72px);line-height:1.02;letter-spacing:-.055em;}
+ .orbit-story .orbit-hero-bottom {gap:18px;margin-top:34px;}
+ .orbit-hero-copy h2 {font-size:clamp(22px,6vw,27px);}
+ .orbit-story .orbit-hero-copy>p {font-size:18px;line-height:1.55;}
   .orbit-kicker>span:last-child {display:none;}
   .orbit-hero-bottom {gap:20px;}
   .orbit-hero-bottom>p br {display:none;}
