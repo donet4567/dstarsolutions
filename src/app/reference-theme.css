@@ -113,6 +113,14 @@ html[data-theme] .brand-wordmark>span {text-transform:none;letter-spacing:0;}
 .business-showcase .study-navigation {min-height:58px;margin:0;padding:8px 0;}
 .business-showcase .study-journey[data-pinned="true"] .study-pin {position:sticky;top:var(--study-pin-top,100px);}
 .business-showcase .study-journey[data-pinned="true"] .business-grid {touch-action:pan-y;overflow-x:hidden;}
+/* Category names are editorial labels, not gallery filters. */
+.gallery-tabs .gallery-selector {display:flex;flex-wrap:wrap;align-items:center;gap:0;overflow:visible;}
+.gallery-category-label {display:inline-flex;align-items:center;min-height:52px;padding:15px 23px;border-bottom:1px solid var(--line);color:var(--muted);font:500 18px/1.3 Arial,sans-serif;white-space:nowrap;}
+.gallery-category-all {color:var(--text);}
+@media(min-width:761px) {
+ .business-showcase .business-card,.business-showcase .business-card:nth-child(even) {flex-basis:88%;}
+ .business-showcase .study-journey .business-card .gallery-image-stage {height:clamp(300px,40svh,440px);min-height:0;aspect-ratio:auto;}
+}
 @media(max-width:760px) {
  .business-showcase .business-card,.business-showcase .business-card:nth-child(even) {flex-basis:94%;}
  .business-showcase .study-journey .business-card .gallery-image-stage {height:clamp(120px,22svh,190px);}

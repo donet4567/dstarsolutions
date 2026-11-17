@@ -108,7 +108,7 @@ export default function BusinessShowcase({ source = "home" }: { source?: "home" 
   };
   return <section className="sales-section container business-showcase" id="business-websites" aria-labelledby="business-websites-title">
     <div className="sales-heading"><div><p className="eyebrow"><span className="section-dash" /> 03 / THE POSSIBILITY GALLERY</p><h2 id="business-websites-title" data-title-motion="shutter">Website<br /><em>directions.</em></h2></div></div>
-    <div className="gallery-tabs"><div ref={selector} className="gallery-selector" role="group" aria-label="Filter website examples"><button type="button" aria-pressed={category === "all"} onClick={() => select("all")}>All studies <span>06</span></button>{businessExamples.map((example, index) => <button type="button" key={example.slug} aria-pressed={category === example.slug} onClick={() => select(example.slug)}>{categories[index]}</button>)}</div></div>
+    <div className="gallery-tabs"><div ref={selector} className="gallery-selector" aria-label="Website studio categories"><span className="gallery-category-label gallery-category-all">All studies <span>06</span></span>{businessExamples.map((example, index) => <span className="gallery-category-label" key={example.slug}>{categories[index]}</span>)}</div></div>
     <div className="showcase-toolbar"><span role="status" aria-live="polite">{category === "all" ? "06 studies" : "01 study"} / Scroll to explore</span></div>
 
     <div ref={journey} className="study-journey"><div className="study-pin"><div ref={attachStudies} className="business-grid" key={category} tabIndex={0} role="region" aria-label="Website demo images" onScroll={()=>{
