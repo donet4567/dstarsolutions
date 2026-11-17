@@ -81,7 +81,6 @@ html[data-theme] .brand-symbol img {filter:none!important;opacity:1;mix-blend-mo
 .study-navigation button:not(:disabled):hover {background:var(--gold);color:var(--theme-on-accent);border-color:var(--gold);}
 .study-navigation button:disabled {opacity:.4;cursor:default;}
 @media(max-width:900px) {
-  .study-journey .study-pin {position:static;}
   .business-showcase .business-grid {scroll-padding-inline:0;overscroll-behavior-x:contain;}
   .business-showcase .business-card .gallery-image-stage {aspect-ratio:3/2;height:auto;}
   html[data-theme] .brand {padding:0;}
@@ -135,11 +134,11 @@ html[data-theme] .brand-wordmark>span {text-transform:none;letter-spacing:0;}
 .business-showcase .study-journey .business-card .gallery-image-stage img {object-fit:cover;}
 @media(min-width:761px) {
  .business-showcase .business-card,.business-showcase .business-card:nth-child(even) {flex-basis:88%;}
- .business-showcase .study-journey .business-card .gallery-image-stage {width:min(100%,clamp(510px,76svh,820px));height:auto;min-height:0;aspect-ratio:3/2;margin-inline:auto;}
+ .business-showcase .study-journey .business-card .gallery-image-stage {width:min(100%,var(--study-image-fit-width,clamp(510px,76svh,820px)));height:var(--study-image-fit,auto);min-height:0;aspect-ratio:3/2;margin-inline:auto;}
 }
 @media(max-width:760px) {
  .business-showcase .business-card,.business-showcase .business-card:nth-child(even) {flex-basis:94%;}
- .business-showcase .study-journey .business-card .gallery-image-stage {width:min(100%,clamp(320px,55svh,420px));height:auto;aspect-ratio:3/2;margin-inline:auto;}
+ .business-showcase .study-journey .business-card .gallery-image-stage {width:min(100%,var(--study-image-fit-width,clamp(320px,55svh,420px)));height:var(--study-image-fit,auto);aspect-ratio:3/2;margin-inline:auto;}
  .business-showcase .study-journey .business-card h3 {font-size:28px;}
  .business-showcase .study-journey .business-card-actions {gap:8px;flex-direction:column;align-items:flex-start;}
  .business-showcase .study-journey .business-card-actions a {min-height:40px;}
