@@ -13,7 +13,6 @@ function subscribe(callback: () => void) {
 export default function StudioWorld() {
   const host=useRef<HTMLDivElement>(null);
   const world=useRef<WorldController|undefined>(undefined);
-  const activateWorld=useRef<(()=>void)|undefined>(undefined);
   const [paused,setPaused]=useState(false);
   const [ready,setReady]=useState(false);
   const pausePreference=useRef(false);
@@ -42,7 +41,8 @@ export default function StudioWorld() {
       if(bounds && event.clientX>=bounds.left && event.clientX<=bounds.right &&
         event.clientY>=bounds.top && event.clientY<=bounds.bottom) activate();
     };
-    activateWorld.current=activate;
+    const activateOnFirstTouch=()=>activate();
+    document.addEventListener("touchstart",activateOnFirstTouch,{passive:true,once:true});
     const observer=new IntersectionObserver(([entry])=>{
       visible=entry.isIntersecting;
       if(visible && activated) void load();
@@ -58,22 +58,18 @@ export default function StudioWorld() {
       disposed=true;observer.disconnect();canvasReady.disconnect();
       stage.removeEventListener("pointermove",activateNearButterfly);
       stage.removeEventListener("pointerdown",activateNearButterfly);
-      activateWorld.current=undefined;
+      document.removeEventListener("touchstart",activateOnFirstTouch);
       world.current?.dispose();world.current=undefined;setReady(false);
     };
   },[reduced]);
-  const isStatic=reduced||!ready;
   return <div className="studio-world">
     <div className="world-layer" aria-hidden="true"><div ref={host} className="world-viewport"><div className="world-fallback"><div className="world-proof"/></div></div></div>
     <div className="world-controls">
-      <p>Approach the butterfly to see it fly. <a className="wing-credit" href="/models/monarch/CREDITS.txt" aria-label="Butterfly photograph credit">Image credit</a></p>
-      <div><button type="button" disabled={reduced||paused} onClick={()=>{
-        if(!ready) {activateWorld.current?.();return;}
-        world.current?.takeFlight();
-      }}>{ready?"Take flight":reduced?"Static scene":"Enable 3D"} <span aria-hidden="true">↗</span></button>
-      <button type="button" aria-label="Pause scene motion" aria-pressed={paused||reduced} disabled={isStatic} onClick={()=>{
+      <p>Touch the screen or approach the butterfly to see it fly. <a className="wing-credit" href="/models/monarch/CREDITS.txt" aria-label="Butterfly photograph credit">Image credit</a></p>
+      <div>{ready&&!reduced&&<button type="button" disabled={paused} onClick={()=>world.current?.takeFlight()}>Take flight <span aria-hidden="true">↗</span></button>}
+      {!reduced&&<button type="button" aria-label="Pause scene motion" aria-pressed={paused} disabled={!ready} onClick={()=>{
         const next=!paused;pausePreference.current=next;setPaused(next);world.current?.setPaused(next);
-      }}>{reduced?"Static scene":paused?"Resume motion":"Pause motion"}</button></div>
+      }}>{paused?"Resume motion":"Pause motion"}</button>}</div>
     </div>
   </div>;
 }

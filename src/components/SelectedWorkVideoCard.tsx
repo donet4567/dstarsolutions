@@ -5,9 +5,6 @@ import { useEffect, useRef, useState } from "react";
 export default function SelectedWorkVideoCard() {
   const canvas=useRef<HTMLCanvasElement>(null);
   const figure=useRef<HTMLElement>(null);
-  const pausedRef=useRef(false);
-  const [paused,setPaused]=useState(false);
-  const [reduced,setReduced]=useState(false);
   const [fullscreen,setFullscreen]=useState(false);
   useEffect(()=>{
     const element=canvas.current;if(!element)return;
@@ -48,7 +45,7 @@ export default function SelectedWorkVideoCard() {
     };
     const tick=(now:number)=>{
       frame=0;
-      if(!visible||document.hidden||pausedRef.current||preference.matches)return;
+      if(!visible||document.hidden||preference.matches)return;
       if(!last)last=now;
       const elapsed=now-last;
       if(elapsed>=1000/30){time+=Math.min(elapsed,70);last=now;render();}
@@ -56,8 +53,8 @@ export default function SelectedWorkVideoCard() {
     };
     const update=()=>{
       cancelAnimationFrame(frame);frame=0;last=0;
-      element.dataset.running=String(visible&&!document.hidden&&!pausedRef.current&&!preference.matches);
-      if(visible&&!document.hidden&&!pausedRef.current&&!preference.matches)frame=requestAnimationFrame(tick);
+      element.dataset.running=String(visible&&!document.hidden&&!preference.matches);
+      if(visible&&!document.hidden&&!preference.matches)frame=requestAnimationFrame(tick);
       else render();
     };
     const resize=new ResizeObserver(()=>{
@@ -67,15 +64,15 @@ export default function SelectedWorkVideoCard() {
       ctx.setTransform(dpr,0,0,dpr,0,0);render();
     });resize.observe(element);
     const observer=new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;update();},{threshold:.1});observer.observe(element);
-    const motionChange=()=>{setReduced(preference.matches);update();};motionChange();
+    const motionChange=()=>update();motionChange();
     const fullChange=()=>setFullscreen(document.fullscreenElement===figure.current);
-    preference.addEventListener("change",motionChange);document.addEventListener("visibilitychange",update);document.addEventListener("fullscreenchange",fullChange);element.addEventListener("preview-toggle",update);
-    return()=>{cancelAnimationFrame(frame);resize.disconnect();observer.disconnect();preference.removeEventListener("change",motionChange);document.removeEventListener("visibilitychange",update);document.removeEventListener("fullscreenchange",fullChange);element.removeEventListener("preview-toggle",update);};
+    preference.addEventListener("change",motionChange);document.addEventListener("visibilitychange",update);document.addEventListener("fullscreenchange",fullChange);
+    return()=>{cancelAnimationFrame(frame);resize.disconnect();observer.disconnect();preference.removeEventListener("change",motionChange);document.removeEventListener("visibilitychange",update);document.removeEventListener("fullscreenchange",fullChange);};
   },[]);
   return <aside className="selected-work-media" aria-label="Original motion study">
     <figure ref={figure} className="selected-work-video motion-reel">
       <canvas ref={canvas} role="img" aria-label="Abstract rotating ribbons and moving typography, an original D Star motion study" />
-      <figcaption className="motion-reel-controls"><span>Ideas in motion.</span><div>{!reduced&&<button type="button" aria-pressed={paused} onClick={()=>{pausedRef.current=!paused;setPaused(!paused);canvas.current?.dispatchEvent(new Event("preview-toggle"));}}>{paused?"Play reel":"Pause reel"}</button>}<button type="button" onClick={()=>{if(document.fullscreenElement)void document.exitFullscreen().catch(()=>{});else void figure.current?.requestFullscreen?.().catch(()=>{});}}>{fullscreen?"Exit full screen":"Full screen"}</button></div></figcaption>
+      <figcaption className="motion-reel-controls"><span>Ideas in motion.</span><div><button type="button" onClick={()=>{if(document.fullscreenElement)void document.exitFullscreen().catch(()=>{});else void figure.current?.requestFullscreen?.().catch(()=>{});}}>{fullscreen?"Exit full screen":"Full screen"}</button></div></figcaption>
     </figure>
   </aside>;
 }

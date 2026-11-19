@@ -62,7 +62,6 @@ export default function SelectedWork({standalone=false}:{standalone?:boolean}) {
   const [failed,setFailed]=useState(0);
   const [artVisible,setArtVisible]=useState(false);
   const [inView,setInView]=useState(false);
-  const [paused,setPaused]=useState(false);
   const section=useRef<HTMLElement>(null);
   const dialog=useRef<HTMLDialogElement>(null);
   const trigger=useRef<HTMLButtonElement|null>(null);
@@ -95,7 +94,7 @@ export default function SelectedWork({standalone=false}:{standalone?:boolean}) {
   };
   const changeProject=(direction:number)=>setModalProject(index=>index===null?null:(index+direction+projects.length)%projects.length);
   return <>
-    <section ref={section} className={scene.section} id="selected-work" aria-labelledby="selected-work-title" data-project={selected} data-running={inView&&!paused}>
+    <section ref={section} className={scene.section} id="selected-work" aria-labelledby="selected-work-title" data-project={selected} data-running={inView}>
       <div className={scene.inner}>
         <div className={scene.heading}><div><p className="eyebrow">DIGITAL WITH CHARACTER</p><Heading id="selected-work-title">Selected work.</Heading></div></div>
         <div className={scene.layout}>
@@ -114,7 +113,7 @@ export default function SelectedWork({standalone=false}:{standalone?:boolean}) {
                 <div className={scene.copy}><div><p>{project.category}</p><h3>{project.name}</h3></div><p>{project.description}</p></div>
               </article>)}
             </div>
-            <div className={scene.controls}><button type="button" aria-label="Previous selected project" onClick={()=>select(selected-1)}>Previous</button><span aria-live="polite" aria-atomic="true">{selected+1} / {projects.length}</span><button type="button" aria-label="Next selected project" onClick={()=>select(selected+1)}>Next</button><button type="button" className={scene.pause} aria-pressed={paused} onClick={()=>setPaused(!paused)}>{paused?"Play motion":"Pause motion"}</button></div>
+            <div className={scene.controls}><button type="button" aria-label="Previous selected project" onClick={()=>select(selected-1)}>Previous</button><span aria-live="polite" aria-atomic="true">{selected+1} / {projects.length}</span><button type="button" aria-label="Next selected project" onClick={()=>select(selected+1)}>Next</button></div>
 
           </div>
           <SelectedWorkVideoCard/>

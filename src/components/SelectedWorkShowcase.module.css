@@ -42,7 +42,6 @@
 .controls {display:flex;align-items:center;gap:16px;border-top:1px solid #07111040;padding-top:18px;}
 .controls button {border:1px solid #07111065;border-radius:30px;min-height:44px;padding:8px 18px;background:transparent;color:#071110;font:700 18px var(--font-source-sans),sans-serif;}
 .controls button:hover {background:#071110;color:#fff;}
-.controls .pause {margin-left:auto;}
 .note {font-size:18px;line-height:1.5;margin-top:18px;max-width:650px;}
 .section :global(.selected-work-media) {position:relative;top:auto;width:100%;max-width:none;grid-column:auto;grid-row:auto;}
 .section :global(.selected-work-video) {border-radius:18px;border:0;background:#071110;color:#fff;box-shadow:0 20px 45px #07111026;animation:none;transform:none;}
@@ -63,7 +62,7 @@
  .satelliteRight {width:18%;right:-1%;top:49%;}.satelliteRight .float {border-width:3px;border-radius:11px;}
  .mainArtwork .float {border-width:3px;}.artworkCta {margin-top:15px;}.orbitDot {width:20px;bottom:12%;}
  .copy {grid-template-columns:1fr;gap:15px;}.copy h3 {font-size:32px;}
- .controls {gap:10px;flex-wrap:wrap;}.controls button {padding-inline:14px;}.controls .pause {margin-left:0;}
+ .controls {gap:10px;flex-wrap:wrap;}.controls button {padding-inline:14px;}
 }
 @media(max-width:370px) {.tabs button {font-size:18px;}.composition {height:295px;}.word {font-size:85px;}.copy h3 {font-size:28px;}}
-@media(prefers-reduced-motion:reduce) {.section,.panel,.mainArtwork,.satelliteLeft,.satelliteRight,.tabs button,.tabs button::after,.tabImage {transition:none;}.float {animation:none;}.pause {display:none;}}
+@media(prefers-reduced-motion:reduce) {.section,.panel,.mainArtwork,.satelliteLeft,.satelliteRight,.tabs button,.tabs button::after,.tabImage {transition:none;}.float {animation:none;}}
