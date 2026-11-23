@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import SelectedWorkVideoCard from "./SelectedWorkVideoCard";
+import "../app/work-deck.css";
 import styles from "./SelectedWork.module.css";
 import scene from "./SelectedWorkShowcase.module.css";
 
@@ -54,6 +55,31 @@ function ProjectArtwork({ index, sizes, onLoad, onError }: {
 const labels = ["Mecardee Rental", "Mecardee Manager", "HireVify"];
 const words = ["Drive.", "Organise.", "Connect."];
 
+function ProjectLogo({ index }: { index: number }) {
+  if (index === 0) {
+    // Mecardee Rental: aerodynamic coupe roof sweep + geometric M emblem
+    return <svg viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <path d="M5 14.5c4.5-4.5 11.2-6.5 18.2-5 3.1.7 5.8 2.1 7.8 3.7-3.4-.5-6.7-.4-9.8.3-4.9 1.1-9.4 1.6-16.2 1Z" fill="currentColor" opacity=".92" />
+      <path d="M7.5 27V18.5l5.5 5.2 5.5-5.2V27M24 27v-8.5h3.2a2.8 2.8 0 0 1 0 5.6H24m3.4 0L29.8 27" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>;
+  }
+  if (index === 1) {
+    // Mecardee Manager: coupe sweep + structured expense & work bars
+    return <svg viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <path d="M5 13.5c4.6-4.2 11.4-6 18.4-4.5 3 .6 5.6 1.9 7.6 3.5-3.4-.5-6.6-.4-9.7.3-4.9 1-9.5 1.4-16.3.7Z" fill="currentColor" opacity=".92" />
+      <rect x="7" y="21" width="4.6" height="6.5" rx="1.4" fill="currentColor" opacity=".62" />
+      <rect x="14.7" y="17.5" width="4.6" height="10" rx="1.4" fill="currentColor" opacity=".82" />
+      <rect x="22.4" y="14.5" width="4.6" height="13" rx="1.4" fill="currentColor" />
+    </svg>;
+  }
+  // HireVify: verified skills magnifying lens with breakout checkmark
+  return <svg viewBox="0 0 36 36" fill="none" aria-hidden="true">
+    <circle cx="15.5" cy="15.5" r="8.2" stroke="currentColor" strokeWidth="2.4" />
+    <path d="m21.7 21.7 6.8 6.8" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" />
+    <path d="m11.5 15.6 3.1 3.1 8.8-9.2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>;
+}
+
 export default function SelectedWork({standalone=false}:{standalone?:boolean}) {
   const Heading=standalone?"h1":"h2";
   const [selected,setSelected]=useState(0);
@@ -99,7 +125,7 @@ export default function SelectedWork({standalone=false}:{standalone?:boolean}) {
         <div className={scene.heading}><div><p className="eyebrow">DIGITAL WITH CHARACTER</p><Heading id="selected-work-title">Selected work.</Heading></div></div>
         <div className={scene.layout}>
           <div className={scene.showcase}>
-            <div className={scene.tabs} role="tablist" aria-label="Selected project index">{projects.map((project,index)=><button key={project.slug} ref={node=>{tabs.current[index]=node;}} type="button" role="tab" id={`work-tab-${index}`} aria-selected={selected===index} aria-controls={`work-${project.slug}`} tabIndex={selected===index?0:-1} onClick={()=>select(index)} onKeyDown={event=>{let next:number|undefined;if(event.key==="ArrowRight")next=selected+1;if(event.key==="ArrowLeft")next=selected-1;if(event.key==="Home")next=0;if(event.key==="End")next=projects.length-1;if(next!==undefined){event.preventDefault();select(next,true);}}}><span className={scene.tabImage} aria-hidden="true">{artVisible&&<ProjectArtwork index={index} sizes="100px"/>}</span><span>{labels[index]}</span></button>)}</div>
+            <div className={scene.tabs} role="tablist" aria-label="Selected project index">{projects.map((project,index)=><button key={project.slug} data-tab-index={index} ref={node=>{tabs.current[index]=node;}} type="button" role="tab" id={`work-tab-${index}`} aria-selected={selected===index} aria-controls={`work-${project.slug}`} tabIndex={selected===index?0:-1} onClick={()=>select(index)} onKeyDown={event=>{let next:number|undefined;if(event.key==="ArrowRight")next=selected+1;if(event.key==="ArrowLeft")next=selected-1;if(event.key==="Home")next=0;if(event.key==="End")next=projects.length-1;if(next!==undefined){event.preventDefault();select(next,true);}}}><span className={scene.tabHead} aria-hidden="true"><span className={scene.tabIndex}>0{index+1}</span><span className={scene.tabSwatch}/></span><span className={scene.tabBody}><span className={scene.tabLogo} aria-hidden="true"><ProjectLogo index={index}/></span><span className={scene.tabTitle}>{labels[index]}</span></span><span className={scene.tabRail} aria-hidden="true"/></button>)}</div>
             <div className={scene.stage} onPointerDown={event=>{if(event.pointerType!=="mouse")swipe.current={x:event.clientX,y:event.clientY};}} onPointerCancel={()=>{swipe.current=null;}} onPointerUp={event=>{const start=swipe.current;swipe.current=null;if(start&&Math.abs(event.clientX-start.x)>55&&Math.abs(event.clientX-start.x)>Math.abs(event.clientY-start.y)*1.5)select(selected+(event.clientX<start.x?1:-1));}}>
               {projects.map((project,index)=><article className={scene.panel} role="tabpanel" id={`work-${project.slug}`} aria-labelledby={`work-tab-${index}`} aria-hidden={selected!==index} inert={selected!==index} data-active={selected===index} key={project.slug}>
                 <div className={scene.composition}>
@@ -116,7 +142,7 @@ export default function SelectedWork({standalone=false}:{standalone?:boolean}) {
             <div className={scene.controls}><button type="button" aria-label="Previous selected project" onClick={()=>select(selected-1)}>Previous</button><span aria-live="polite" aria-atomic="true">{selected+1} / {projects.length}</span><button type="button" aria-label="Next selected project" onClick={()=>select(selected+1)}>Next</button></div>
 
           </div>
-          <SelectedWorkVideoCard/>
+          <SelectedWorkVideoCard projectIndex={selected}/>
         </div>
       </div>
     </section>

@@ -1,15 +1,119 @@
-/* The founder is a signed editorial note, framed by an oversized initial. */
-.section { position:relative; padding-block:110px 130px; }
-.note { position:relative; border-top:1px solid var(--line); padding-top:40px; }
-.label { color:var(--muted); margin-bottom:70px; font-size:18px; letter-spacing:1.5px; }
-.editorial { display:grid; grid-template-columns:1fr 1fr; gap:8vw; }
-.editorial h2 { font-size:clamp(44px,5.7vw,86px); line-height:1.02; letter-spacing:-.065em; }
-.editorial h2 em { color:var(--gold); font-family:var(--font-handwriting),cursive; font-style:normal; font-weight:600; }
-.body { padding-top:5px; }
-.body blockquote { margin:0; font-size:clamp(18px,1.7vw,25px); line-height:1.65; letter-spacing:-.02em; }
-.signature { display:flex;align-items:center;gap:20px;margin-top:42px; }
-.monogram { display:grid;place-items:center;width:94px;height:94px;border:1px solid var(--gold);border-radius:50%;color:var(--gold);font:italic 38px Georgia,serif;letter-spacing:-5px;padding-right:5px;transform:rotate(-10deg); }
-.signature p>span { display:block;font-size:18px; }.signature small { display:block;color:var(--muted);font-size:18px;margin-top:8px; }
-.invitation { display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid var(--line);padding-top:25px;margin-top:35px; }.invitation p { color:var(--muted);font-size:18px; }
-.cta { display:flex;align-items:center;gap:16px;background:none;color:var(--gold);padding:10px 0;font-size:18px;min-height:44px; }.cta svg { width:18px;height:18px; }
-@media(max-width:760px) { .section {padding-block:75px;}.label {margin-bottom:35px;}.editorial {grid-template-columns:1fr;gap:40px;}.editorial h2 {max-width:480px;font-size:48px;}.body blockquote {font-size:18px;}.monogram {width:75px;height:75px;font-size:30px;}.signature {margin-top:30px;} }
+/* Signed editorial founder note with refined spacing and monogram seal. */
+.section { position: relative; padding-block: 76px 56px; }
+.note {
+  position: relative;
+  border-top: 1px solid var(--line);
+  padding-top: 44px;
+}
+.label {
+  color: var(--muted);
+  margin-bottom: 48px;
+  font-size: 13px;
+  letter-spacing: .12em;
+}
+.editorial {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(32px, 7vw, 96px);
+  align-items: start;
+}
+.editorial h2 {
+  font-size: clamp(38px, 5vw, 76px);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -.045em;
+}
+.editorial h2 em {
+  color: var(--gold);
+  font-family: var(--font-handwriting), cursive;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.06em;
+}
+.body { padding-top: 4px; }
+.body blockquote {
+  margin: 0;
+  font-size: clamp(18px, 1.65vw, 23px);
+  line-height: 1.68;
+  letter-spacing: -.015em;
+  color: var(--text);
+}
+.signature {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 34px;
+}
+.monogram {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  flex: none;
+  border: 1.5px solid color-mix(in srgb, var(--gold) 70%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--gold);
+  font: italic 600 28px Georgia, serif;
+  letter-spacing: -2px;
+  padding-right: 3px;
+  transform: rotate(-6deg);
+}
+.signature p > span {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+.signature small {
+  display: block;
+  color: var(--muted);
+  font-size: 14.5px;
+  margin-top: 4px;
+}
+.invitation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  margin-top: 34px;
+}
+.invitation p { color: var(--muted); font-size: 16.5px; }
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  border-radius: 999px;
+  color: var(--gold);
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  min-height: 44px;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.cta:hover {
+  background: var(--gold);
+  color: var(--theme-on-accent);
+  transform: translateY(-1px);
+}
+.cta svg { width: 15px; height: 15px; transition: transform .2s ease; }
+.cta:hover svg { transform: translateX(3px); }
+
+@media (max-width: 760px) {
+  .section { padding-block: 56px 40px; }
+  .label { margin-bottom: 28px; }
+  .editorial { grid-template-columns: 1fr; gap: 32px; }
+  .editorial h2 { max-width: 480px; font-size: 40px; }
+  .body blockquote { font-size: 17.5px; }
+  .monogram { width: 64px; height: 64px; font-size: 25px; }
+  .signature { margin-top: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta, .cta svg { transition: none; }
+  .cta:hover { transform: none; }
+}

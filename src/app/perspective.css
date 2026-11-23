@@ -20,8 +20,9 @@ html[data-theme="ivory"] .orbit-story {
 }
 .world-fallback {position:absolute;inset:0;}
 .world-viewport[data-ready="true"] .world-fallback {visibility:hidden;}
-.world-proof {position:absolute;left:77%;top:61.5%;width:clamp(230px,32vw,440px);aspect-ratio:439/313;background:url("/models/monarch/resting.webp") center / contain no-repeat;transform:translate(-50%,-95%);}
-@media(max-width:768px) {.world-proof {left:71.5%;top:40.5%;width:clamp(140px,47vw,265px);}}
+.world-proof {display:none;}
+
+
 .orbit-hero { position:relative; z-index:1; display:flex; flex-direction:column; min-height:100svh; padding-top:132px; }
 .orbit-kicker,.orbit-edition,.orbit-hero h1,.orbit-hero-bottom,.orbit-coordinate { position:relative; z-index:1; }
 .orbit-edition { margin-top:30px; font-size:18px; letter-spacing:1.2px; }

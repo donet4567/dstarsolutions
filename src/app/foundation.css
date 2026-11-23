@@ -21,7 +21,7 @@ h1,h2,h3,p { margin:0; } h1,h2,h3 { font-weight:500; } em { font:inherit; }
 .skip-link { position:fixed; top:12px; left:20px; z-index:500; padding:14px 20px; background:var(--gold); color:var(--theme-on-accent); transform:translateY(-180%); }.skip-link:focus { transform:none; }
 .brand-link { display:inline-flex; flex-shrink:0; }
 .brand { display:inline-flex; align-items:center; gap:10px; line-height:1; }
-.brand-symbol { display:flex; width:42px; flex:0 0 42px; }.brand-symbol img { width:100%; height:auto; }
+.brand-symbol { display:flex; align-items:center; width:42px; flex:0 0 42px; }.brand-symbol img { width:100%; height:auto; aspect-ratio:256/224; }
 .brand-wordmark { display:flex; flex-direction:column; gap:6px; }.brand-wordmark strong { font-size:23px; font-weight:750; letter-spacing:-.8px; color:var(--text); }.brand-wordmark>span { color:var(--muted); font-size:18px; text-transform:uppercase; letter-spacing:2px; }
 .brand--footer .brand-symbol { width:58px; flex-basis:58px; }.brand--footer .brand-wordmark strong { font-size:32px; }.brand--footer .brand-wordmark>span { font-size:18px; }
 .button { display:inline-flex; align-items:center; justify-content:center; gap:22px; min-height:48px; padding:15px 22px; border-radius:50px; font-size:18px; line-height:1.5; font-weight:600; transition:background .2s,transform .2s; }

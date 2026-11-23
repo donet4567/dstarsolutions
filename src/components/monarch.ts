@@ -128,8 +128,8 @@ function bodySurface(map: THREE.Texture) {
 
 export function makeMonarch(map: THREE.Texture, bodyMap: THREE.Texture, underside: THREE.Texture) {
   const rig=new THREE.Group();
-  const material=new THREE.MeshStandardMaterial({map,roughness:.84});
-  const ventral=new THREE.MeshStandardMaterial({map:underside,side:THREE.BackSide,roughness:.9});
+  const material=new THREE.MeshStandardMaterial({map,roughness:.72});
+  const ventral=new THREE.MeshStandardMaterial({map:underside,side:THREE.BackSide,roughness:.86});
   const fore=membrane(true), hind=membrane(false);
   const wings: {front:THREE.Mesh;back:THREE.Mesh;side:number}[]=[];
   for(const side of [-1,1]) {
@@ -149,18 +149,21 @@ export function makeMonarch(map: THREE.Texture, bodyMap: THREE.Texture, undersid
   }
   const body=anatomy();
   const shell=bodySurface(bodyMap);
-  rig.add(body,shell);
+  const torso=new THREE.Group();
+  torso.add(body,shell);
+  rig.add(torso);
   return {
     rig,
-    beat(angle:number, lag:number, flex:number, bank:number) {
+    beat(angle:number, lag:number, flex:number, bank:number, pronation=0, sweep=0, bodyPitch=0) {
       for (const {front,back,side} of wings) {
-        front.rotation.set(.045*flex,-angle-side*bank,.07*flex);
-        back.rotation.set(-.035*flex,-lag-side*bank*.65,-.047*flex);
-        front.morphTargetInfluences![0]=flex;
-        back.morphTargetInfluences![0]=flex*.8;
-        front.morphTargetInfluences![1]=flex;
-        back.morphTargetInfluences![1]=flex*.65;
+        front.rotation.set(pronation,-angle-side*bank,sweep);
+        back.rotation.set(pronation*.55,-lag-side*bank*.65,-sweep*.45);
+        front.morphTargetInfluences![0]=THREE.MathUtils.clamp(flex*1.35,-1.25,1.25);
+        back.morphTargetInfluences![0]=THREE.MathUtils.clamp(flex*.95,-1,1);
+        front.morphTargetInfluences![1]=THREE.MathUtils.clamp(pronation*3.2,-1.2,1.2);
+        back.morphTargetInfluences![1]=THREE.MathUtils.clamp(pronation*1.8,-.9,.9);
       }
+      torso.rotation.x=bodyPitch;
     },
     dispose() {
       fore.dispose(); hind.dispose(); material.dispose(); ventral.dispose(); body.geometry.dispose(); body.material.dispose();

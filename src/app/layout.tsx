@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
+import { Caveat, Josefin_Sans, Rubik, Source_Sans_3 } from "next/font/google";
 import WebVitals from "@/components/WebVitals";
 import { PHONE, SITE_NAME, SITE_URL } from "@/components/site";
 import "./foundation.css";
@@ -10,26 +10,32 @@ import "./orbit.css";
 import "./showroom.css";
 import "./perspective.css";
 import "./chapters.css";
-import "./work-deck.css";
 import "./reference-theme.css";
 import "./pages.css";
 
-const sourceSans = localFont({
-  src: [
-    { path: "./fonts/source-sans-pro-400.woff2", weight: "400" },
-    { path: "./fonts/source-sans-pro-600.woff2", weight: "600" },
-    { path: "./fonts/source-sans-pro-700.woff2", weight: "700" },
-    { path: "./fonts/source-sans-pro-900.woff2", weight: "900" },
-  ],
-  variable: "--font-source-sans", display: "swap", fallback: ["Arial"],
+const sourceSans = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-source-sans",
+  display: "swap",
 });
-const josefin = localFont({
-  src: [{ path: "./fonts/josefin-sans-400.woff2", weight: "400" }, { path: "./fonts/josefin-sans-700.woff2", weight: "700" }],
-  variable: "--font-josefin", display: "swap", preload: false,
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  variable: "--font-josefin",
+  display: "swap",
+  preload: false,
 });
-const handwriting = localFont({
-  src: [{ path: "./fonts/caveat-600.woff2", weight: "600" }],
-  variable: "--font-handwriting", display: "swap", preload: false,
+const signatureDisplay = Rubik({
+  subsets: ["latin"],
+  weight: "900",
+  variable: "--font-signature",
+  display: "swap",
+  preload: false,
+});
+const handwriting = Caveat({
+  subsets: ["latin"],
+  weight: "600",
+  variable: "--font-handwriting",
+  display: "swap",
 });
 
 // Resolve old one-page bookmarks before loading the homepage experience.
@@ -123,13 +129,13 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0c0c0c",
+  themeColor: "#040a10",
   colorScheme: "dark light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="midnight" className={`${sourceSans.variable} ${josefin.variable} ${handwriting.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="midnight" className={`${sourceSans.variable} ${josefin.variable} ${handwriting.variable} ${signatureDisplay.variable}`} suppressHydrationWarning>
       <head><script id="legacy-sections" dangerouslySetInnerHTML={{ __html: legacySections }} /><script id="restore-theme" dangerouslySetInnerHTML={{ __html: restoreTheme }} /><script id="reload-scroll-reset" dangerouslySetInnerHTML={{ __html: resetScrollOnReload }} /></head>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, "\\u003c") }} />

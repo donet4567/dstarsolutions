@@ -1,8 +1,11 @@
 // Render the supplied artwork intact, including its original black background.
 
 export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
-  void diagonal;
-  return null;
+  return <svg className="ui-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    {diagonal
+      ? <path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" />
+      : <path d="M3 8h10M8.75 3.75 13 8l-4.25 4.25" />}
+  </svg>;
 }
 export function Star({ className = "" }: { className?: string }) {
   return <svg className={className} viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="m16 0 3.8 12.2L32 16l-12.2 3.8L16 32l-3.8-12.2L0 16l12.2-3.8Z" /></svg>;
@@ -11,5 +14,5 @@ export function ServiceIcon({ app = false }: { app?: boolean }) {
   return <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">{app ? <><rect x="3" y="3" width="9" height="9" rx="2" /><rect x="16" y="3" width="9" height="9" rx="2" /><rect x="3" y="16" width="9" height="9" rx="2" /><path d="M16 20.5h9m-4.5-4.5v9" /></> : <><rect x="2" y="4" width="24" height="20" rx="3" /><path d="M2 10h24M6 7h.1M10 7h.1m1 8-3 3 3 3m6-6 3 3-3 3" /></>}</svg>;
 }
 export function Brand({ footer = false }: { footer?: boolean }) {
-  return <span className={footer ? "brand brand--footer" : "brand"}><span className="brand-symbol" aria-hidden="true"><img src="/brand/dstar-monogram.webp" width={256} height={224} alt="" /></span><span className="brand-wordmark"><strong>D Star</strong><span>Solutions</span></span><span className="brand-light"><picture><source type="image/webp" srcSet="/brand/dstar-light-616.webp" /><img src="/brand/dstar-light.png" width={616} height={205} alt="D Star Solutions" /></picture></span></span>;
+  return <span className={footer ? "brand brand--footer" : "brand"}><span className="brand-symbol" aria-hidden="true"><img src="/brand/dstar-monogram.webp" width={256} height={224} loading={footer ? "lazy" : undefined} decoding="async" alt="" /></span><span className="brand-wordmark"><strong>D Star</strong><span>Solutions</span></span><span className="brand-light"><picture><source type="image/webp" srcSet="/brand/dstar-light-616.webp" /><img src="/brand/dstar-light.png" width={616} height={205} loading="lazy" decoding="async" alt="D Star Solutions" /></picture></span></span>;
 }
