@@ -200,6 +200,7 @@ html[data-theme="ivory"] .brand--footer .brand-light { width: 224px; }
   --text: #ffffff;
   --muted: #b9cad6;
   --gold: #f162a4;
+  --theme-on-accent: #040a10;
   --background: #040a10;
   --line: rgba(148, 188, 224, .18);
   background: var(--plate);
@@ -231,6 +232,7 @@ html[data-theme="ivory"] .orbit-story {
   --text: #061018;
   --muted: #4a5b68;
   --gold: #b31e68;
+  --theme-on-accent: #ffffff;
   --background: #ffffff;
   --line: rgba(6, 16, 24, .13);
   background: var(--plate);
@@ -376,6 +378,10 @@ html[data-theme="ivory"] .orbit-story {
   border-color: var(--theme-accent-hover);
   transform: translateY(-2px);
   box-shadow: 0 18px 36px -10px color-mix(in srgb, var(--gold) 72%, transparent);
+}
+html[data-theme="ivory"] .orbit-story .orbit-package,
+html[data-theme="ivory"] .orbit-story .orbit-package:hover {
+  color: var(--theme-on-accent);
 }
 .orbit-story .orbit-package svg { width: 16px; height: 16px; }
 
